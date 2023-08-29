@@ -1,0 +1,9 @@
+.vscode
+build
+cmake-build-debug
+tags
+
+bminor
+*.o
+
+test/**/*.out
