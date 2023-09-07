@@ -1,0 +1,560 @@
+=====STUDENT TESTS=====
+====Good Tests====
+===[good0.bminor Input]===
+"Hello \n World!"
+===[good0.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good0.bminor Output]===
+"Hello \n World!"
+
+
+
+
+===[good1.bminor Input]===
+"\a\b\e\f\n\r\t\v\\\'\"and\0x7F s \0x0Aabs"
+===[good1.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good1.bminor Output]===
+"\a\b\e\f\n\r\t\v\\'\"and\0x7Fs \nabs"
+
+
+
+
+===[good2.bminor Input]===
+" \t Aa 1024 \n \""
+===[good2.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good2.bminor Output]===
+" \t Aa 1024 \n \""
+
+
+
+
+===[good3.bminor Input]===
+"\"\"\'8abc1\'\"\""
+===[good3.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good3.bminor Output]===
+"\"\"'8abc1'\"\""
+
+
+
+
+===[good4.bminor Input]===
+""
+===[good4.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good4.bminor Output]===
+""
+
+
+
+
+===[good5.bminor Input]===
+" 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789\0x1F "
+===[good5.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good5.bminor Output]===
+" 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789\0x1F"
+
+
+
+
+===[good6.bminor Input]===
+"^samuel(g&huang@outlook.com^)# "
+===[good6.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good6.bminor Output]===
+"^samuel(g&huang@outlook.com^)# "
+
+
+
+
+===[good7.bminor Input]===
+"1234567890qwertyuiop[];',./"
+===[good7.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good7.bminor Output]===
+"1234567890qwertyuiop[];',./"
+
+
+
+
+===[good8.bminor Input]===
+" a b  c  3\t\n\n80\n\n\nn "
+===[good8.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good8.bminor Output]===
+" a b  c  3\t\n\n80\n\n\nn "
+
+
+
+
+===[good9.bminor Input]===
+"     "
+===[good9.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good9.bminor Output]===
+"     "
+
+
+
+
+====Bad Tests====
+===[bad0.bminor Input]===
+
+===[bad0.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad0.bminor Output]===
+
+Invalid string: does not start or end with a quote
+Failed to decode file ghuang3-compiler/test/encode/bad0.bminor
+
+
+
+===[bad1.bminor Input]===
+"
+===[bad1.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad1.bminor Output]===
+
+Invalid string: does not start or end with a quote
+Failed to decode file ghuang3-compiler/test/encode/bad1.bminor
+
+
+
+===[bad2.bminor Input]===
+"a \"
+===[bad2.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad2.bminor Output]===
+
+Invalid string: escape sequence at end of string
+Failed to decode file ghuang3-compiler/test/encode/bad2.bminor
+
+
+
+===[bad3.bminor Input]===
+"\\\"
+===[bad3.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad3.bminor Output]===
+
+Invalid string: escape sequence at end of string
+Failed to decode file ghuang3-compiler/test/encode/bad3.bminor
+
+
+
+===[bad4.bminor Input]===
+"\ "
+===[bad4.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad4.bminor Output]===
+
+Invalid string: invalid escape sequence
+Failed to decode file ghuang3-compiler/test/encode/bad4.bminor
+
+
+
+===[bad5.bminor Input]===
+"\0x"
+===[bad5.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad5.bminor Output]===
+
+Invalid string: invalid hex escape sequence
+Failed to decode file ghuang3-compiler/test/encode/bad5.bminor
+
+
+
+===[bad6.bminor Input]===
+" 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789..."
+===[bad6.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad6.bminor Output]===
+
+Invalid string: too long
+Failed to decode file ghuang3-compiler/test/encode/bad6.bminor
+
+
+
+===[bad7.bminor Input]===
+"\"\\\a\0xA "
+===[bad7.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad7.bminor Output]===
+
+Invalid string: invalid hex escape sequence
+Failed to decode file ghuang3-compiler/test/encode/bad7.bminor
+
+
+
+===[bad8.bminor Input]===
+" \ n \0xAB"
+===[bad8.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad8.bminor Output]===
+
+Invalid string: invalid escape sequence
+Failed to decode file ghuang3-compiler/test/encode/bad8.bminor
+
+
+
+===[bad9.bminor Input]===
+"\ n"
+===[bad9.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad9.bminor Output]===
+
+Invalid string: invalid escape sequence
+Failed to decode file ghuang3-compiler/test/encode/bad9.bminor
+
+
+
+=====HIDDEN TESTS=====
+====Good Tests====
+===[good1.bminor Input]===
+"Whan that Aprill with his shoures soote"
+===[good1.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good1.bminor Output]===
+"Whan that Aprill with his shoures soote"
+
+
+
+
+===[good10.bminor Input]===
+"That slepen al the nyght with open ye\n(So priketh hem Nature in hir corages),\nThanne longen folk to goon on pilgrimages,\nAnd palmeres for to seken straunge strondes,\n To ferne halwes, kowthe in sondry londes;\t And specially from every shires ende."
+===[good10.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good10.bminor Output]===
+"That slepen al the nyght with open ye\n(So priketh hem Nature in hir corages),\nThanne longen folk to goon on pilgrimages,\nAnd palmeres for to seken straunge strondes,\n To ferne halwes, kowthe in sondry londes;\t And specially from every shires ende."
+
+
+
+
+===[good3.bminor Input]===
+"And bathed  \bevery veyne in swich licour"
+===[good3.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good3.bminor Output]===
+"And bathed  \bevery veyne in swich licour"
+
+
+
+
+===[good4.bminor Input]===
+"Of which vertu engendred is the flour\e"
+===[good4.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good4.bminor Output]===
+"Of which vertu engendred is the flour\e"
+
+
+
+
+===[good5.bminor Input]===
+"\fWhan Zephirus eek with his sweete breeth"
+===[good5.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good5.bminor Output]===
+"\fWhan Zephirus eek with his sweete breeth"
+
+
+
+
+===[good6.bminor Input]===
+"Inspired hath in \nevery\nholt\nand\nheeth\rheeth"
+===[good6.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good6.bminor Output]===
+"Inspired hath in \nevery\nholt\nand\nheeth\rheeth"
+
+
+
+
+===[good7.bminor Input]===
+"The tendre croppes, \t and the yonge sonne"
+===[good7.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good7.bminor Output]===
+"The tendre croppes, \t and the yonge sonne"
+
+
+
+
+===[good8.bminor Input]===
+"Hath in the Ram his half \\ \'cours\' yronne,"
+===[good8.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good8.bminor Output]===
+"Hath in the Ram his half \\ 'cours' yronne,"
+
+
+
+
+===[good9.bminor Input]===
+"And smale \"foweles\" maken melodye,\v"
+===[good9.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good9.bminor Output]===
+"And smale \"foweles\" maken melodye,\v"
+
+
+
+
+===[good2.bminor Input]===
+"The droghte \a of March hath per\0x5Ed to \0x22 the roote\n"
+===[good2.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[good2.bminor Output]===
+"The droghte \a of March hath per^d to \" the roote\n"
+
+
+
+
+====Bad Tests====
+===[bad1.bminor Input]===
+Bifil that seson on a day
+===[bad1.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad1.bminor Output]===
+
+Invalid string: does not start or end with a quote
+Failed to decode file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/encoder/bad1.bminor
+
+
+
+===[bad4.bminor Input]===
+"To Caunterbury with ful devout corage \c \d \g \h \i \j \k \l \m \o \p \q \s \u \w \x \y \z"
+===[bad4.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad4.bminor Output]===
+
+Invalid string: invalid escape sequence
+Failed to decode file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/encoder/bad4.bminor
+
+
+
+===[bad5.bminor Input]===
+"At nyght was come "into that hostelrye"
+===[bad5.bminor Status]===
+return code: 0
+TEST NOT PASSED
+
+===[bad5.bminor Output]===
+"At nyght was come \"into that hostelrye"
+
+
+
+
+===[bad6.bminor Input]===
+"Wel nyne and twenty \~in a compaignye"
+===[bad6.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad6.bminor Output]===
+
+Invalid string: invalid escape sequence
+Failed to decode file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/encoder/bad6.bminor
+
+
+
+===[bad7.bminor Input]===
+"Of sondry folk, by aventure yfalle" \n\n
+===[bad7.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad7.bminor Output]===
+
+Invalid string: does not start or end with a quote
+Failed to decode file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/encoder/bad7.bminor
+
+
+
+===[bad8.bminor Input]===
+\n "In felaweshipe, and pilgrimes were they alle,"
+===[bad8.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad8.bminor Output]===
+
+Invalid string: does not start or end with a quote
+Failed to decode file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/encoder/bad8.bminor
+
+
+
+===[bad9.bminor Input]===
+"That toward Caunterbuty \" wolden "" ryde."
+===[bad9.bminor Status]===
+return code: 0
+TEST NOT PASSED
+
+===[bad9.bminor Output]===
+"That toward Caunterbuty \" wolden \"\" ryde."
+
+
+
+
+===[bad2.bminor Input]===
+"In \0xfg Southwerk at the tabard as I lay"
+===[bad2.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad2.bminor Output]===
+
+Invalid string: invalid hex escape sequence
+Failed to decode file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/encoder/bad2.bminor
+
+
+
+===[bad3.bminor Input]===
+"
+===[bad3.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad3.bminor Output]===
+
+Invalid string: does not start or end with a quote
+Failed to decode file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/encoder/bad3.bminor
+
+
+
+===[bad10.bminor Input]===
+"The chambres and the stables weren wyde, And wel we weren esed atte beste. And shortly, whan the sonne was to reste, So hadde I spoken with hem everichon That I was of hir felaweshipe anon, And made forward erly for to ryse, To take oure wey ther as I yow devyse. This is over 255 bytes"
+===[bad10.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[bad10.bminor Output]===
+
+Invalid string: too long
+Failed to decode file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/encoder/bad10.bminor
+
+
+
+===== SUMMARIZED ENCODER RESULTS =====
+{
+  "student_tests": {
+    "Good": {
+      "correct": 10,
+      "incorrect": 0
+    },
+    "Bad": {
+      "correct": 10,
+      "incorrect": 0
+    }
+  },
+  "hidden_tests": {
+    "Good": {
+      "correct": 10,
+      "incorrect": 0
+    },
+    "Bad": {
+      "correct": 8,
+      "incorrect": 2
+    }
+  }
+}
+Encoder Project Grade
+---------------------------------
+
+GitHub Usage (2/2 points)
+----------------------------------------------
+Good attention to detail!
+
+Makefile (4/5 points)
+----------------------------------------------
+make test does not exist (-1)
+
+Return Code (8/8 points)
+----------------------------------------------
+Excellent work here
+
+General Structure (15/15 points)
+----------------------------------------------
+Looks like the usage function is not complete? It doesn't seem to provide any helpful message to the user.
+
+Student Tests (20/20 points)
+------------------------------------------
+Nice coverage of a wide variety of edge cases here
+
+Hidden Tests (18/20 points)
+------------------------------------------
+Looks like two bad test cases passed when they had unescaped double quotes (-2)
+
+Coding Style (10/10 points)
+------------------------------------------
+I would appreciate it if you would delete the commented out printf statements before submitting assignments in the future.
+
+Total (77/80 Points)
+------------------------------------------
