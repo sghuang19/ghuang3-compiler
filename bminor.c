@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "encoder.h"
+#include "scanner.h"
 
 void usage(int exit_code)
 {
@@ -24,14 +25,12 @@ int main(int argc, char* argv[])
 				usage(0);
 			else if (strcmp(argv[i], "--encode") == 0)
 			{
-				char* filename = argv[++i];
+				const char* filename = argv[++i];
 				if (filename)
 				{
 					if (decode(filename) == 0)
-					{
-//						printf("Successfully decoded file %s\n", filename);
 						return EXIT_SUCCESS;
-					} else
+					else
 					{
 						fprintf(stderr, "Failed to decode file %s\n", filename);
 						return EXIT_FAILURE;
@@ -40,6 +39,25 @@ int main(int argc, char* argv[])
 				else
 				{
 					fprintf(stderr, "Missing filename to be encoded\n");
+					return EXIT_FAILURE;
+				}
+			}
+			else if (strcmp(argv[i], "--scan") == 0)
+			{
+				const char* filename = argv[++i];
+				if (filename)
+				{
+					if (scan(filename) == 0)
+						return EXIT_SUCCESS;
+					else
+					{
+						fprintf(stderr, "Failed to scan file %s\n", filename);
+						return EXIT_FAILURE;
+					}
+				}
+				else
+				{
+					fprintf(stderr, "Missing filename to be scanned\n");
 					return EXIT_FAILURE;
 				}
 			}
