@@ -7,14 +7,12 @@
 int is_hex(char c)
 {
 	return c >= '0' && c <= '9' ||
-			c >= 'A' && c <= 'F' ||
-			c >= 'a' && c <= 'f';
+		   c >= 'A' && c <= 'F' ||
+		   c >= 'a' && c <= 'f';
 }
 
 int string_decode(const char* es, char* s)
 {
-//	printf("Decoding: %s\n", es);
-
 	// Check for start and end quotes
 	size_t es_len = strlen(es);
 	if (es_len < 2 || *es != '"' || *(es + es_len - 1) != '"')
@@ -128,8 +126,6 @@ int string_decode(const char* es, char* s)
 		len++;
 	}
 
-//		printf("Decoded result: %s\n", s);
-
 	return 0;
 }
 
@@ -143,7 +139,6 @@ int string_encode(const char* s, char* es)
 
 	while (*s_ptr != '\0')
 	{
-		// printf("Current: %s\n", s);
 		// Handle printable characters
 		if (*s_ptr >= 32 && *s_ptr <= 126)
 		{
@@ -190,13 +185,12 @@ int string_encode(const char* s, char* es)
 
 		default:
 			sprintf(es_ptr, "0x%X", *s_ptr);
+			printf("Hex: %s\n", es_ptr);
 			es_ptr += 3;
-			s_ptr++;
 			break;
 		}
 		es_ptr++;
 		s_ptr++;
-//		printf("Encoded result: %s\n", es);
 	}
 
 	*es_ptr = '"';
@@ -205,7 +199,7 @@ int string_encode(const char* s, char* es)
 	return 0;
 }
 
-int decode(char* filename)
+int decode(const char* filename)
 {
 	FILE* file = fopen(filename, "r");
 	if (file == NULL)
