@@ -1,0 +1,1952 @@
+=====STUDENT TESTS=====
+====Good Tests====
+===[STUDENT TESTS/good0.bminor Input]===
+array auto boolean char else false float for function if integer print return string true void while
+===[STUDENT TESTS/good0.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good0.bminor Output]===
+ARRAY
+AUTO
+BOOLEAN
+CHAR
+ELSE
+FALSE
+FLOAT
+FOR
+FUNCTION
+IF
+INTEGER
+PRINT
+RETURN
+STRING
+TRUE
+VOID
+WHILE
+
+
+
+
+===[STUDENT TESTS/good1.bminor Input]===
+++ -- + - * ^ > >= <= == != = ! && || ( ) [ ] { }
+*([{])}--[++]}^<=!==||(
+===[STUDENT TESTS/good1.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good1.bminor Output]===
+INCREMENT
+DECREMENT
+ADD
+MINUS
+MULTIPLY
+EXPONENT
+GREATER
+GREATER_OR_EQUAL
+LESS_OR_EQUAL
+EQUAL
+NOT_EQUAL
+ASSIGN
+LOGICAL_NOT
+LOGICAL_AND
+LOGICAL_OR
+LPAREN
+RPAREN
+LBRACKET
+RBRACKET
+LBRACE
+RBRACE
+MULTIPLY
+LPAREN
+LBRACKET
+LBRACE
+RBRACKET
+RPAREN
+RBRACE
+DECREMENT
+LBRACKET
+INCREMENT
+RBRACKET
+RBRACE
+EXPONENT
+LESS_OR_EQUAL
+NOT_EQUAL
+ASSIGN
+LOGICAL_OR
+LPAREN
+
+
+
+
+===[STUDENT TESTS/good2.bminor Input]===
+3.14
+.14
+.014
+0.14
+1e10
+1.1e-1
+10e+1
++12e-12
+-31e-3
+.000000100001
++31.42e-34
+===[STUDENT TESTS/good2.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good2.bminor Output]===
+FLOAT_LITERAL: 3.14
+FLOAT_LITERAL: .14
+FLOAT_LITERAL: .014
+FLOAT_LITERAL: 0.14
+FLOAT_LITERAL: 1e10
+FLOAT_LITERAL: 1.1e-1
+FLOAT_LITERAL: 10e+1
+FLOAT_LITERAL: +12e-12
+FLOAT_LITERAL: -31e-3
+FLOAT_LITERAL: .000000100001
+FLOAT_LITERAL: +31.42e-34
+
+
+
+
+===[STUDENT TESTS/good3.bminor Input]===
+123 10 0 +0 -0 +131 -123
+===[STUDENT TESTS/good3.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good3.bminor Output]===
+INTEGER_LITERAL: 123
+INTEGER_LITERAL: 10
+INTEGER_LITERAL: 0
+INTEGER_LITERAL: +0
+INTEGER_LITERAL: -0
+INTEGER_LITERAL: +131
+INTEGER_LITERAL: -123
+
+
+
+
+===[STUDENT TESTS/good4.bminor Input]===
+'a'
+'0'
+'\n'
+'\0x23'
+'\t'
+'\v'
+'\''
+'"'
+'\0x1C'
+' ''1''2'
+
+===[STUDENT TESTS/good4.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good4.bminor Output]===
+matching: 'a'
+becomes: "a"
+decoded: a
+encoded: "a"
+CHAR_LITERAL: a
+matching: '0'
+becomes: "0"
+decoded: 0
+encoded: "0"
+CHAR_LITERAL: 0
+matching: '\n'
+becomes: "\n"
+decoded: 
+
+encoded: "\n"
+CHAR_LITERAL: \n
+matching: '\0x23'
+becomes: "\0x23"
+decoded: #
+encoded: "#"
+CHAR_LITERAL: #
+matching: '\t'
+becomes: "\t"
+decoded: 	
+encoded: "\t"
+CHAR_LITERAL: \t
+matching: '\v'
+becomes: "\v"
+decoded: 
+encoded: "\v"
+CHAR_LITERAL: \v
+matching: '\''
+becomes: "\'"
+decoded: '
+encoded: "'"
+CHAR_LITERAL: '
+matching: '"'
+becomes: """
+decoded: "
+encoded: "\""
+CHAR_LITERAL: \"
+matching: '\0x1C'
+becomes: "\0x1C"
+decoded: 
+Hex: 0x1C
+encoded: "\0x1C"
+CHAR_LITERAL: \0x1C
+matching: ' '
+becomes: " "
+decoded:  
+encoded: " "
+CHAR_LITERAL:  
+matching: '1'
+becomes: "1"
+decoded: 1
+encoded: "1"
+CHAR_LITERAL: 1
+matching: '2'
+becomes: "2"
+decoded: 2
+encoded: "2"
+CHAR_LITERAL: 2
+
+
+
+
+===[STUDENT TESTS/good5.bminor Input]===
+foo bar foo_bar Fo1o__Ba3r foo__bar3 f2oo__
+foo+bar foo=bar foo:bar (foo)-bar
++2foo
+===[STUDENT TESTS/good5.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good5.bminor Output]===
+IDENTIFIER: foo
+IDENTIFIER: bar
+IDENTIFIER: foo_bar
+IDENTIFIER: Fo1o__Ba3r
+IDENTIFIER: foo__bar3
+IDENTIFIER: f2oo__
+IDENTIFIER: foo
+ADD
+IDENTIFIER: bar
+IDENTIFIER: foo
+ASSIGN
+IDENTIFIER: bar
+IDENTIFIER: foo
+COLON
+IDENTIFIER: bar
+LPAREN
+IDENTIFIER: foo
+RPAREN
+MINUS
+IDENTIFIER: bar
+INTEGER_LITERAL: +2
+IDENTIFIER: foo
+
+
+
+
+===[STUDENT TESTS/good6.bminor Input]===
+string
+1534
+3.4
+10e9
+'a'
+Notre Dame
+"\'Notre Dame\'";
+>=
+
+===[STUDENT TESTS/good6.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good6.bminor Output]===
+STRING
+INTEGER_LITERAL: 1534
+FLOAT_LITERAL: 3.4
+FLOAT_LITERAL: 10e9
+matching: 'a'
+becomes: "a"
+decoded: a
+encoded: "a"
+CHAR_LITERAL: a
+IDENTIFIER: Notre
+IDENTIFIER: Dame
+STRING_LITERAL: "'Notre Dame'"
+SEMICOLON
+GREATER_OR_EQUAL
+
+
+
+
+===[STUDENT TESTS/good7.bminor Input]===
+x: integer;
+y: integer = 123;
+f: float = 45.67;
+b: boolean = false;
+c: char    = 'q';
+s: string  = "hello bminor\n";
+
+a: array [5] integer = {1,2,3,4,5};
+===[STUDENT TESTS/good7.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good7.bminor Output]===
+IDENTIFIER: x
+COLON
+INTEGER
+SEMICOLON
+IDENTIFIER: y
+COLON
+INTEGER
+ASSIGN
+INTEGER_LITERAL: 123
+SEMICOLON
+IDENTIFIER: f
+COLON
+FLOAT
+ASSIGN
+FLOAT_LITERAL: 45.67
+SEMICOLON
+IDENTIFIER: b
+COLON
+BOOLEAN
+ASSIGN
+FALSE
+SEMICOLON
+IDENTIFIER: c
+COLON
+CHAR
+ASSIGN
+matching: 'q'
+becomes: "q"
+decoded: q
+encoded: "q"
+CHAR_LITERAL: q
+SEMICOLON
+IDENTIFIER: s
+COLON
+STRING
+ASSIGN
+STRING_LITERAL: "hello bminor\n"
+SEMICOLON
+IDENTIFIER: a
+COLON
+ARRAY
+LBRACKET
+INTEGER_LITERAL: 5
+RBRACKET
+INTEGER
+ASSIGN
+LBRACE
+INTEGER_LITERAL: 1
+COMMA
+INTEGER_LITERAL: 2
+COMMA
+INTEGER_LITERAL: 3
+COMMA
+INTEGER_LITERAL: 4
+COMMA
+INTEGER_LITERAL: 5
+RBRACE
+SEMICOLON
+
+
+
+
+====Bad Tests====
+===[STUDENT TESTS/bad0.bminor Input]===
+-123..013
+===[STUDENT TESTS/bad0.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad0.bminor Output]===
+INTEGER_LITERAL: -123
+ERROR: Invalid character .
+
+Failed to scan file /escnfs/home/dsimone2/scanner-submissions/ghuang3-compiler/test/scanner/bad0.bminor
+
+
+
+===[STUDENT TESTS/bad1.bminor Input]===
+'A\0x12'
+===[STUDENT TESTS/bad1.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad1.bminor Output]===
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/scanner-submissions/ghuang3-compiler/test/scanner/bad1.bminor
+
+
+
+===[STUDENT TESTS/bad2.bminor Input]===
+"1245sfg
+===[STUDENT TESTS/bad2.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad2.bminor Output]===
+ERROR: Invalid character "
+
+Failed to scan file /escnfs/home/dsimone2/scanner-submissions/ghuang3-compiler/test/scanner/bad2.bminor
+
+
+
+===[STUDENT TESTS/bad3.bminor Input]===
+'\0xFF'
+===[STUDENT TESTS/bad3.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad3.bminor Output]===
+matching: '\0xFF'
+becomes: "\0xFF"
+ERROR: Invalid character literal: '\0xFF'
+
+Invalid string: hex character not in ASCII
+Failed to scan file /escnfs/home/dsimone2/scanner-submissions/ghuang3-compiler/test/scanner/bad3.bminor
+
+
+
+===[STUDENT TESTS/bad4.bminor Input]===
+foo ^ bar & foobar
+===[STUDENT TESTS/bad4.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad4.bminor Output]===
+IDENTIFIER: foo
+EXPONENT
+IDENTIFIER: bar
+ERROR: Invalid character &
+
+Failed to scan file /escnfs/home/dsimone2/scanner-submissions/ghuang3-compiler/test/scanner/bad4.bminor
+
+
+
+===[STUDENT TESTS/bad5.bminor Input]===
+@
+===[STUDENT TESTS/bad5.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad5.bminor Output]===
+ERROR: Invalid character @
+
+Failed to scan file /escnfs/home/dsimone2/scanner-submissions/ghuang3-compiler/test/scanner/bad5.bminor
+
+
+
+=====HIDDEN TESTS=====
+====Good Tests====
+===[HIDDEN TESTS/good11.bminor Input]===
+// some more complicated corner cases
+z = -(5 * 4);
+z = 15 + 5 - 4*3/7;
+z = x + (y * 5 - (4 + 20/v) - 15) % 6 + z; //long integer expr
+z+++; // these will cause parsing errors
+w---;
+
+
+===[HIDDEN TESTS/good11.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good11.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: some
+IDENTIFIER: more
+IDENTIFIER: complicated
+IDENTIFIER: corner
+IDENTIFIER: cases
+IDENTIFIER: z
+ASSIGN
+MINUS
+LPAREN
+INTEGER_LITERAL: 5
+MULTIPLY
+INTEGER_LITERAL: 4
+RPAREN
+SEMICOLON
+IDENTIFIER: z
+ASSIGN
+INTEGER_LITERAL: 15
+ADD
+INTEGER_LITERAL: 5
+MINUS
+INTEGER_LITERAL: 4
+MULTIPLY
+INTEGER_LITERAL: 3
+DIVIDE
+INTEGER_LITERAL: 7
+SEMICOLON
+IDENTIFIER: z
+ASSIGN
+IDENTIFIER: x
+ADD
+LPAREN
+IDENTIFIER: y
+MULTIPLY
+INTEGER_LITERAL: 5
+MINUS
+LPAREN
+INTEGER_LITERAL: 4
+ADD
+INTEGER_LITERAL: 20
+DIVIDE
+IDENTIFIER: v
+RPAREN
+MINUS
+INTEGER_LITERAL: 15
+RPAREN
+MODULO
+INTEGER_LITERAL: 6
+ADD
+IDENTIFIER: z
+SEMICOLON
+DIVIDE
+DIVIDE
+IDENTIFIER: long
+INTEGER
+IDENTIFIER: expr
+IDENTIFIER: z
+INCREMENT
+ADD
+SEMICOLON
+DIVIDE
+DIVIDE
+IDENTIFIER: these
+IDENTIFIER: will
+IDENTIFIER: cause
+IDENTIFIER: parsing
+IDENTIFIER: errors
+IDENTIFIER: w
+DECREMENT
+MINUS
+SEMICOLON
+
+
+
+
+===[HIDDEN TESTS/good12.bminor Input]===
+//tests the for/print keyword and while keyword
+x:integer;
+for(x = 0; x < 5; x++)
+{
+	print "counting: ", x;
+}
+a:integer = 0;
+while(a > 0)
+{
+	a--;
+}
+
+
+
+===[HIDDEN TESTS/good12.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good12.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: tests
+IDENTIFIER: the
+FOR
+DIVIDE
+PRINT
+IDENTIFIER: keyword
+IDENTIFIER: and
+WHILE
+IDENTIFIER: keyword
+IDENTIFIER: x
+COLON
+INTEGER
+SEMICOLON
+FOR
+LPAREN
+IDENTIFIER: x
+ASSIGN
+INTEGER_LITERAL: 0
+SEMICOLON
+IDENTIFIER: x
+LESS
+INTEGER_LITERAL: 5
+SEMICOLON
+IDENTIFIER: x
+INCREMENT
+RPAREN
+LBRACE
+PRINT
+STRING_LITERAL: "counting: "
+COMMA
+IDENTIFIER: x
+SEMICOLON
+RBRACE
+IDENTIFIER: a
+COLON
+INTEGER
+ASSIGN
+INTEGER_LITERAL: 0
+SEMICOLON
+WHILE
+LPAREN
+IDENTIFIER: a
+GREATER
+INTEGER_LITERAL: 0
+RPAREN
+LBRACE
+IDENTIFIER: a
+DECREMENT
+SEMICOLON
+RBRACE
+
+
+
+
+===[HIDDEN TESTS/good13.bminor Input]===
+//test some odd identifier names
+ident55
+ident55_
+ident__55__
+thisIsAReallyReallyLongIdentifierNameThatHasTonsOfLettersInIt = 7
+variable_names_may_contain_underscores_
+_variables_can_start_with_an_underscore_67
+7minus5 
+
+===[HIDDEN TESTS/good13.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good13.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: test
+IDENTIFIER: some
+IDENTIFIER: odd
+IDENTIFIER: identifier
+IDENTIFIER: names
+IDENTIFIER: ident55
+IDENTIFIER: ident55_
+IDENTIFIER: ident__55__
+IDENTIFIER: thisIsAReallyReallyLongIdentifierNameThatHasTonsOfLettersInIt
+ASSIGN
+INTEGER_LITERAL: 7
+IDENTIFIER: variable_names_may_contain_underscores_
+IDENTIFIER: _variables_can_start_with_an_underscore_67
+INTEGER_LITERAL: 7
+IDENTIFIER: minus5
+
+
+
+
+===[HIDDEN TESTS/good14.bminor Input]===
+main: function integer ( argc: integer, argv: array [] string ) =
+{
+}
+boolFunction: function boolean(intVar:integer) =
+{
+	return intVar > 5;
+}
+intFunction: function integer(integer n) =
+{
+	total:integer = 0;
+	int count;
+	for(count = 0; count < n+1; count++)
+	{
+		total = total + count;
+	
+}
+
+
+===[HIDDEN TESTS/good14.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good14.bminor Output]===
+IDENTIFIER: main
+COLON
+FUNCTION
+INTEGER
+LPAREN
+IDENTIFIER: argc
+COLON
+INTEGER
+COMMA
+IDENTIFIER: argv
+COLON
+ARRAY
+LBRACKET
+RBRACKET
+STRING
+RPAREN
+ASSIGN
+LBRACE
+RBRACE
+IDENTIFIER: boolFunction
+COLON
+FUNCTION
+BOOLEAN
+LPAREN
+IDENTIFIER: intVar
+COLON
+INTEGER
+RPAREN
+ASSIGN
+LBRACE
+RETURN
+IDENTIFIER: intVar
+GREATER
+INTEGER_LITERAL: 5
+SEMICOLON
+RBRACE
+IDENTIFIER: intFunction
+COLON
+FUNCTION
+INTEGER
+LPAREN
+INTEGER
+IDENTIFIER: n
+RPAREN
+ASSIGN
+LBRACE
+IDENTIFIER: total
+COLON
+INTEGER
+ASSIGN
+INTEGER_LITERAL: 0
+SEMICOLON
+IDENTIFIER: int
+IDENTIFIER: count
+SEMICOLON
+FOR
+LPAREN
+IDENTIFIER: count
+ASSIGN
+INTEGER_LITERAL: 0
+SEMICOLON
+IDENTIFIER: count
+LESS
+IDENTIFIER: n
+INTEGER_LITERAL: +1
+SEMICOLON
+IDENTIFIER: count
+INCREMENT
+RPAREN
+LBRACE
+IDENTIFIER: total
+ASSIGN
+IDENTIFIER: total
+ADD
+IDENTIFIER: count
+SEMICOLON
+RBRACE
+
+
+
+
+===[HIDDEN TESTS/good15.bminor Input]===
+intFunction: function integer(intVar:integer, boolVar: boolean)
+{
+	if(boolVar)
+	{
+		intVar = intVar * 2;
+	}
+	return intVar;
+}
+// finds the largest value in the array
+getLargest: function integer(intArrVar:array [] integer, int len) =
+{
+	largest:integer = 0;
+	x:integer;
+	for(x = 0; x < len; x++)
+	{
+		if(intArrVar[x] > largest)
+		{
+			largest = intArrVar[x];
+		}
+	}
+	return largest;
+		
+}
+
+main: function integer ( argc: integer, argv: array [] string ) =
+{
+	b:array [10] integer = {0,1,2,3,4,5};
+	b[4] = 6;
+	i:integer;
+	z:integer = intFunction(i, true);
+	print intArrFunction(v, z);
+}
+
+===[HIDDEN TESTS/good15.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good15.bminor Output]===
+IDENTIFIER: intFunction
+COLON
+FUNCTION
+INTEGER
+LPAREN
+IDENTIFIER: intVar
+COLON
+INTEGER
+COMMA
+IDENTIFIER: boolVar
+COLON
+BOOLEAN
+RPAREN
+LBRACE
+IF
+LPAREN
+IDENTIFIER: boolVar
+RPAREN
+LBRACE
+IDENTIFIER: intVar
+ASSIGN
+IDENTIFIER: intVar
+MULTIPLY
+INTEGER_LITERAL: 2
+SEMICOLON
+RBRACE
+RETURN
+IDENTIFIER: intVar
+SEMICOLON
+RBRACE
+DIVIDE
+DIVIDE
+IDENTIFIER: finds
+IDENTIFIER: the
+IDENTIFIER: largest
+IDENTIFIER: value
+IDENTIFIER: in
+IDENTIFIER: the
+ARRAY
+IDENTIFIER: getLargest
+COLON
+FUNCTION
+INTEGER
+LPAREN
+IDENTIFIER: intArrVar
+COLON
+ARRAY
+LBRACKET
+RBRACKET
+INTEGER
+COMMA
+IDENTIFIER: int
+IDENTIFIER: len
+RPAREN
+ASSIGN
+LBRACE
+IDENTIFIER: largest
+COLON
+INTEGER
+ASSIGN
+INTEGER_LITERAL: 0
+SEMICOLON
+IDENTIFIER: x
+COLON
+INTEGER
+SEMICOLON
+FOR
+LPAREN
+IDENTIFIER: x
+ASSIGN
+INTEGER_LITERAL: 0
+SEMICOLON
+IDENTIFIER: x
+LESS
+IDENTIFIER: len
+SEMICOLON
+IDENTIFIER: x
+INCREMENT
+RPAREN
+LBRACE
+IF
+LPAREN
+IDENTIFIER: intArrVar
+LBRACKET
+IDENTIFIER: x
+RBRACKET
+GREATER
+IDENTIFIER: largest
+RPAREN
+LBRACE
+IDENTIFIER: largest
+ASSIGN
+IDENTIFIER: intArrVar
+LBRACKET
+IDENTIFIER: x
+RBRACKET
+SEMICOLON
+RBRACE
+RBRACE
+RETURN
+IDENTIFIER: largest
+SEMICOLON
+RBRACE
+IDENTIFIER: main
+COLON
+FUNCTION
+INTEGER
+LPAREN
+IDENTIFIER: argc
+COLON
+INTEGER
+COMMA
+IDENTIFIER: argv
+COLON
+ARRAY
+LBRACKET
+RBRACKET
+STRING
+RPAREN
+ASSIGN
+LBRACE
+IDENTIFIER: b
+COLON
+ARRAY
+LBRACKET
+INTEGER_LITERAL: 10
+RBRACKET
+INTEGER
+ASSIGN
+LBRACE
+INTEGER_LITERAL: 0
+COMMA
+INTEGER_LITERAL: 1
+COMMA
+INTEGER_LITERAL: 2
+COMMA
+INTEGER_LITERAL: 3
+COMMA
+INTEGER_LITERAL: 4
+COMMA
+INTEGER_LITERAL: 5
+RBRACE
+SEMICOLON
+IDENTIFIER: b
+LBRACKET
+INTEGER_LITERAL: 4
+RBRACKET
+ASSIGN
+INTEGER_LITERAL: 6
+SEMICOLON
+IDENTIFIER: i
+COLON
+INTEGER
+SEMICOLON
+IDENTIFIER: z
+COLON
+INTEGER
+ASSIGN
+IDENTIFIER: intFunction
+LPAREN
+IDENTIFIER: i
+COMMA
+TRUE
+RPAREN
+SEMICOLON
+PRINT
+IDENTIFIER: intArrFunction
+LPAREN
+IDENTIFIER: v
+COMMA
+IDENTIFIER: z
+RPAREN
+SEMICOLON
+RBRACE
+
+
+
+
+===[HIDDEN TESTS/good1.bminor Input]===
+// Easy comment
+/* Easy comment */
+
+===[HIDDEN TESTS/good1.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good1.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: Easy
+IDENTIFIER: comment
+DIVIDE
+MULTIPLY
+IDENTIFIER: Easy
+IDENTIFIER: comment
+MULTIPLY
+DIVIDE
+
+
+
+
+===[HIDDEN TESTS/good10.bminor Input]===
+// Modulus operator
+15%3
+
+// Exponentiation operator
+2^6
+
+// Negation
+-value
+
+// Postincrement and postdecrement
+number++;
+
+number--;
+
+===[HIDDEN TESTS/good10.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good10.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: Modulus
+IDENTIFIER: operator
+INTEGER_LITERAL: 15
+MODULO
+INTEGER_LITERAL: 3
+DIVIDE
+DIVIDE
+IDENTIFIER: Exponentiation
+IDENTIFIER: operator
+INTEGER_LITERAL: 2
+EXPONENT
+INTEGER_LITERAL: 6
+DIVIDE
+DIVIDE
+IDENTIFIER: Negation
+MINUS
+IDENTIFIER: value
+DIVIDE
+DIVIDE
+IDENTIFIER: Postincrement
+IDENTIFIER: and
+IDENTIFIER: postdecrement
+IDENTIFIER: number
+INCREMENT
+SEMICOLON
+IDENTIFIER: number
+DECREMENT
+SEMICOLON
+
+
+
+
+===[HIDDEN TESTS/good2.bminor Input]===
+////* Harder comment ***/
+/******************/
+/*
+This one works too.
+*/
+/***************
+Also a good comment.
+****************/
+// comment // comment // comment
+
+
+===[HIDDEN TESTS/good2.bminor Status]===
+return code: 1
+TEST NOT PASSED
+
+===[HIDDEN TESTS/good2.bminor Output]===
+DIVIDE
+DIVIDE
+DIVIDE
+DIVIDE
+MULTIPLY
+IDENTIFIER: Harder
+IDENTIFIER: comment
+MULTIPLY
+MULTIPLY
+MULTIPLY
+DIVIDE
+DIVIDE
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+MULTIPLY
+DIVIDE
+DIVIDE
+MULTIPLY
+IDENTIFIER: This
+IDENTIFIER: one
+IDENTIFIER: works
+IDENTIFIER: too
+ERROR: Invalid character .
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/good2.bminor
+
+
+
+===[HIDDEN TESTS/good3.bminor Input]===
+// Identifiers
+CamelCase
+lower_case
+skiddo23
+B4UFLY
+i
+x15
+
+
+===[HIDDEN TESTS/good3.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good3.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: Identifiers
+IDENTIFIER: CamelCase
+IDENTIFIER: lower_case
+IDENTIFIER: skiddo23
+IDENTIFIER: B4UFLY
+IDENTIFIER: i
+IDENTIFIER: x15
+
+
+
+
+===[HIDDEN TESTS/good4.bminor Input]===
+// Equality Operators
+== != <= < > >=
+
+===[HIDDEN TESTS/good4.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good4.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: Equality
+IDENTIFIER: Operators
+EQUAL
+NOT_EQUAL
+LESS_OR_EQUAL
+LESS
+GREATER
+GREATER_OR_EQUAL
+
+
+
+
+===[HIDDEN TESTS/good5.bminor Input]===
+// Various bits of punctuation
+, : ; ( ) [ ] { }
+
+
+===[HIDDEN TESTS/good5.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good5.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: Various
+IDENTIFIER: bits
+IDENTIFIER: of
+IDENTIFIER: punctuation
+COMMA
+COLON
+SEMICOLON
+LPAREN
+RPAREN
+LBRACKET
+RBRACKET
+LBRACE
+RBRACE
+
+
+
+
+===[HIDDEN TESTS/good6.bminor Input]===
+// Complete function prototype
+main: function integer ( argc: integer, argv: array [] string );
+
+
+===[HIDDEN TESTS/good6.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good6.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: Complete
+FUNCTION
+IDENTIFIER: prototype
+IDENTIFIER: main
+COLON
+FUNCTION
+INTEGER
+LPAREN
+IDENTIFIER: argc
+COLON
+INTEGER
+COMMA
+IDENTIFIER: argv
+COLON
+ARRAY
+LBRACKET
+RBRACKET
+STRING
+RPAREN
+SEMICOLON
+
+
+
+
+===[HIDDEN TESTS/good7.bminor Input]===
+// Nested statements
+if( x<15 ) {
+    print "small";
+} else {
+    print "large!";
+}
+
+
+===[HIDDEN TESTS/good7.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good7.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: Nested
+IDENTIFIER: statements
+IF
+LPAREN
+IDENTIFIER: x
+LESS
+INTEGER_LITERAL: 15
+RPAREN
+LBRACE
+PRINT
+STRING_LITERAL: "small"
+SEMICOLON
+RBRACE
+ELSE
+LBRACE
+PRINT
+STRING_LITERAL: "large!"
+SEMICOLON
+RBRACE
+
+
+
+
+===[HIDDEN TESTS/good8.bminor Input]===
+// Valid integers
+0
+1024
+-512
++256
+// valid floats
+1.2
+0.45
+.67
+12e10
++1.2
+-1.2
+1.2e+1
+1.2e-1
++1.2e+1
++1.2e-1
+-1.2e+1
+-1.2e-1
+
+===[HIDDEN TESTS/good8.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good8.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: Valid
+IDENTIFIER: integers
+INTEGER_LITERAL: 0
+INTEGER_LITERAL: 1024
+INTEGER_LITERAL: -512
+INTEGER_LITERAL: +256
+DIVIDE
+DIVIDE
+IDENTIFIER: valid
+IDENTIFIER: floats
+FLOAT_LITERAL: 1.2
+FLOAT_LITERAL: 0.45
+FLOAT_LITERAL: .67
+FLOAT_LITERAL: 12e10
+FLOAT_LITERAL: +1.2
+FLOAT_LITERAL: -1.2
+FLOAT_LITERAL: 1.2e+1
+FLOAT_LITERAL: 1.2e-1
+FLOAT_LITERAL: +1.2e+1
+FLOAT_LITERAL: +1.2e-1
+FLOAT_LITERAL: -1.2e+1
+FLOAT_LITERAL: -1.2e-1
+
+
+
+
+===[HIDDEN TESTS/good9.bminor Input]===
+// Type Keywords
+array
+boolean
+char
+string
+void
+integer
+float
+
+===[HIDDEN TESTS/good9.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good9.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: Type
+IDENTIFIER: Keywords
+ARRAY
+BOOLEAN
+CHAR
+STRING
+VOID
+INTEGER
+FLOAT
+
+
+
+
+====Bad Tests====
+===[HIDDEN TESTS/bad11.bminor Input]===
+/*
+A string should not contain a literal newline,
+but use backslash-n instead.
+*/
+
+"invalid
+
+string"
+
+===[HIDDEN TESTS/bad11.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad11.bminor Output]===
+DIVIDE
+MULTIPLY
+IDENTIFIER: A
+STRING
+IDENTIFIER: should
+IDENTIFIER: not
+IDENTIFIER: contain
+IDENTIFIER: a
+IDENTIFIER: literal
+IDENTIFIER: newline
+COMMA
+IDENTIFIER: but
+IDENTIFIER: use
+IDENTIFIER: backslash
+MINUS
+IDENTIFIER: n
+IDENTIFIER: instead
+ERROR: Invalid character .
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad11.bminor
+
+
+
+===[HIDDEN TESTS/bad12.bminor Input]===
+'ca'
+
+===[HIDDEN TESTS/bad12.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad12.bminor Output]===
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad12.bminor
+
+
+
+===[HIDDEN TESTS/bad13.bminor Input]===
+''
+
+===[HIDDEN TESTS/bad13.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad13.bminor Output]===
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad13.bminor
+
+
+
+===[HIDDEN TESTS/bad14.bminor Input]===
+'\ac'
+
+===[HIDDEN TESTS/bad14.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad14.bminor Output]===
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad14.bminor
+
+
+
+===[HIDDEN TESTS/bad15.bminor Input]===
+'
+
+===[HIDDEN TESTS/bad15.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad15.bminor Output]===
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad15.bminor
+
+
+
+===[HIDDEN TESTS/bad1.bminor Input]===
+"unmatched string""
+
+===[HIDDEN TESTS/bad1.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad1.bminor Output]===
+STRING_LITERAL: "unmatched string"
+ERROR: Invalid character "
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad1.bminor
+
+
+
+===[HIDDEN TESTS/bad10.bminor Input]===
+#compilers // No hashtags in B-minor
+
+===[HIDDEN TESTS/bad10.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad10.bminor Output]===
+ERROR: Invalid character #
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad10.bminor
+
+
+
+===[HIDDEN TESTS/bad2.bminor Input]===
+"unterminated \"
+
+
+===[HIDDEN TESTS/bad2.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad2.bminor Output]===
+ERROR: Invalid character "
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad2.bminor
+
+
+
+===[HIDDEN TESTS/bad3.bminor Input]===
+never started"
+
+
+
+
+
+
+===[HIDDEN TESTS/bad3.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad3.bminor Output]===
+IDENTIFIER: never
+IDENTIFIER: started
+ERROR: Invalid character "
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad3.bminor
+
+
+
+===[HIDDEN TESTS/bad4.bminor Input]===
+'character?' // Character too long.
+
+===[HIDDEN TESTS/bad4.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad4.bminor Output]===
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad4.bminor
+
+
+
+===[HIDDEN TESTS/bad5.bminor Input]===
+'' // Empty character not allowed.
+
+===[HIDDEN TESTS/bad5.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad5.bminor Output]===
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad5.bminor
+
+
+
+===[HIDDEN TESTS/bad6.bminor Input]===
+~tilde // Invalid symbol
+
+===[HIDDEN TESTS/bad6.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad6.bminor Output]===
+ERROR: Invalid character ~
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad6.bminor
+
+
+
+===[HIDDEN TESTS/bad7.bminor Input]===
+/* Is this a valid comment */ @ */
+
+
+===[HIDDEN TESTS/bad7.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad7.bminor Output]===
+DIVIDE
+MULTIPLY
+IDENTIFIER: Is
+IDENTIFIER: this
+IDENTIFIER: a
+IDENTIFIER: valid
+IDENTIFIER: comment
+MULTIPLY
+DIVIDE
+ERROR: Invalid character @
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad7.bminor
+
+
+
+===[HIDDEN TESTS/bad8.bminor Input]===
+"\0xGG" // invalid escape sequence
+
+===[HIDDEN TESTS/bad8.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad8.bminor Output]===
+ERROR: Invalid string literal: "\0xGG"
+
+Invalid string: invalid hex escape sequence
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad8.bminor
+
+
+
+===[HIDDEN TESTS/bad9.bminor Input]===
+minus#44
+
+===[HIDDEN TESTS/bad9.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad9.bminor Output]===
+IDENTIFIER: minus
+ERROR: Invalid character #
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad9.bminor
+
+
+
+===[HIDDEN TESTS/bad16.bminor Input]===
+@
+#
+&
+|
+\
+
+===[HIDDEN TESTS/bad16.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad16.bminor Output]===
+ERROR: Invalid character @
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad16.bminor
+
+
+
+===[HIDDEN TESTS/bad17.bminor Input]===
+// unmatched comment throws error 
+/* This is a comment.
+
+
+
+
+
+
+
+
+===[HIDDEN TESTS/bad17.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad17.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: unmatched
+IDENTIFIER: comment
+IDENTIFIER: throws
+IDENTIFIER: error
+DIVIDE
+MULTIPLY
+IDENTIFIER: This
+IDENTIFIER: is
+IDENTIFIER: a
+IDENTIFIER: comment
+ERROR: Invalid character .
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad17.bminor
+
+
+
+===[HIDDEN TESTS/bad18.bminor Input]===
+// basic data types
+" the quote is unmatched
+
+
+
+
+
+
+
+===[HIDDEN TESTS/bad18.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad18.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: basic
+IDENTIFIER: data
+IDENTIFIER: types
+ERROR: Invalid character "
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad18.bminor
+
+
+
+===[HIDDEN TESTS/bad19.bminor Input]===
+// floating point mistake
+5..6..0..5..0;
+
+===[HIDDEN TESTS/bad19.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad19.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: floating
+IDENTIFIER: point
+IDENTIFIER: mistake
+INTEGER_LITERAL: 5
+ERROR: Invalid character .
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad19.bminor
+
+
+
+===[HIDDEN TESTS/bad20.bminor Input]===
+// test comparotors and boolean logic
+if (a | b)
+{
+	print " a || b is true";
+}
+if (a & b)// must had 2 &&
+{
+	print " a || b is true";
+}
+
+===[HIDDEN TESTS/bad20.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad20.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: test
+IDENTIFIER: comparotors
+IDENTIFIER: and
+BOOLEAN
+IDENTIFIER: logic
+IF
+LPAREN
+IDENTIFIER: a
+ERROR: Invalid character |
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad20.bminor
+
+
+
+===[HIDDEN TESTS/bad21.bminor Input]===
+
+"""
+
+
+===[HIDDEN TESTS/bad21.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad21.bminor Output]===
+STRING_LITERAL: ""
+ERROR: Invalid character "
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad21.bminor
+
+
+
+===[HIDDEN TESTS/bad22.bminor Input]===
+"012345678901234567890101234567890123456789010123456789012345678901012345678901234567890101234567890123456789010123456789012345678901012345678901234567890101234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"
+
+
+===[HIDDEN TESTS/bad22.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad22.bminor Output]===
+ERROR: Invalid string literal: "012345678901234567890101234567890123456789010123456789012345678901012345678901234567890101234567890123456789010123456789012345678901012345678901234567890101234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"
+
+Invalid string: too long
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad22.bminor
+
+
+
+===[HIDDEN TESTS/bad23.bminor Input]===
+$minus
+
+===[HIDDEN TESTS/bad23.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad23.bminor Output]===
+ERROR: Invalid character $
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad23.bminor
+
+
+
+===[HIDDEN TESTS/bad25.bminor Input]===
+// invalid character
+'😋'
+
+===[HIDDEN TESTS/bad25.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad25.bminor Output]===
+DIVIDE
+DIVIDE
+IDENTIFIER: invalid
+IDENTIFIER: character
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad25.bminor
+
+
+
+===[HIDDEN TESTS/bad26.bminor Input]===
+/*
+A string should not contain a literal newline,
+but use backslash-n instead.
+*/
+
+"invalid
+
+string"
+
+===[HIDDEN TESTS/bad26.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad26.bminor Output]===
+DIVIDE
+MULTIPLY
+IDENTIFIER: A
+STRING
+IDENTIFIER: should
+IDENTIFIER: not
+IDENTIFIER: contain
+IDENTIFIER: a
+IDENTIFIER: literal
+IDENTIFIER: newline
+COMMA
+IDENTIFIER: but
+IDENTIFIER: use
+IDENTIFIER: backslash
+MINUS
+IDENTIFIER: n
+IDENTIFIER: instead
+ERROR: Invalid character .
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad26.bminor
+
+
+
+===[HIDDEN TESTS/bad27.bminor Input]===
+'''
+
+===[HIDDEN TESTS/bad27.bminor Status]===
+return code: 0
+TEST NOT PASSED
+
+===[HIDDEN TESTS/bad27.bminor Output]===
+matching: '''
+becomes: "'"
+decoded: '
+encoded: "'"
+CHAR_LITERAL: '
+
+
+
+
+===[HIDDEN TESTS/bad28.bminor Input]===
+"'"'"
+
+===[HIDDEN TESTS/bad28.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad28.bminor Output]===
+STRING_LITERAL: "'"
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad28.bminor
+
+
+
+===[HIDDEN TESTS/bad29.bminor Input]===
+'\t\e\s\t\ \s\t\r\i\n\g'
+
+===[HIDDEN TESTS/bad29.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad29.bminor Output]===
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad29.bminor
+
+
+
+===[HIDDEN TESTS/bad30.bminor Input]===
+'\0x12\0x34'
+
+===[HIDDEN TESTS/bad30.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad30.bminor Output]===
+ERROR: Invalid character '
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad30.bminor
+
+
+
+===[HIDDEN TESTS/bad0.bminor Input]===
+!@#$*(!&%!@)#(@!+)!@*!@)*$!@_)(%!@_%(*!
+
+===[HIDDEN TESTS/bad0.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad0.bminor Output]===
+LOGICAL_NOT
+ERROR: Invalid character @
+
+Failed to scan file /escnfs/home/dsimone2/compilers-fa23-solution/hidden-tests/scanner/bad0.bminor
+
+
+
+===== SUMMARIZED SCANNER RESULTS =====
+{
+  "student_tests": {
+    "Good": {
+      "correct": 8,
+      "incorrect": 0
+    },
+    "Bad": {
+      "correct": 6,
+      "incorrect": 0
+    }
+  },
+  "hidden_tests": {
+    "Good": {
+      "correct": 14,
+      "incorrect": 1
+    },
+    "Bad": {
+      "correct": 29,
+      "incorrect": 1
+    }
+  }
+}
+Scanner Project Grade
+    ---------------------------------
+
+    General Structure (35/35 points)
+    ----------------------------------------------
+    Wow, main has so many layers of indentation! Make sure it doesn't keep on growing
+
+    Student Tests (14/20 points)
+    ------------------------------------------
+    Missing 6 tests
+
+    Hidden Tests (43/45 points)
+    ------------------------------------------
+    One wrong case with an unescaped single quote, one about comments
+
+    Coding Style (10/10 points)
+    ------------------------------------------
+    The lex.yy.l file is truly beautiful! Great work on the final product here
