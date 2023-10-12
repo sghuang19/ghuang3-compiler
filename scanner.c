@@ -15,10 +15,10 @@ int scan(const char* filename)
 	}
 
 	int token = 1; // Initialize to a non-zero value
-	while (token != T_EOF)
+	while (token != TOKEN_EOF)
 	{
 		// Handle the tokens
-		if (token == T_ERROR) {
+		if (token == TOKEN_ERROR) {
 			return 1;
 		}
 		token = yylex();
