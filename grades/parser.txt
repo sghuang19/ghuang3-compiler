@@ -1,0 +1,1257 @@
+=====STUDENT TESTS=====
+====Good Tests====
+===[good0.bminor Input]===
+a : float;
+a : integer = 10;
+===[good0.bminor Output]===
+Success!
+
+IDENTIFIER: a
+COLON
+FLOAT
+SEMICOLON
+IDENTIFIER: a
+COLON
+INTEGER
+ASSIGN
+INTEGER_LITERAL: 10
+SEMICOLON
+
+
+return code: 0
+
+
+===[good1.bminor Input]===
+str : string = "Hello World!";
+some_char : char = '\0x41';
+some_char : char = 'a';
+
+===[good1.bminor Output]===
+Success!
+
+IDENTIFIER: str
+COLON
+STRING
+ASSIGN
+STRING_LITERAL: "Hello World!"
+SEMICOLON
+IDENTIFIER: some_char
+COLON
+CHAR
+ASSIGN
+matching: '\0x41'
+becomes: "\0x41"
+decoded: A
+encoded: "A"
+CHAR_LITERAL: A
+SEMICOLON
+IDENTIFIER: some_char
+COLON
+CHAR
+ASSIGN
+matching: 'a'
+becomes: "a"
+decoded: a
+encoded: "a"
+CHAR_LITERAL: a
+SEMICOLON
+
+
+return code: 0
+
+
+===[good2.bminor Input]===
+main : function integer (args : string) = {
+    return 0;
+}
+
+===[good2.bminor Output]===
+Success!
+
+IDENTIFIER: main
+COLON
+FUNCTION
+INTEGER
+LPAREN
+IDENTIFIER: args
+COLON
+STRING
+RPAREN
+ASSIGN
+LBRACE
+RETURN
+INTEGER_LITERAL: 0
+SEMICOLON
+RBRACE
+
+
+return code: 0
+
+
+===[good3.bminor Input]===
+main : function integer (args : string) = {
+    result : integer = usage();
+    return 0;
+}
+
+usage : function void () = {
+    print "Usage", 10;
+    return;
+}
+
+===[good3.bminor Output]===
+Success!
+
+IDENTIFIER: main
+COLON
+FUNCTION
+INTEGER
+LPAREN
+IDENTIFIER: args
+COLON
+STRING
+RPAREN
+ASSIGN
+LBRACE
+IDENTIFIER: result
+COLON
+INTEGER
+ASSIGN
+IDENTIFIER: usage
+LPAREN
+RPAREN
+SEMICOLON
+RETURN
+INTEGER_LITERAL: 0
+SEMICOLON
+RBRACE
+IDENTIFIER: usage
+COLON
+FUNCTION
+VOID
+LPAREN
+RPAREN
+ASSIGN
+LBRACE
+PRINT
+STRING_LITERAL: "Usage"
+COMMA
+INTEGER_LITERAL: 10
+SEMICOLON
+RETURN
+SEMICOLON
+RBRACE
+
+
+return code: 0
+
+
+===[good4.bminor Input]===
+a : integer;
+
+func : function void () = {
+    if ( a > 1)
+    {
+        a = a - 1;
+    } else {
+    a = a + 1;
+    }
+
+}
+===[good4.bminor Output]===
+TEST NOT PASSED
+
+IDENTIFIER: a
+COLON
+INTEGER
+SEMICOLON
+IDENTIFIER: func
+COLON
+FUNCTION
+VOID
+LPAREN
+RPAREN
+ASSIGN
+LBRACE
+IF
+LPAREN
+IDENTIFIER: a
+GREATER
+INTEGER_LITERAL: 1
+RPAREN
+LBRACE
+IDENTIFIER: a
+ASSIGN
+IDENTIFIER: a
+MINUS
+INTEGER_LITERAL: 1
+SEMICOLON
+RBRACE
+ELSE
+
+Error: syntax error at line 1 near 'else'
+Failed to parse file ghuang3-compiler/test/parser/good4.bminor
+
+return code: 1
+
+
+===[good5.bminor Input]===
+a : integer;
+
+func : function void () = {
+    if ( a > 1 ) a = a - 1;
+    else a = a + 1;
+}
+===[good5.bminor Output]===
+TEST NOT PASSED
+
+IDENTIFIER: a
+COLON
+INTEGER
+SEMICOLON
+IDENTIFIER: func
+COLON
+FUNCTION
+VOID
+LPAREN
+RPAREN
+ASSIGN
+LBRACE
+IF
+LPAREN
+IDENTIFIER: a
+GREATER
+INTEGER_LITERAL: 1
+RPAREN
+IDENTIFIER: a
+ASSIGN
+IDENTIFIER: a
+MINUS
+INTEGER_LITERAL: 1
+SEMICOLON
+ELSE
+
+Error: syntax error at line 1 near 'else'
+Failed to parse file ghuang3-compiler/test/parser/good5.bminor
+
+return code: 1
+
+
+===[good6.bminor Input]===
+a : integer;
+
+func : function void () = {
+    for (i = 0; i++; i ^ 2) {
+        a = a + 1;
+        for (i = 0; i++; i ^ 2) {
+            a = a + 1;
+        }
+    }
+}
+===[good6.bminor Output]===
+Success!
+
+IDENTIFIER: a
+COLON
+INTEGER
+SEMICOLON
+IDENTIFIER: func
+COLON
+FUNCTION
+VOID
+LPAREN
+RPAREN
+ASSIGN
+LBRACE
+FOR
+LPAREN
+IDENTIFIER: i
+ASSIGN
+INTEGER_LITERAL: 0
+SEMICOLON
+IDENTIFIER: i
+INCREMENT
+SEMICOLON
+IDENTIFIER: i
+EXPONENT
+INTEGER_LITERAL: 2
+RPAREN
+LBRACE
+IDENTIFIER: a
+ASSIGN
+IDENTIFIER: a
+ADD
+INTEGER_LITERAL: 1
+SEMICOLON
+FOR
+LPAREN
+IDENTIFIER: i
+ASSIGN
+INTEGER_LITERAL: 0
+SEMICOLON
+IDENTIFIER: i
+INCREMENT
+SEMICOLON
+IDENTIFIER: i
+EXPONENT
+INTEGER_LITERAL: 2
+RPAREN
+LBRACE
+IDENTIFIER: a
+ASSIGN
+IDENTIFIER: a
+ADD
+INTEGER_LITERAL: 1
+SEMICOLON
+RBRACE
+RBRACE
+RBRACE
+
+
+return code: 0
+
+
+====Bad Tests====
+===[bad0.bminor Input]===
+a : 10;
+===[bad0.bminor Output]===
+Success!
+
+IDENTIFIER: a
+COLON
+INTEGER_LITERAL: 10
+
+Error: syntax error at line 1 near '10'
+Failed to parse file ghuang3-compiler/test/parser/bad0.bminor
+
+return code: 1
+
+
+===[bad1.bminor Input]===
+a : integer 10
+===[bad1.bminor Output]===
+Success!
+
+IDENTIFIER: a
+COLON
+INTEGER
+INTEGER_LITERAL: 10
+
+Error: syntax error at line 1 near '10'
+Failed to parse file ghuang3-compiler/test/parser/bad1.bminor
+
+return code: 1
+
+
+===[bad2.bminor Input]===
+a : array [] integer = { 1 ; 2; 3} ;
+===[bad2.bminor Output]===
+Success!
+
+IDENTIFIER: a
+COLON
+ARRAY
+LBRACKET
+RBRACKET
+
+Error: syntax error at line 1 near ']'
+Failed to parse file ghuang3-compiler/test/parser/bad2.bminor
+
+return code: 1
+
+
+===[bad3.bminor Input]===
+a : integer = 10;
+a += 10;
+===[bad3.bminor Output]===
+Success!
+
+IDENTIFIER: a
+COLON
+INTEGER
+ASSIGN
+INTEGER_LITERAL: 10
+SEMICOLON
+IDENTIFIER: a
+ADD
+
+Error: syntax error at line 1 near '+'
+Failed to parse file ghuang3-compiler/test/parser/bad3.bminor
+
+return code: 1
+
+
+=====HIDDEN TESTS=====
+====Good Tests====
+===[good1.bminor Input]===
+/* A program is a sequence of declarations */
+/* Try a variety of variable declarations. */
+
+n: integer;
+m: integer = 20;
+
+b: boolean;
+c: boolean = true;
+s: string;
+t: string = "hello\n";
+d: char;
+e: char = 'x';
+
+x: array [] string;
+y: array [] string = { "a", "b", "c" };
+z: array [] array [] string = { {"a","b","c"}, {"x","y","z"} };
+
+g: array [3] string;
+h: array [3] string = { "a", "b", "c" };
+i: array [2] array [3] string = { {"a","b","c"}, {"x","y","z"} };
+
+===[good1.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good1.bminor
+
+return code: 1
+
+
+===[good10.bminor Input]===
+/* Try accesssing arrays of various sizes; */
+
+a: array [10] integer = {100,200,300,400,500,600,700,800,900};
+b: array [10] integer;
+c: array [10] array [10] integer;
+
+testfunc: function void () = {
+    i: integer;
+    j: integer;
+
+    for(i=0;i<10;i++) {
+        b[i] = a[i] * 10;
+    }
+
+    for(i=0;i<5;i++) {
+        b[i*2] = a[i] + b[i];
+    }
+
+    for(j=0;j<10;i++) {
+        for(i=0;i<10;i++) {
+            c[i][j] = i*j;
+        }
+    }
+
+    for(j=0;j<10;i++) {
+        for(i=0;i<10;i++) {
+            print c[i][j];
+            print " ";
+        }
+        print "\n";
+    }
+}
+
+===[good10.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good10.bminor
+
+return code: 1
+
+
+===[good11.bminor Input]===
+
+/* Try locally declared array lengths */
+
+
+testfunc: function void (x: integer, y: integer) = {
+    i: integer;
+    j: integer;
+
+    a: array [10] integer = {100,200,300,400,500,600,700,800,900};
+    b: array [x] integer;
+    c: array [x] array [y] integer;
+
+    for(i=0;i<10;i++) {
+        b[i] = a[i] * 10;
+    }
+
+    for(i=0;i<5;i++) {
+        b[i*2] = a[i] + b[i];
+    }
+
+    for(j=0;j<10;i++) {
+        for(i=0;i<10;i++) {
+            c[i][j] = i*j;
+        }
+    }
+
+    for(j=0;j<10;i++) {
+        for(i=0;i<10;i++) {
+            print c[i][j];
+            print " ";
+        }
+        print "\n";
+    }
+}
+
+===[good11.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good11.bminor
+
+return code: 1
+
+
+===[good12.bminor Input]===
+
+/* single statement ifs */
+
+x: integer = 65;
+s: string = "hello";
+b: boolean = false;
+
+min: function integer ( a: integer, b: integer ) =
+{
+	if(a > b) return a;
+	else return b;
+}
+
+testfunc: function void ( z: integer ) =
+{
+	print "minimum", min(10, 5), "\n";
+}
+
+===[good12.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good12.bminor
+
+return code: 1
+
+
+===[good13.bminor Input]===
+/* string format expr */
+
+x: integer = 65;
+s: string = "hello";
+b: boolean = false;
+
+min: function integer ( a: integer, b: integer ) =
+{
+	if(a > b) return a;
+	else return b;
+}
+
+testfunc: function void ( z: integer ) =
+{
+	print "minimum", min(10, 5), "\n", z=10, z==10;
+}
+	
+
+===[good13.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good13.bminor
+
+return code: 1
+
+
+===[good14.bminor Input]===
+
+/* returning various expressions */
+
+testfunc: function void ( x: integer, y:integer, z:integer ) = {
+	return x;
+	return "hello";
+	return x = 10;
+	return x == 10;
+	return x > 5;
+	return testfunc(x, y, z);
+}
+
+===[good14.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good14.bminor
+
+return code: 1
+
+
+===[good15.bminor Input]===
+
+
+/* code blocks */
+
+testfunc: function void ( x: integer, y:integer, z:integer ) = {
+	{
+		return x;
+		return "hello";
+		return x = 10;
+	}
+	{
+		return x == 10;
+		{
+			return x > 5;
+			return testfunc(x, y, z);
+		}
+	}
+}
+
+===[good15.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good15.bminor
+
+return code: 1
+
+
+===[good2.bminor Input]===
+/* Function prototypes are declarations without bodies. */
+
+ComputeAscii: function char ( c: char );
+
+GetLength: function integer ( s: string, i: integer );
+
+/* Function body has some code in it */
+
+GetArea: function integer ( width: integer, height: integer ) =
+{
+	return width * height;
+}
+
+===[good2.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good2.bminor
+
+return code: 1
+
+
+===[good3.bminor Input]===
+/* A function contains a sequence of statements */
+/* Some of those statements can be decls */
+
+simplefunc: function void () = {
+     x: integer;
+     y: integer = 20;
+     s: string = "hello world";
+}
+
+===[good3.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good3.bminor
+
+return code: 1
+
+
+===[good4.bminor Input]===
+/* A function contains a sequence of statements */
+/* Try decls and stmts and exprs together. */
+
+simplefunc: function boolean ( x: integer, y: integer ) = {
+
+     // A declaration
+     z: integer = x * y;
+
+     // An expression with a semicolon
+     z = 16 + x / y;
+
+     // Print statement
+     print "input is: ", x, " and ", y, "\n";
+
+     // Simple if-else statement
+     if( x < y ) {
+         return true;
+     } else {
+         return false;
+     }
+
+}
+
+===[good4.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good4.bminor
+
+return code: 1
+
+
+===[good5.bminor Input]===
+/* A function contains a sequence of statements */
+/* Try decls and stmts and exprs together. */
+/* Add some float */
+
+simplefunc: function boolean ( x: integer, y: integer ) = {
+
+     // A declaration
+     z: integer = x * y;
+	
+     // A float declaration
+     q: float = 10e9;
+     
+     // another float
+     v: float = 2.10e2;
+
+     // a float operation
+     return v;
+
+}
+
+===[good5.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good5.bminor
+
+return code: 1
+
+
+===[good6.bminor Input]===
+/* Try several variations of for-loops */
+
+simplefunc: function void (r: integer, s: integer, t: integer ) = {
+
+    i: integer;
+
+    for( i=0; i<r; i++ ) {
+        print i,"\n";
+    }
+
+    i=0;
+    for( ; i<s; i++ ) {
+        print i,"\n";
+    }
+
+    i=0;
+    for( ; i<r; ) {
+        print i,"\n";
+        i++;
+    }
+
+    for(;;) print "forever!\n";
+}
+
+===[good6.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good6.bminor
+
+return code: 1
+
+
+===[good7.bminor Input]===
+/* Test various nestings of if-else statements */
+
+testit: function boolean ( x: integer, y: integer ) = {
+
+	/* If statement without braces */
+	if( x<y ) print "less\n"; else print "low\n";
+
+	/* If statement with braces */
+	if( x<y ) { print "less\n"; } else { print "low\n"; }
+
+	/* This statement should print nothing */
+        if(20<10) if(10<20) print "incorrect!"; else print "dangling else!";
+
+	/* statements and decls inside of if-else */
+
+        if( x>y ) {
+              i: integer;
+              for(i=0;i<x;i++) print i, "\n";
+        } else {
+              i: integer;
+              for(i=0;i<y;i++) print i, "\n";
+        }
+
+	/* A decl can come after a few statements */
+	i: integer;
+
+	/* try the other way around */
+	for(i=0;i<x;i++) {
+              if( i<x ) print "small"; else print "large";
+        }
+
+        return true;
+}
+
+===[good7.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good7.bminor
+
+return code: 1
+
+
+===[good8.bminor Input]===
+/* Now try some expressions */
+
+x: integer = 65;
+s: string = "hello";
+b: boolean = false;
+
+min: function integer ( a: integer, b: integer ) =
+{
+	if( a<b ) return a; else return b;
+}
+
+testfunc: function void ( z: integer ) =
+{
+	// Nested integer operators.
+	y: integer = x*(x*10 + 55%6 + z/10);
+	print "y: ", y, "\n";
+
+	// Nested boolean operations.
+	c: boolean = ( x<100 && y>200 ) || !(b=true);
+	print "c: ", c, "\n";
+
+	// Boolean operations on strings?
+	d: boolean = (s == "goodbye");
+	print "d: ", d, "\n";
+
+	// Can we stack up assignments?
+	z = y = x;
+
+	a: array [100] integer;
+
+	// Function calls and array accesses:
+	y = min(a[10],a[20]);
+}
+
+===[good8.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good8.bminor
+
+return code: 1
+
+
+===[good9.bminor Input]===
+/* Check for minimum use of parentheses. */
+
+testfunc: function void ( x: integer, y:integer, z:integer ) = {
+
+          r: integer;
+	  b: boolean;
+
+          // Parens required
+	  r = (x+y)/z;
+	  r = x+(y+z);
+	  b = (true||false) && (false||true);
+
+          // Parens not required
+	  r = x+(y/z);
+	  r = (x+y)+z;
+	  b = (x+y) < (x+z);
+	  b = (true&&false) || (false&&true);
+
+}
+
+===[good9.bminor Output]===
+TEST NOT PASSED
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/good9.bminor
+
+return code: 1
+
+
+====Bad Tests====
+===[bad1.bminor Input]===
+/* A program is a not an expression at the top level */
+
+x = 5;
+
+
+===[bad1.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad1.bminor
+
+return code: 1
+
+
+===[bad10.bminor Input]===
+/* Unbalanced braces */
+
+main:function integer ( x: integer ) =
+{
+	if(x<10) {
+              if(x!=23) {
+                  print "hello";
+              } else {
+                  print "goodbye";
+              }
+        print "too few braces";
+}
+
+===[bad10.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad10.bminor
+
+return code: 1
+
+
+===[bad11.bminor Input]===
+/* return return */
+
+simplefunc: function void () = {
+     x: integer = 10;
+     y: integer = 20;
+
+     return return;
+
+}
+
+===[bad11.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad11.bminor
+
+return code: 1
+
+
+===[bad12.bminor Input]===
+/* invalid keyword usage */
+
+simplefunc: function void () = {
+     x: integer = 10;
+     array: integer = 20;
+
+     return x + array;
+}
+
+===[bad12.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad12.bminor
+
+return code: 1
+
+
+===[bad13.bminor Input]===
+
+/* empty array initializer */
+
+simplefunc: function void () = {
+     x: integer = 10;
+     y: integer = 20;
+	
+     p: array [5] integer = {};
+}
+
+===[bad13.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad13.bminor
+
+return code: 1
+
+
+===[bad14.bminor Input]===
+
+/* Array declaration attempt */
+
+
+simplefunc: function void () = {
+	c7: array [x] char = {'C', 'E', 'G', "Bb"};
+	d7: array [c7;] char = c7 + 1; 
+}
+
+===[bad14.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad14.bminor
+
+return code: 1
+
+
+===[bad15.bminor Input]===
+/* empty file? */
+
+
+===[bad15.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad15.bminor
+
+return code: 1
+
+
+===[bad2.bminor Input]===
+/* A program is a not a sequence of statements */
+
+print "hello world";
+return 5;
+
+===[bad2.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad2.bminor
+
+return code: 1
+
+
+===[bad3.bminor Input]===
+/* Cannot have more elses than ifs */
+
+simplefunc: function void () = {
+     x: integer = 10;
+     y: integer = 20;
+
+     if(x<y) if(y>x) else print "a"; else print "b" else print "c";
+}
+
+===[bad3.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad3.bminor
+
+return code: 1
+
+
+===[bad4.bminor Input]===
+/* For loop does need to have semis even if parts are missing */
+
+main: function void() =
+{
+        i: integer;
+	for(i=0;) print i;
+}
+
+===[bad4.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad4.bminor
+
+return code: 1
+
+
+===[bad5.bminor Input]===
+/* Print statement must separate elemnts with a comma */
+
+main:function void()
+{
+	print x y z;
+}
+
+===[bad5.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad5.bminor
+
+return code: 1
+
+
+===[bad6.bminor Input]===
+/* Function parameters must separate with a comma */
+
+main:function void( x:integer y:integer );
+
+===[bad6.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad6.bminor
+
+return code: 1
+
+
+===[bad7.bminor Input]===
+/* No invalid seqeuences of operators */
+
+main:function integer ( x:integer ) = {
+
+        return x + * 5 * - 7;
+}
+
+===[bad7.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad7.bminor
+
+return code: 1
+
+
+===[bad8.bminor Input]===
+/* Unbalanced parentheses */
+
+main:function integer( x: integer ) =
+{
+	return (x*(x+5);
+}
+
+===[bad8.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad8.bminor
+
+return code: 1
+
+
+===[bad9.bminor Input]===
+/* Unbalanced braces */
+
+main:function integer ( x: integer ) =
+{
+	if(x<10) {
+              if(x!=23) {
+                  print "hello";
+              } else {
+                  print "goodbye";
+              }
+        }
+
+    }
+    print "too many braces";
+}
+
+===[bad9.bminor Output]===
+Success!
+
+DIVIDE
+
+Error: syntax error at line 1 near '/'
+Failed to parse file ../hidden-tests/parser/bad9.bminor
+
+return code: 1
+
+
+===== SUMMARIZED PARSER RESULTS =====
+{
+  "student_tests": {
+    "Good": {
+      "correct": 5,
+      "incorrect": 2
+    },
+    "Bad": {
+      "correct": 4,
+      "incorrect": 0
+    }
+  },
+  "hidden_tests": {
+    "Good": {
+      "correct": 0,
+      "incorrect": 15
+    },
+    "Bad": {
+      "correct": 15,
+      "incorrect": 0
+    }
+  }
+}
+
+Parser Project Grade
+-------------------
+
+General Structure: 25/25
+---------------------------------
+Overall structure seems on the right track.
+
+Please don't hesistate to reach out or come to office hours, we can help you get 
+your project on track. 
+
+Eliminating Ambiguities: 10/10
+--------------------------------------
+No conflicts reported
+
+Student Tests: 9/20
+---------------------------
+Fails 2 of your tests, however you were asked to 
+make a total of 20 tests, 10 good and 10 bad. So 
+9 additional tests are missing. 
+
+Hidden Tests: 7/35
+---------------------------
+Each test fails because of improper comment handling in the scanner,
+therefore the bad tests may only pass coincidentally. 
+
+Code Style: 10/10
+------------------------
+grammar is organized and code looks good. Just need to
+fix some of the functional issues.
+
+Total: 61/100
+------------------------------------------
