@@ -1,8 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#define MAX_STRING_LEN 255
+#include "encoder.h"
 
 int is_hex(char c)
 {

@@ -19,6 +19,9 @@ case $module in
     "parser")
         command="parse"
         ;;
+    "printer")
+        command="print"
+        ;;
     *)
         echo "Unknown module: $module"
         exit 1
