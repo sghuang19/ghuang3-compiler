@@ -8,24 +8,23 @@
 %%
     /* Keywords */
 
-array       { printf("ARRAY\n");    return T_ARRAY; }
-auto        { printf("AUTO\n");     return T_AUTO; }
-boolean     { printf("BOOLEAN\n");  return T_BOOLEAN; }
-char        { printf("CHAR\n");     return T_CHAR; }
-else        { printf("ELSE\n");     return T_ELSE; }
-false       { printf("FALSE\n");    return T_FALSE; }
-float       { printf("FLOAT\n");    return T_FLOAT; }
-for         { printf("FOR\n");      return T_FOR; }
-function    { printf("FUNCTION\n"); return T_FUNCTION; }
-if          { printf("IF\n");       return T_IF; }
-integer     { printf("INTEGER\n");  return T_INTEGER; }
-print       { printf("PRINT\n");    return T_PRINT; }
-return      { printf("RETURN\n");   return T_RETURN; }
-string      { printf("STRING\n");   return T_STRING; }
-true        { printf("TRUE\n");     return T_TRUE; }
-print       { printf("TRUE\n");     return T_TRUE; }
-void        { printf("VOID\n");     return T_VOID; }
-while       { printf("WHILE\n");    return T_WHILE; }
+array       { printf("ARRAY\n");    return TOKEN_ARRAY; }
+auto        { printf("AUTO\n");     return TOKEN_AUTO; }
+boolean     { printf("BOOLEAN\n");  return TOKEN_BOOLEAN; }
+char        { printf("CHAR\n");     return TOKEN_CHAR; }
+else        { printf("ELSE\n");     return TOKEN_ELSE; }
+false       { printf("FALSE\n");    return TOKEN_FALSE; }
+float       { printf("FLOAT\n");    return TOKEN_FLOAT; }
+for         { printf("FOR\n");      return TOKEN_FOR; }
+function    { printf("FUNCTION\n"); return TOKEN_FUNCTION; }
+if          { printf("IF\n");       return TOKEN_IF; }
+integer     { printf("INTEGER\n");  return TOKEN_INTEGER; }
+print       { printf("PRINT\n");    return TOKEN_PRINT; }
+return      { printf("RETURN\n");   return TOKEN_RETURN; }
+string      { printf("STRING\n");   return TOKEN_STRING; }
+true        { printf("TRUE\n");     return TOKEN_TRUE; }
+void        { printf("VOID\n");     return TOKEN_VOID; }
+while       { printf("WHILE\n");    return TOKEN_WHILE; }
 
     /* Identifiers and Literals */
     /* Literals have higher precedence to ensure preceding plus and minus
@@ -33,24 +32,24 @@ while       { printf("WHILE\n");    return T_WHILE; }
 
 [a-zA-Z_][a-zA-Z0-9_]* {
     printf("IDENTIFIER: %s\n", yytext);
-    return T_IDENTIFIER;
+    return TOKEN_ID;
 }
 
-[+-]?([1-9][0-9]*|0) {
+[1-9][0-9]*|0 {
     printf("INTEGER_LITERAL: %s\n", yytext);
-    return T_INTEGER_LITERAL;
+    return TOKEN_INT_LITERAL;
 }
 
-[+-]?[0-9]*\.[0-9]+ {
+[0-9]*\.[0-9]+ {
     /* Float without decimal point */
-    printf("FLOAT_LITERAL: %s\n", yytext);
-    return T_FLOAT_LITERAL;
+    printf("TOKEN_FLOAT_LITERAL: %s\n", yytext);
+    return TOKEN_FLOAT_LITERAL;
 }
 
-[+-]?[0-9]*(\.[0-9]+)?[eE][+-]?[1-9]+[0-9]* {
+[0-9]*(\.[0-9]+)?[eE][+-]?[1-9]+[0-9]* {
     /* Float with scientific notation */
-    printf("FLOAT_LITERAL: %s\n", yytext);
-    return T_FLOAT_LITERAL;
+    printf("TOKEN_FLOAT_LITERAL: %s\n", yytext);
+    return TOKEN_FLOAT_LITERAL;
 }
 
 '([[:print:]]|\\([abefnrtv\\'"]|0x[[:xdigit:]]{2}))' {
@@ -69,44 +68,45 @@ while       { printf("WHILE\n");    return T_WHILE; }
         printf("encoded: %s\n", es);
         es[strlen(es) - 1] = '\0';
         printf("CHAR_LITERAL: %s\n", es + 1);
-        return T_CHAR_LITERAL;
+        return TOKEN_CHAR_LITERAL;
     } else {
         printf("ERROR: Invalid character literal: %s\n", yytext);
-        return T_ERROR;
+        return TOKEN_ERROR;
     }
 }
+
     /* Operators */
 
-\+\+    { printf("INCREMENT\n");        return T_INCREMENT; }
---      { printf("DECREMENT\n");        return T_DECREMENT; }
-\^      { printf("EXPONENT\n");         return T_EXPONENT; }
-\*      { printf("MULTIPLY\n");         return T_MULTIPLY; }
-\/      { printf("DIVIDE\n");           return T_DIVIDE; }
-\%      { printf("MODULO\n");           return T_MODULO; }
-\+      { printf("ADD\n");              return T_ADD; }
--       { printf("MINUS\n");            return T_MINUS; }
-\<      { printf("LESS\n");             return T_LESS; }
-\<=     { printf("LESS_OR_EQUAL\n");    return T_LESS_OR_EQUAL; }
->       { printf("GREATER\n");          return T_GREATER; }
->=      { printf("GREATER_OR_EQUAL\n"); return T_GREATER_OR_EQUAL; }
-==      { printf("EQUAL\n");            return T_EQUAL; }
-!=      { printf("NOT_EQUAL\n");        return T_NOT_EQUAL; }
-&&      { printf("LOGICAL_AND\n");      return T_LOGICAL_AND; }
-\|\|    { printf("LOGICAL_OR\n");       return T_LOGICAL_OR; }
-!       { printf("LOGICAL_NOT\n");      return T_LOGICAL_NOT; }
-=       { printf("ASSIGN\n");           return T_ASSIGN; }
+\+\+    { printf("INCREMENT\n");        return TOKEN_INCREMENT; }
+--      { printf("DECREMENT\n");        return TOKEN_DECREMENT; }
+\^      { printf("EXPONENT\n");         return TOKEN_EXPONENT; }
+\*      { printf("MULTIPLY\n");         return TOKEN_MULTIPLY; }
+\/      { printf("DIVIDE\n");           return TOKEN_DIVIDE; }
+\%      { printf("MODULO\n");           return TOKEN_MODULO; }
+\+      { printf("ADD\n");              return TOKEN_ADD; }
+-       { printf("MINUS\n");            return TOKEN_MINUS; }
+\<      { printf("LESS\n");             return TOKEN_LESS; }
+\<=     { printf("LESS_OR_EQUAL\n");    return TOKEN_LESS_OR_EQUAL; }
+>       { printf("GREATER\n");          return TOKEN_GREATER; }
+>=      { printf("GREATER_OR_EQUAL\n"); return TOKEN_GREATER_OR_EQUAL; }
+==      { printf("EQUAL\n");            return TOKEN_EQUAL; }
+!=      { printf("NOT_EQUAL\n");        return TOKEN_NOT_EQUAL; }
+&&      { printf("LOGICAL_AND\n");      return TOKEN_LOGICAL_AND; }
+\|\|    { printf("LOGICAL_OR\n");       return TOKEN_LOGICAL_OR; }
+!       { printf("LOGICAL_NOT\n");      return TOKEN_LOGICAL_NOT; }
+=       { printf("ASSIGN\n");           return TOKEN_ASSIGN; }
 
     /* Symbols */
 
-"("     { printf("LPAREN\n");       return T_LPAREN; }
-")"     { printf("RPAREN\n");       return T_RPAREN; }
-"["     { printf("LBRACKET\n");     return T_LBRACKET; }
-"]"     { printf("RBRACKET\n");     return T_RBRACKET; }
-"{"     { printf("LBRACE\n");       return T_LBRACE; }
-"}"     { printf("RBRACE\n");       return T_RBRACE; }
-;       { printf("SEMICOLON\n");    return T_SEMICOLON; }
-:       { printf("COLON\n");        return T_COLON; }
-,       { printf("COMMA\n");        return T_COMMA; }
+"("     { printf("LPAREN\n");       return TOKEN_LPAREN; }
+")"     { printf("RPAREN\n");       return TOKEN_RPAREN; }
+"["     { printf("LBRACKET\n");     return TOKEN_LBRACKET; }
+"]"     { printf("RBRACKET\n");     return TOKEN_RBRACKET; }
+"{"     { printf("LBRACE\n");       return TOKEN_LBRACE; }
+"}"     { printf("RBRACE\n");       return TOKEN_RBRACE; }
+;       { printf("SEMICOLON\n");    return TOKEN_SEMICOLON; }
+:       { printf("COLON\n");        return TOKEN_COLON; }
+,       { printf("COMMA\n");        return TOKEN_COMMA; }
 
 
 \"([^"\\]*(\\.[^"\\]*)*)\" {
@@ -115,10 +115,10 @@ while       { printf("WHILE\n");    return T_WHILE; }
         char es[strlen(yytext) + 1];
         string_encode((const char*) s, es);
         printf("STRING_LITERAL: %s\n", es);
-        return T_STRING_LITERAL;
+        return TOKEN_STRING_LITERAL;
     } else {
         printf("ERROR: Invalid string literal: %s\n", yytext);
-        return T_ERROR;
+        return TOKEN_ERROR;
     }
 }
 
@@ -134,10 +134,10 @@ while       { printf("WHILE\n");    return T_WHILE; }
 
 . {
     printf("ERROR: Invalid character %s\n", yytext);
-    return T_ERROR;
+    return TOKEN_ERROR;
 }
-
 %%
+
 int yywrap() {
     return 1;
 }
