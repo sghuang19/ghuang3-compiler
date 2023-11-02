@@ -6,6 +6,16 @@
 %}
 
 %%
+    /* Comments */
+
+\/\/[^\n]* {
+    printf("INLINE_COMMENT\n");
+}
+
+\/\*[^*]*\*(\*|[^*/][^*]*\*)*\/ {
+    printf("MULTI_LINE_COMMENT\n");
+}
+
     /* Keywords */
 
 array       { printf("ARRAY\n");    return TOKEN_ARRAY; }
