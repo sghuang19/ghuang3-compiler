@@ -3,6 +3,8 @@
 #include <string.h>
 #include "token.h"
 #include "encoder.h"
+
+static int returned_eof = 0;
 %}
 
 %%
@@ -139,7 +141,10 @@ while       { printf("WHILE\n");    return TOKEN_WHILE; }
 }
 
 <<EOF>> {
-    return T_EOF;
+    // Returns 0 for subsequent calls
+    if (returned_eof) return 0;
+    returned_eof = 1;
+    return TOKEN_EOF;
 }
 
 . {
