@@ -4,6 +4,7 @@
 
 #include "encoder.h"
 #include "scanner.h"
+#include "parser.h"
 
 void usage(int exit_code)
 {
@@ -43,6 +44,11 @@ int main(int argc, char* argv[])
 	else if (strcmp(option, "--scan") == 0)
 	{
 		if (scan(filename) == 0)
+			return EXIT_SUCCESS;
+	}
+	else if (strcmp(option, "--parse") == 0)
+	{
+		if (parse(filename) == 0)
 			return EXIT_SUCCESS;
 	}
 	else
