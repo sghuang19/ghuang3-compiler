@@ -16,6 +16,9 @@ case $module in
     "scanner")
         command="scan"
         ;;
+    "parser")
+        command="parse"
+        ;;
     *)
         echo "Unknown module: $module"
         exit 1

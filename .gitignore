@@ -6,5 +6,7 @@ tags
 bminor
 *.o
 lex.yy.c
+token.h
+grammar.tab.c
 
 test/**/*.out
