@@ -1,7 +1,7 @@
 bminor: bminor.c encoder.o scanner.o lex.yy.o parser.o grammar.tab.o
 	gcc $^ -o $@
 
-encoder.o: encoder.c
+encoder.o: encoder.c encoder.h
 	gcc -c $^ -o $@
 
 lex.yy.c: lex.yy.l
