@@ -1,0 +1,5 @@
+/* Simple for loop */
+main : function void () = {
+    for (;;)
+        print "Hello";
+}

@@ -1,0 +1,18 @@
+/* Nested if conditions */
+main : function void () = {
+    if (true) {
+        print "Hello";
+    } else {
+        print "World";
+    }
+
+    if ( x + y <= 0 )
+        if (x)
+            print "x";
+
+    if ( x + y <= 0 )
+        if (x)
+            print "x";
+        else
+            print "y";
+}
