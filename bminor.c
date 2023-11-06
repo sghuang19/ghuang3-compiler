@@ -5,6 +5,7 @@
 #include "encoder.h"
 #include "scanner.h"
 #include "parser.h"
+#include "printer.h"
 
 void usage(int exit_code)
 {
@@ -59,6 +60,10 @@ int main(int argc, char* argv[])
 	{
 		if (parse(fp) != NULL)
 			return EXIT_SUCCESS;
+	}
+	else if (strcmp(option, "--print") == 0)
+	{
+		return print_and_compare(filename, fp);
 	}
 	else
 	{
