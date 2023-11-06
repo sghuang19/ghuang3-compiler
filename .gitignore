@@ -8,5 +8,6 @@ bminor
 lex.yy.c
 token.h
 grammar.tab.c
+grammar.output
 
 test/**/*.out

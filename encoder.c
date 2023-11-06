@@ -1,8 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
-#define MAX_STRING_LEN 255
+#include "encoder.h"
 
 int is_hex(char c)
 {
@@ -199,25 +198,18 @@ int string_encode(const char* s, char* es)
 	return 0;
 }
 
-int decode(const char* filename)
+int decode(FILE* fp)
 {
-	FILE* file = fopen(filename, "r");
-	if (file == NULL)
-	{
-		printf("Could not open file %s\n", filename);
-		return 1;
-	}
-
 	// Find the size of the file
-	fseek(file, 0, SEEK_END);
-	long file_size = ftell(file);
+	fseek(fp, 0, SEEK_END);
+	long file_size = ftell(fp);
 	if (file_size > (MAX_STRING_LEN * 5 + 2) * sizeof(char))
 	{
 		fprintf(stderr, "Invalid string: too long\n");
-		fclose(file);
+		fclose(fp);
 		return 1;
 	}
-	rewind(file);
+	rewind(fp);
 
 	// Allocate memory for the file content
 	// Reserve space for \0
@@ -225,14 +217,13 @@ int decode(const char* filename)
 	if (file_content == NULL)
 	{
 		perror("Could not allocate memory");
-		fclose(file);
+		fclose(fp);
 		return 1;
 	}
 
 	// Read the file content into the allocated memory
-	size_t chars_read = fread(file_content, sizeof(char), file_size, file);
+	size_t chars_read = fread(file_content, sizeof(char), file_size, fp);
 	file_content[chars_read] = '\0';
-	fclose(file);
 
 	char s[MAX_STRING_LEN + 1] = { 0 };
 

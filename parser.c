@@ -1,19 +1,15 @@
 #include <stdio.h>
+#include "parser.h"
 
 extern int yyparse();
-extern FILE* yyin;
+extern void yyrestart(FILE*);
 extern int yydebug;
+extern struct decl* root;
 
-int parse(const char* filename)
+struct decl* parse(FILE* fp)
 {
 	yydebug = 0;
-	yyin = fopen(filename, "r");
-	if (!yyin)
-	{
-		fprintf(stderr, "Could not open file %s\n", filename);
-		return 1;
-	}
-	int result = yyparse();
-	fclose(yyin);
-	return result;
+	yyrestart(fp);
+	yyparse();
+	return root;
 }

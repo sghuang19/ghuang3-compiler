@@ -44,23 +44,27 @@ while       { printf("WHILE\n");    return TOKEN_WHILE; }
 
 [a-zA-Z_][a-zA-Z0-9_]* {
     printf("IDENTIFIER: %s\n", yytext);
+    yylval.s = strdup(yytext);
     return TOKEN_ID;
 }
 
 [1-9][0-9]*|0 {
     printf("INTEGER_LITERAL: %s\n", yytext);
+    yylval.i = atoi(yytext);
     return TOKEN_INT_LITERAL;
 }
 
 [0-9]*\.[0-9]+ {
     /* Float without decimal point */
     printf("TOKEN_FLOAT_LITERAL: %s\n", yytext);
+    yylval.f = atof(yytext);
     return TOKEN_FLOAT_LITERAL;
 }
 
 [0-9]*(\.[0-9]+)?[eE][+-]?[1-9]+[0-9]* {
     /* Float with scientific notation */
     printf("TOKEN_FLOAT_LITERAL: %s\n", yytext);
+    yylval.f = atof(yytext);
     return TOKEN_FLOAT_LITERAL;
 }
 
@@ -80,6 +84,7 @@ while       { printf("WHILE\n");    return TOKEN_WHILE; }
         printf("encoded: %s\n", es);
         es[strlen(es) - 1] = '\0';
         printf("CHAR_LITERAL: %s\n", es + 1);
+        yylval.c = s[0];
         return TOKEN_CHAR_LITERAL;
     } else {
         printf("ERROR: Invalid character literal: %s\n", yytext);
@@ -127,6 +132,7 @@ while       { printf("WHILE\n");    return TOKEN_WHILE; }
         char es[strlen(yytext) + 1];
         string_encode((const char*) s, es);
         printf("STRING_LITERAL: %s\n", es);
+        yylval.s = strdup(s);
         return TOKEN_STRING_LITERAL;
     } else {
         printf("ERROR: Invalid string literal: %s\n", yytext);

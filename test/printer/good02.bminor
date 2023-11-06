@@ -1,0 +1,20 @@
+/* Complex for loops */
+main : function integer (args: array [] string) = {
+    str: string = "Hello World";
+    i: integer = 0;
+    for (i = 0; i < 10; i++) {
+        print str;
+    }
+
+    for (;;) {
+        print str;
+    }
+
+    for (;;) {
+        print str;
+        for (;;) {
+            print str;
+        }
+    }
+    return 0;
+}

@@ -1,0 +1,17 @@
+/* Function declarations */
+main : function integer (args: string) = {
+    print "hello", "world";
+    return 0;
+}
+
+x: integer = 2;
+
+main : function array [x] integer (args: string) = {
+    print "hello", "world";
+    return 0;
+}
+
+main : function integer (args: string, ints: array [] integer) = {
+    print "hello", "world";
+    return 0;
+}

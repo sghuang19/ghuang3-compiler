@@ -1,0 +1,11 @@
+/* If condition in loops */
+main : function void () = {
+    for (;;) {
+        if (true)
+            x++;
+        else {
+            x--;
+            return;
+        }
+    }
+}

@@ -1,1 +1,1 @@
-int parse(char* filename);
+struct decl* parse(FILE* fp);

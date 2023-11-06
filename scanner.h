@@ -1,1 +1,1 @@
-int scan(const char* filename);
+int scan(FILE *fp);
