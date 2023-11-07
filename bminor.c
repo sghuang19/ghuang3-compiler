@@ -51,7 +51,10 @@ int main(int argc, char* argv[])
 		return parse(fp) != NULL ? EXIT_SUCCESS : EXIT_FAILURE;
 	else if (strcmp(option, "--print") == 0)
 	{
-		return print_and_compare(filename, fp);
+		struct decl* d = parse(fp);
+		if (d == NULL) return EXIT_FAILURE;
+		print(d);
+		return EXIT_SUCCESS;
 	}
 	else
 	{
