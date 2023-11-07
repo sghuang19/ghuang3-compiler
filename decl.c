@@ -34,9 +34,7 @@ void decl_print(struct decl* d, int indent)
 			printf("}");
 		}
 		else
-		{
 			expr_print(d->value);
-		}
 	}
 
 	if (d->code)
@@ -45,14 +43,10 @@ void decl_print(struct decl* d, int indent)
 		stmt_print(d->code, indent + 1);
 		for (i = 0; i < indent; i++)
 			printf("\t");
-		printf("}");
+		printf("}\n");
 	}
 	else
-	{
-		// Functions don't end with semicolon
-		printf(";");
-	}
+		printf(";\n");
 
-	printf("\n");
 	decl_print(d->next, indent);
 }

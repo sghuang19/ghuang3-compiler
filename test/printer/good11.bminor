@@ -1,0 +1,6 @@
+/* Function */
+main : function void () = {
+    x: integer = 0;
+    y: integer = x * 2;
+    a: array [2] integer = {1 + 1, x / y};
+}

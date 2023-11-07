@@ -105,7 +105,6 @@ void stmt_print(const struct stmt* s, int indent)
 	{
 	case STMT_DECL:
 		decl_print(s->decl, indent);
-		printf(";\n");
 		break;
 	case STMT_EXPR:
 		stmt_print_indent(indent);
