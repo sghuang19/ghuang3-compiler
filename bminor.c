@@ -6,6 +6,7 @@
 #include "scanner.h"
 #include "parser.h"
 #include "printer.h"
+#include "resolver.h"
 
 void usage(int exit_code)
 {
@@ -55,6 +56,12 @@ int main(int argc, char* argv[])
 		if (d == NULL) return EXIT_FAILURE;
 		print(d);
 		return EXIT_SUCCESS;
+	}
+	else if (strcmp(option, "--resolve") == 0)
+	{
+		struct decl* d = parse(fp);
+		if (d == NULL) return EXIT_FAILURE;
+		return resolve(d);
 	}
 	else
 	{
