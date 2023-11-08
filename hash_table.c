@@ -309,15 +309,13 @@ acceptable.  Do NOT use for cryptographic purposes.
 --------------------------------------------------------------------
 */
 
-static ub4 jenkins_hash(k, length, initval)
-	 register const ub1 *k;	/* the key */
-	 register ub4 length;	/* the length of the key */
-	 register ub4 initval;	/* the previous hash, or an arbitrary value */
+static ub4 jenkins_hash(const ub1 *k, ub4 length, ub4 initval)
 {
 	register ub4 a, b, c, len;	/* Set up the internal state */
 	len = length;
 	a = b = 0x9e3779b9;	/* the golden ratio; an arbitrary value */
-	c = initval;					 /* the previous hash value *//*---------------------------------------- handle most of the key */
+	c = initval;					 /* the previous hash value */
+	/*---------------------------------------- handle most of the key */
 	while(len >= 12) {
 		a += (k[0] + ((ub4) k[1] << 8) + ((ub4) k[2] << 16) + ((ub4) k[3] << 24));
 		b += (k[4] + ((ub4) k[5] << 8) + ((ub4) k[6] << 16) + ((ub4) k[7] << 24));
