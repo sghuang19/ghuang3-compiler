@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "encoder.h"
 #include "expr.h"
+#include "scope.h"
 
 /* Creating binary nodes by default */
 
@@ -289,5 +290,28 @@ void expr_print(const struct expr* e)
 		/* Trivial binary operators */
 		expr_print_binary(e);
 		break;
+	}
+}
+
+/* Resolving the expression nodes */
+
+void expr_resolve(struct expr* e)
+{
+	if (!e) return;
+	if (e->kind == EXPR_NAME)
+	{
+		e->symbol = scope_lookup(e->name);
+		if (e->symbol)
+			resolve_msg(e->symbol);
+		else
+		{
+			printf("Resolve Error | Undefined symbol '%s'\n", e->name);
+			res_errors++;
+		}
+	}
+	else
+	{
+		expr_resolve(e->left);
+		expr_resolve(e->right);
 	}
 }
