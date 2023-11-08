@@ -7,6 +7,8 @@
 static int returned_eof = 0;
 %}
 
+%option yylineno
+
 %%
     /* Comments */
 
@@ -87,7 +89,11 @@ while       { printf("WHILE\n");    return TOKEN_WHILE; }
         yylval.c = s[0];
         return TOKEN_CHAR_LITERAL;
     } else {
-        printf("ERROR: Invalid character literal: %s\n", yytext);
+        fprintf(stderr, "Scan Error @ %d | Invalid character literal ", yylineno);
+        if (*yytext == '\'')
+            fprintf(stderr, "%s\n", yytext);
+        else
+            fprintf(stderr, "'%s'\n", yytext);
         return TOKEN_ERROR;
     }
 }
@@ -135,7 +141,11 @@ while       { printf("WHILE\n");    return TOKEN_WHILE; }
         yylval.s = strdup(s);
         return TOKEN_STRING_LITERAL;
     } else {
-        printf("ERROR: Invalid string literal: %s\n", yytext);
+        fprintf(stderr, "Scan Error @ %d | invalid string literal ", yylineno);
+        if (*yytext == '\'')
+            fprintf(stderr, "%s\n", yytext);
+        else
+            fprintf(stderr, "'%s'\n", yytext);
         return TOKEN_ERROR;
     }
 }
@@ -154,7 +164,7 @@ while       { printf("WHILE\n");    return TOKEN_WHILE; }
 }
 
 . {
-    printf("ERROR: Invalid character %s\n", yytext);
+    fprintf(stderr, "Scan Error @ %d | invalid character '%s'\n", yylineno, yytext);
     return TOKEN_ERROR;
 }
 %%

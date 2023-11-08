@@ -8,11 +8,13 @@ extern int yylineno;
 extern char *yytext;
 
 void yyerror(const char *s) {
-    fprintf(stderr, "Error: %s at line %d near '%s'\n", s, yylineno, yytext);
+    fprintf(stderr, "Parse Error @ %d | %s\n", yylineno, s);
 }
 
 struct decl *root = NULL;
 %}
+
+%error-verbose
 
 /* Keywords */
 %token TOKEN_ARRAY
