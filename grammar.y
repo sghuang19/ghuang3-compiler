@@ -218,7 +218,7 @@ opt_expr : /* epsilon */ { $$ = NULL; }
 expr : expr1
      ;
 
-expr1 : lval TOKEN_ASSIGN expr1 { expr_create(EXPR_ASSIGN, $1, $3); }
+expr1 : lval TOKEN_ASSIGN expr1 { $$ = expr_create(EXPR_ASSIGN, $1, $3); }
       | expr2
       ;
 
