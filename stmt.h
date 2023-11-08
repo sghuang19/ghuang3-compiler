@@ -38,7 +38,7 @@ struct stmt* stmt_create(
 );
 
 struct stmt* stmt_create_empty(stmt_t kind);
-
 void stmt_print(const struct stmt* s, int indent);
+void stmt_resolve(struct stmt* s);
 
 #endif
