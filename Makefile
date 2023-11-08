@@ -3,6 +3,7 @@ bminor: bminor.c \
 		scanner.o lex.yy.o \
 		parser.o grammar.tab.o \
 		printer.o decl.o stmt.o expr.o type.o param_list.o \
+		resolver.o symbol.o scope.o hash_table.o
 	gcc $^ -o $@
 
 encoder.o: encoder.c encoder.h
@@ -47,14 +48,18 @@ type.o: type.c type.h
 param_list.o: param_list.c param_list.h
 	gcc -c $< -o $@
 
-expr.o: expr.c
-	gcc -c $^ -o $@
+# Resolver
+resolver.o: resolver.c resolver.h
+	gcc -c $< -o $@
 
-type.o: type.c
-	gcc -c $^ -o $@
+symbol.o: symbol.c symbol.h
+	gcc -c $< -o $@
 
-param_list.o: param_list.c
-	gcc -c $^ -o $@
+scope.o: scope.c scope.h
+	gcc -c $< -o $@
+
+hash_table.o: hash_table.c hash_table.h
+	gcc -c $< -o $@
 
 # Tests
 test-encoder:
@@ -68,6 +73,9 @@ test-parser:
 
 test-printer:
 	./runtest.sh printer
+
+test-resolver:
+	./runtest.sh resolver
 
 # Cleanup
 clean-test:
