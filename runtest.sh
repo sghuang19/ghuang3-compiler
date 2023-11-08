@@ -11,13 +11,15 @@ module="$1"
 
 printer_test () {
   for testfile in ./test/printer/good*.bminor; do
-    if bminor --print "$testfile" 2>/dev/null; then
+    if bminor --print "$testfile" > "$testfile.out" &&
+       bminor --print "$testfile.out" > "$testfile.tmp" &&
+       diff "$testfile.out" "$testfile.tmp" > /dev/null; then
       echo "$testfile success (as expected)"
+      rm "$testfile.tmp"
     else
       echo "$testfile failure (INCORRECT)"
     fi
   done
-  exit 0
 }
 
 case $module in
@@ -38,14 +40,6 @@ case $module in
         exit 1
         ;;
 esac
-
-for testfile in ./test/"$module"/good*.bminor; do
-  if bminor --"$command" "$testfile" > "$testfile.out"; then
-    echo "$testfile success (as expected)"
-  else
-    echo "$testfile failure (INCORRECT)"
-  fi
-done
 
 for testfile in ./test/"$module"/good*.bminor; do
   if bminor --"$command" "$testfile" > "$testfile.out"; then
