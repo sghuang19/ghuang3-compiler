@@ -1,0 +1,13 @@
+/* Multi-levels */
+
+var: integer;
+
+main: function void (var: integer) = {
+    {
+        var: integer;
+        main(var0);
+    }
+    var++;
+}
+
+new: integer = var;

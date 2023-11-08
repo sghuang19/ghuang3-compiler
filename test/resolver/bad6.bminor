@@ -1,0 +1,16 @@
+/* Loop */
+
+var: integer;
+
+main: function void () = {
+    if (new == 0)
+        new++;
+    else
+        new--;
+
+    new: boolean;
+    if (new)
+        new++;
+    else
+        new--;
+}

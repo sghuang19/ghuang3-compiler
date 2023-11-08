@@ -1,0 +1,5 @@
+/* Undeclared variable at top level */
+a: integer;
+c: integer = a;
+d: integer = b;
+e: array [a] array [b] integer;

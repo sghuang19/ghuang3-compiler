@@ -1,0 +1,9 @@
+/* Function declarations */
+a: function void () = {
+    return;
+}
+
+b: function integer () = {
+    a();
+    b();
+}
