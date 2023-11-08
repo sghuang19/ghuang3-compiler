@@ -11,3 +11,4 @@ grammar.tab.c
 grammar.output
 
 test/**/*.out
+test/**/*.tmp

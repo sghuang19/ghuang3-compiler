@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "stmt.h"
+#include "scope.h"
 
 struct stmt* stmt_create(
 	stmt_t kind,
@@ -105,7 +106,6 @@ void stmt_print(const struct stmt* s, int indent)
 	{
 	case STMT_DECL:
 		decl_print(s->decl, indent);
-		printf(";\n");
 		break;
 	case STMT_EXPR:
 		stmt_print_indent(indent);
@@ -145,4 +145,41 @@ void stmt_print(const struct stmt* s, int indent)
 
 	if (s->next)
 		stmt_print(s->next, indent);
+}
+
+void stmt_resolve(struct stmt* s)
+{
+	if (!s) return;
+	switch (s->kind)
+	{
+	case STMT_DECL:
+		decl_resolve(s->decl);
+		break;
+	case STMT_EXPR:
+		expr_resolve(s->expr);
+		break;
+	case STMT_IF_ELSE:
+		expr_resolve(s->expr);
+		stmt_resolve(s->body);
+		stmt_resolve(s->else_body);
+		break;
+	case STMT_FOR:
+		expr_resolve(s->init_expr);
+		expr_resolve(s->expr);
+		expr_resolve(s->next_expr);
+		stmt_resolve(s->body);
+		break;
+	case STMT_PRINT:
+		expr_resolve(s->expr);
+		break;
+	case STMT_RETURN:
+		expr_resolve(s->expr);
+		break;
+	case STMT_BLOCK:
+		scope_enter();
+		stmt_resolve(s->body);
+		scope_exit();
+		break;
+	}
+	stmt_resolve(s->next);
 }

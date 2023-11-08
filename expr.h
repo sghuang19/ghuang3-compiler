@@ -62,6 +62,7 @@ struct expr
 	const char* string_literal;
 };
 
+/* Creating non-leaf nodes */
 struct expr* expr_create(expr_t kind, struct expr* left, struct expr* right);
 struct expr* expr_create_unary(expr_t kind, struct expr* operand);
 
@@ -75,5 +76,8 @@ struct expr* expr_create_string_literal(const char* str);
 
 /* Printing the expressions */
 void expr_print(const struct expr* e);
+
+/* Resolving the expressions */
+void expr_resolve(struct expr* e);
 
 #endif

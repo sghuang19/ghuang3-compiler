@@ -1,0 +1,16 @@
+/* Mixed declarations */
+
+a: integer;
+b: float;
+c: string;
+d: boolean;
+
+func: function void (arg: integer);
+
+main: function void () = {
+    func(a);
+    f: float;
+    g: string;
+    h: boolean;
+    a + b + c + d + f + g + h;
+}

@@ -6,6 +6,7 @@
 #include "scanner.h"
 #include "parser.h"
 #include "printer.h"
+#include "resolver.h"
 
 void usage(int exit_code)
 {
@@ -21,12 +22,10 @@ int main(int argc, char* argv[])
 	{
 	case 1:
 		usage(EXIT_FAILURE);
-		break;
 	case 2:
 		if (strcmp(argv[1], "--help") == 0)
 			usage(EXIT_SUCCESS);
 		else usage(EXIT_FAILURE);
-		break;
 	case 3:
 		option = argv[1];
 		filename = argv[2];
@@ -34,7 +33,6 @@ int main(int argc, char* argv[])
 	default:
 		fprintf(stderr, "Too many arguments.\n");
 		usage(EXIT_FAILURE);
-		break;
 	}
 
 	// Open input file
@@ -47,31 +45,27 @@ int main(int argc, char* argv[])
 
 	// Perform the requested operation
 	if (strcmp(option, "--encode") == 0)
-	{
-		if (decode(fp) == 0)
-			return EXIT_SUCCESS;
-	}
+		return decode(fp) == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 	else if (strcmp(option, "--scan") == 0)
-	{
-		if (scan(fp) == 0)
-			return EXIT_SUCCESS;
-	}
+		return scan(fp) == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 	else if (strcmp(option, "--parse") == 0)
-	{
-		if (parse(fp) != NULL)
-			return EXIT_SUCCESS;
-	}
+		return parse(fp) != NULL ? EXIT_SUCCESS : EXIT_FAILURE;
 	else if (strcmp(option, "--print") == 0)
 	{
-		return print_and_compare(filename, fp);
+		struct decl* d = parse(fp);
+		if (d == NULL) return EXIT_FAILURE;
+		print(d);
+		return EXIT_SUCCESS;
+	}
+	else if (strcmp(option, "--resolve") == 0)
+	{
+		struct decl* d = parse(fp);
+		if (d == NULL) return EXIT_FAILURE;
+		return resolve(d);
 	}
 	else
 	{
 		fprintf(stderr, "Unknown option '%s'\n", option);
 		usage(EXIT_FAILURE);
 	}
-
-	//Error message
-	fprintf(stderr, "Failed to %s file %s\n", option + 2, filename);
-	return EXIT_FAILURE;
 }

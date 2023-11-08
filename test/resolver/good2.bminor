@@ -1,0 +1,9 @@
+/* Declarations within function */
+
+a: function void (arg1: integer, arg2: integer) = {
+    a: integer = 2;
+    b: float = a;
+    c: array [a] boolean = {true, false};
+    arg1 = arg2;
+    a + b + c;
+}
