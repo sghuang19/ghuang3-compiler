@@ -34,6 +34,10 @@ case $module in
         ;;
     "printer")
         printer_test
+        exit
+        ;;
+    "resolver")
+        command="resolve"
         ;;
     *)
         echo "Unknown module: $module"
