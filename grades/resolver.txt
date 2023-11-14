@@ -1,0 +1,1399 @@
+=====STUDENT TESTS=====
+====Good Tests====
+===[good0.bminor Input]===
+/* Variable declarations */
+a: integer;
+b: integer = a;
+c: integer = a + b;
+d: float = c + 45.67;
+e: boolean = false;
+f: char = 'q';
+g: string = "hello bminor\n";
+h: array [g] integer;
+i: array [2] boolean = {true, false};
+j: array [2] array [d] boolean;
+k: array [2] integer = {i + j, 1 / 3};
+
+===[good0.bminor Output]===
+Success!
+
+a -> global @ a
+a -> global @ a
+b -> global @ b
+c -> global @ c
+g -> global @ g
+i -> global @ i
+j -> global @ j
+
+
+return code: 0
+
+
+===[good1.bminor Input]===
+/* Function declarations */
+a: function void () = {
+    return;
+}
+
+b: function integer () = {
+    a();
+    b();
+}
+
+===[good1.bminor Output]===
+Success!
+
+a -> global @ a
+b -> global @ b
+
+
+return code: 0
+
+
+===[good2.bminor Input]===
+/* Declarations within function */
+
+a: function void (arg1: integer, arg2: integer) = {
+    a: integer = 2;
+    b: float = a;
+    c: array [a] boolean = {true, false};
+    arg1 = arg2;
+    a + b + c;
+}
+
+===[good2.bminor Output]===
+Success!
+
+a -> local @ 0
+a -> local @ 0
+arg1 -> param @ 0
+arg2 -> param @ 1
+a -> local @ 0
+b -> local @ 1
+c -> local @ 2
+
+
+return code: 0
+
+
+===[good3.bminor Input]===
+/* Mixed declarations */
+
+a: integer;
+b: float;
+c: string;
+d: boolean;
+
+func: function void (arg: integer);
+
+main: function void () = {
+    func(a);
+    f: float;
+    g: string;
+    h: boolean;
+    a + b + c + d + f + g + h;
+}
+
+===[good3.bminor Output]===
+Success!
+
+func -> global @ func
+a -> global @ a
+a -> global @ a
+b -> global @ b
+c -> global @ c
+d -> global @ d
+f -> local @ 0
+g -> local @ 1
+h -> local @ 2
+
+
+return code: 0
+
+
+===[good4.bminor Input]===
+/* Multi-levels */
+
+var: integer;
+
+main: function void (var: integer) = {
+    {
+        var: integer;
+        main(var);
+    }
+    var++;
+}
+
+new: integer = var;
+===[good4.bminor Output]===
+Success!
+
+main -> global @ main
+var -> local @ 0
+var -> param @ 0
+var -> global @ var
+
+
+return code: 0
+
+
+===[good5.bminor Input]===
+/* Conditions */
+
+var: integer;
+
+main: function void () = {
+    if (var == 0)
+        var++;
+    else
+        var--;
+
+    new: boolean;
+    if (new)
+        new++;
+    else
+        new--;
+}
+
+===[good5.bminor Output]===
+Success!
+
+var -> global @ var
+var -> global @ var
+var -> global @ var
+new -> local @ 0
+new -> local @ 0
+new -> local @ 0
+
+
+return code: 0
+
+
+===[good6.bminor Input]===
+/* Loop */
+
+var: integer;
+
+main: function void () = {
+    if (var == 0)
+        var++;
+    else
+        var--;
+
+    new: boolean;
+    if (new)
+        new++;
+    else
+        new--;
+}
+
+===[good6.bminor Output]===
+Success!
+
+var -> global @ var
+var -> global @ var
+var -> global @ var
+new -> local @ 0
+new -> local @ 0
+new -> local @ 0
+
+
+return code: 0
+
+
+===[good7.bminor Input]===
+/* Finding max in array */
+
+SIZE: integer = 10;
+
+find_max: function integer (arr: array [] integer, size: integer) = {
+    max: integer = arr[0];
+    i: integer;
+    for (i = 1; i < size; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+main: function integer () = {
+    numbers: array [SIZE] integer = {0, 3, 5, 7, 9, 2, 4, 6, 8, 1};
+    max: integer = find_max(numbers, SIZE);
+    print "The maximum number is ", max, "\n";
+    return 0;
+}
+
+===[good7.bminor Output]===
+Success!
+
+arr -> param @ 0
+i -> local @ 1
+i -> local @ 1
+size -> param @ 1
+i -> local @ 1
+arr -> param @ 0
+i -> local @ 1
+max -> local @ 0
+max -> local @ 0
+arr -> param @ 0
+i -> local @ 1
+max -> local @ 0
+SIZE -> global @ SIZE
+find_max -> global @ find_max
+numbers -> local @ 2
+SIZE -> global @ SIZE
+max -> local @ 3
+
+
+return code: 0
+
+
+===[good8.bminor Input]===
+/* Sum of even numbers in an array */
+
+SIZE: integer = 10;
+
+sum_even: function integer (arr: array [] integer, size: integer) = {
+    sum: integer = 0;
+    i: integer;
+    for (i = 0; i < size; i++) {
+        if (arr[i] % 2 == 0) {
+            sum = sum + arr[i];
+        }
+    }
+    return sum;
+}
+
+main: function integer () = {
+    numbers: array [SIZE] integer = {0, 3, 5, 7, 9, 2, 4, 6, 8, 1};
+    even_sum: integer = sum_even(numbers, SIZE);
+    print "The sum of even numbers is ", even_sum, "\n";
+    return 0;
+}
+
+===[good8.bminor Output]===
+Success!
+
+i -> local @ 1
+i -> local @ 1
+size -> param @ 1
+i -> local @ 1
+arr -> param @ 0
+i -> local @ 1
+sum -> local @ 0
+sum -> local @ 0
+arr -> param @ 0
+i -> local @ 1
+sum -> local @ 0
+SIZE -> global @ SIZE
+sum_even -> global @ sum_even
+numbers -> local @ 2
+SIZE -> global @ SIZE
+even_sum -> local @ 3
+
+
+return code: 0
+
+
+===[good9.bminor Input]===
+/* Factorial of a number using recursion */
+
+factorial: function integer (n: integer) = {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+main: function integer () = {
+    num: integer = 5;
+    result: integer = factorial(num);
+    print "The factorial of ", num, " is ", result, "\n";
+    return 0;
+}
+
+===[good9.bminor Output]===
+Success!
+
+n -> param @ 0
+n -> param @ 0
+factorial -> global @ factorial
+n -> param @ 0
+factorial -> global @ factorial
+num -> local @ 0
+num -> local @ 0
+result -> local @ 1
+
+
+return code: 0
+
+
+====Bad Tests====
+===[bad0.bminor Input]===
+/* Undeclared variable at top level */
+a: integer;
+c: integer = a;
+d: integer = b;
+e: array [a] array [b] integer;
+
+===[bad0.bminor Output]===
+Success!
+
+a -> global @ a
+Resolve Error | Undefined symbol 'b'
+a -> global @ a
+
+
+return code: 1
+
+
+===[bad1.bminor Input]===
+/* Undeclared function */
+a: function void () = {
+    return;
+}
+
+b: function integer () = {
+    a();
+    b();
+    c();
+}
+
+===[bad1.bminor Output]===
+Success!
+
+a -> global @ a
+b -> global @ b
+Resolve Error | Undefined symbol 'c'
+
+
+return code: 1
+
+
+===[bad2.bminor Input]===
+/* Undefined parameter */
+
+a: function void (arg1: integer, arg2: integer) = {
+    a: integer = 2;
+    b: float = a;
+    c: array [a] boolean = {true, false};
+    arg1 = arg2;
+    a + b + c;
+    return arg3;
+}
+
+===[bad2.bminor Output]===
+Success!
+
+a -> local @ 0
+a -> local @ 0
+arg1 -> param @ 0
+arg2 -> param @ 1
+a -> local @ 0
+b -> local @ 1
+c -> local @ 2
+Resolve Error | Undefined symbol 'arg3'
+
+
+return code: 1
+
+
+===[bad3.bminor Input]===
+/* Mixed declarations */
+
+a: integer;
+b: float;
+c: string;
+d: boolean;
+
+func: function void (arg: integer);
+
+main: function void () = {
+    func(a, e);
+    f: float;
+    g: string;
+    h: boolean;
+    a + b + c + d + f + g + h;
+    return i + j + k;
+}
+
+===[bad3.bminor Output]===
+Success!
+
+func -> global @ func
+a -> global @ a
+Resolve Error | Undefined symbol 'e'
+a -> global @ a
+b -> global @ b
+c -> global @ c
+d -> global @ d
+f -> local @ 0
+g -> local @ 1
+h -> local @ 2
+Resolve Error | Undefined symbol 'i'
+Resolve Error | Undefined symbol 'j'
+Resolve Error | Undefined symbol 'k'
+
+
+return code: 4
+
+
+===[bad4.bminor Input]===
+/* Multi-levels */
+
+var: integer;
+
+main: function void (var: integer) = {
+    {
+        var: integer;
+        main(var0);
+    }
+    var++;
+}
+
+new: integer = var;
+===[bad4.bminor Output]===
+Success!
+
+main -> global @ main
+Resolve Error | Undefined symbol 'var0'
+var -> param @ 0
+var -> global @ var
+
+
+return code: 1
+
+
+===[bad5.bminor Input]===
+/* Conditions */
+
+var: integer;
+
+main: function void () = {
+    if (new == 0)
+        new++;
+    else
+        new--;
+
+    new: boolean;
+    if (new)
+        new++;
+    else
+        new--;
+}
+
+===[bad5.bminor Output]===
+Success!
+
+Resolve Error | Undefined symbol 'new'
+Resolve Error | Undefined symbol 'new'
+Resolve Error | Undefined symbol 'new'
+new -> local @ 0
+new -> local @ 0
+new -> local @ 0
+
+
+return code: 3
+
+
+===[bad6.bminor Input]===
+/* Loop */
+
+var: integer;
+
+main: function void () = {
+    if (new == 0)
+        new++;
+    else
+        new--;
+
+    new: boolean;
+    if (new)
+        new++;
+    else
+        new--;
+}
+
+===[bad6.bminor Output]===
+Success!
+
+Resolve Error | Undefined symbol 'new'
+Resolve Error | Undefined symbol 'new'
+Resolve Error | Undefined symbol 'new'
+new -> local @ 0
+new -> local @ 0
+new -> local @ 0
+
+
+return code: 3
+
+
+===[bad7.bminor Input]===
+/* Finding max in array */
+
+// SIZE: integer = 10;
+
+find_max: function integer (arr: array [] integer, size: integer) = {
+    max: integer = arr[0];
+    // i: integer;
+    for (i = 1; i < size; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+main: function integer () = {
+    numbers: array [SIZE] integer = {0, 3, 5, 7, 9, 2, 4, 6, 8, 1};
+    max: integer = find_max(numbers, SIZE);
+    print "The maximum number is ", max, "\n";
+    return 0;
+}
+
+===[bad7.bminor Output]===
+Success!
+
+arr -> param @ 0
+Resolve Error | Undefined symbol 'i'
+Resolve Error | Undefined symbol 'i'
+size -> param @ 1
+Resolve Error | Undefined symbol 'i'
+arr -> param @ 0
+Resolve Error | Undefined symbol 'i'
+max -> local @ 0
+max -> local @ 0
+arr -> param @ 0
+Resolve Error | Undefined symbol 'i'
+max -> local @ 0
+Resolve Error | Undefined symbol 'SIZE'
+find_max -> global @ find_max
+numbers -> local @ 1
+Resolve Error | Undefined symbol 'SIZE'
+max -> local @ 2
+
+
+return code: 7
+
+
+===[bad8.bminor Input]===
+/* Sum of even numbers in an array */
+
+SIZE: integer = 10;
+
+sum_even: function integer (arr: array [] integer, size: integer) = {
+    // sum: integer = 0;
+    i: integer;
+    for (i = 0; i < size; i++) {
+        if (arr[i] % 2 == 0) {
+            sum = sum + arr[i];
+        }
+    }
+    return sum;
+}
+
+main: function integer () = {
+    numbers: array [SIZE] integer = {0, 3, 5, 7, 9, 2, 4, 6, 8, 1};
+    // even_sum: integer = sum_even(numbers, SIZE);
+    print "The sum of even numbers is ", even_sum, "\n";
+    return 0;
+}
+
+===[bad8.bminor Output]===
+Success!
+
+i -> local @ 0
+i -> local @ 0
+size -> param @ 1
+i -> local @ 0
+arr -> param @ 0
+i -> local @ 0
+Resolve Error | Undefined symbol 'sum'
+Resolve Error | Undefined symbol 'sum'
+arr -> param @ 0
+i -> local @ 0
+Resolve Error | Undefined symbol 'sum'
+SIZE -> global @ SIZE
+Resolve Error | Undefined symbol 'even_sum'
+
+
+return code: 4
+
+
+===[bad9.bminor Input]===
+/* Factorial of a number using recursion */
+
+/*
+factorial: function integer (n: integer) = {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+*/
+
+main: function integer () = {
+    num: integer = 5;
+    result: integer = factorial(num);
+    print "The factorial of ", num, " is ", result, "\n";
+    return 0;
+}
+
+===[bad9.bminor Output]===
+Success!
+
+Resolve Error | Undefined symbol 'factorial'
+num -> local @ 0
+num -> local @ 0
+result -> local @ 1
+
+
+return code: 1
+
+
+=====HIDDEN TESTS=====
+====Good Tests====
+===[good1.bminor Input]===
+/* Correct: x used but not defined. */
+
+x: integer = 10;
+
+===[good1.bminor Output]===
+Success!
+
+
+
+return code: 0
+
+
+===[good10.bminor Input]===
+/* Correct: Many variables to resolve. */
+
+D: function integer() = {
+        d1: integer = 5;
+        d2: integer = d1 + 1; //6
+        {
+                d3: integer = 9;
+                d2: integer = d3 + d1 - 3; //11
+                d4: integer = -1;
+                d2 = d2 + d3; //20
+                print d2 - d4, "\n";
+        }
+        d4: integer = 16;
+        print d2 - d4, '\n';
+        {
+                d4: integer = -2;
+                d3: integer = 1000;
+                print d3 + 10;
+                print "\n";
+                print d4;
+                print '\n';
+        }
+        print d4;
+        return 3;
+}
+
+main: function integer () = {
+        return D();
+}
+
+===[good10.bminor Output]===
+Success!
+
+d1 -> local @ 0
+d3 -> local @ 2
+d1 -> local @ 0
+d2 -> local @ 3
+d2 -> local @ 3
+d3 -> local @ 2
+d2 -> local @ 3
+d4 -> local @ 4
+d2 -> local @ 1
+d4 -> local @ 5
+d3 -> local @ 7
+d4 -> local @ 6
+d4 -> local @ 5
+D -> global @ D
+
+
+return code: 0
+
+
+===[good2.bminor Input]===
+/* Correct: redefining a name at the local scope. */
+
+x: integer = 10;
+
+f: function void () = {
+     x: integer = 20;
+     print x, "\n";
+}
+
+
+===[good2.bminor Output]===
+Success!
+
+x -> local @ 0
+
+
+return code: 0
+
+
+===[good3.bminor Input]===
+/* Correct: redefining a name at the local scope. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     x: integer = 20;
+     if(a<b) {
+          x: integer = 30;
+          print x, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+
+
+===[good3.bminor Output]===
+Success!
+
+a -> param @ 0
+b -> param @ 1
+x -> local @ 1
+
+
+return code: 0
+
+
+===[good4.bminor Input]===
+/* Correct: Accessing names in different scopes. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+
+}
+
+
+===[good4.bminor Output]===
+Success!
+
+a -> param @ 0
+b -> param @ 1
+x -> global @ x
+y -> local @ 0
+z -> local @ 1
+
+
+return code: 0
+
+
+===[good5.bminor Input]===
+/* Correct: f is called multiple times from main. */
+/* (Should resolve the expression before adding the decl of y. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = a * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     f(40,30);
+}
+
+
+
+===[good5.bminor Output]===
+Success!
+
+a -> param @ 0
+a -> param @ 0
+b -> param @ 1
+x -> global @ x
+y -> local @ 0
+z -> local @ 1
+f -> global @ f
+f -> global @ f
+
+
+return code: 0
+
+
+===[good6.bminor Input]===
+/* Correct: f is prototyped, then defined, then called. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer );
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = a * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     f(40,30);
+}
+
+
+
+
+===[good6.bminor Output]===
+TEST NOT PASSED
+
+a -> param @ 0
+a -> param @ 0
+b -> param @ 1
+x -> global @ x
+y -> local @ 0
+z -> local @ 1
+f -> global @ f
+f -> global @ f
+
+error: symbol 'f' already declared
+
+return code: 1
+
+
+===[good7.bminor Input]===
+/* Correct: f is prototyped, then called, then defined. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer );
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     f(40,30);
+}
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = a * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+
+
+===[good7.bminor Output]===
+TEST NOT PASSED
+
+f -> global @ f
+f -> global @ f
+a -> param @ 0
+a -> param @ 0
+b -> param @ 1
+x -> global @ x
+y -> local @ 0
+z -> local @ 1
+
+error: symbol 'f' already declared
+
+return code: 1
+
+
+===[good8.bminor Input]===
+/* Correct: Resolver should work all the way down the tree. */
+
+f: function void ( n:integer, s: string ) =
+{
+	i:integer;
+
+	for(i=0;i<n;i++) { 
+		if( i%2 == 0 ) {
+			print i, "is even\n";
+		} else {
+			print i, "is odd\n";
+		}
+	}
+
+	/* We can open a new scope with braces */
+	{
+		i: integer;
+		j: integer;
+		for(i=0;i<n;i++) {
+			for(j=0;j<n;j++) {
+				print i, ":", j, " -> ", i*j, " ", s, "\n";
+			}
+		}
+	}
+}
+
+===[good8.bminor Output]===
+Success!
+
+i -> local @ 0
+i -> local @ 0
+n -> param @ 0
+i -> local @ 0
+i -> local @ 0
+i -> local @ 0
+i -> local @ 0
+i -> local @ 1
+i -> local @ 1
+n -> param @ 0
+i -> local @ 1
+j -> local @ 2
+j -> local @ 2
+n -> param @ 0
+j -> local @ 2
+i -> local @ 1
+j -> local @ 2
+i -> local @ 1
+j -> local @ 2
+s -> param @ 1
+
+
+return code: 0
+
+
+===[good9.bminor Input]===
+/* Correct: Different functions can define variables with same params and locals. */
+
+x: integer = 10;
+
+f: function integer ( x: integer ) =
+{
+	y: integer = 20;
+	return x*y;
+}
+
+g: function void ( x: integer ) =
+{
+	y: integer = 30;
+	return x*y;
+}
+
+main: function integer ( argc: integer, argv: array [] string ) =
+{
+	return f(x) + g(x);
+}
+
+===[good9.bminor Output]===
+Success!
+
+x -> param @ 0
+y -> local @ 0
+x -> param @ 0
+y -> local @ 1
+f -> global @ f
+x -> global @ x
+g -> global @ g
+x -> global @ x
+
+
+return code: 0
+
+
+===[good11.bminor Input]===
+e: function integer () = {
+        e: integer = 100;
+	return e;
+}
+
+main: function integer () = {
+        return e();
+}
+
+===[good11.bminor Output]===
+Success!
+
+e -> local @ 0
+e -> global @ e
+
+
+return code: 0
+
+
+====Bad Tests====
+===[bad1.bminor Input]===
+/* Error: name already used in the global scope. */
+x: integer = 10;
+x: integer = 20;
+
+
+===[bad1.bminor Output]===
+Success!
+
+
+error: symbol 'x' already declared
+
+return code: 1
+
+
+===[bad10.bminor Input]===
+/* Error: Function has the same name as a declared variable. */
+
+str: string = "hello";
+
+str: function string ( s: string ) = 
+{
+	return "goodbye";
+}
+
+
+===[bad10.bminor Output]===
+Success!
+
+
+error: symbol 'str' already declared
+
+return code: 1
+
+
+===[bad2.bminor Input]===
+/* Error: Variable z went out of scope. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = 20;
+     if(a<b) {
+          z: integer = 30;
+	  print "a<b\n";
+     }
+     print x, " ", y, " ", z, "\n";
+}
+
+
+===[bad2.bminor Output]===
+Success!
+
+a -> param @ 0
+b -> param @ 1
+x -> global @ x
+y -> local @ 0
+Resolve Error | Undefined symbol 'z'
+
+
+return code: 1
+
+
+===[bad3.bminor Input]===
+/* Error: Cannot refer to variable y in its own definition. */
+/* (Should resolve the expression before adding the decl of y. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+	  print "a<b\n";
+     } else {
+          print "a>=b\n";
+     }
+     print x, " ", y, " ", z, "\n";
+}
+
+
+===[bad3.bminor Output]===
+Success!
+
+y -> local @ 0
+a -> param @ 0
+b -> param @ 1
+x -> global @ x
+y -> local @ 0
+Resolve Error | Undefined symbol 'z'
+
+
+return code: 1
+
+
+===[bad4.bminor Input]===
+/* Error: f has multiple definitions. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+f: function string ( s: string ) = {
+    print "hello";
+    return "goodbye";
+}
+
+
+===[bad4.bminor Output]===
+Success!
+
+y -> local @ 0
+a -> param @ 0
+b -> param @ 1
+x -> global @ x
+y -> local @ 0
+z -> local @ 1
+
+error: symbol 'f' already declared
+
+return code: 1
+
+
+===[bad5.bminor Input]===
+/* Error: f is called prior to definition. */
+
+x: integer = 10;
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     f(40,30);
+}
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+
+
+===[bad5.bminor Output]===
+Success!
+
+Resolve Error | Undefined symbol 'f'
+Resolve Error | Undefined symbol 'f'
+y -> local @ 0
+a -> param @ 0
+b -> param @ 1
+x -> global @ x
+y -> local @ 0
+z -> local @ 1
+
+
+return code: 2
+
+
+===[bad6.bminor Input]===
+/* Error: g is not defined. */
+
+x: integer = 10;
+
+f: function void ( a: integer, b: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+main: function integer ( argc: integer, argv: array [] string ) = {
+     f(10,20);
+     g(40,30);
+}
+
+
+===[bad6.bminor Output]===
+Success!
+
+y -> local @ 0
+a -> param @ 0
+b -> param @ 1
+x -> global @ x
+y -> local @ 0
+z -> local @ 1
+f -> global @ f
+Resolve Error | Undefined symbol 'g'
+
+
+return code: 1
+
+
+===[bad7.bminor Input]===
+/* Error: Two parameters have the same name */
+/* Also, b is not defined. */
+
+f: function void ( a: integer, a: integer ) = {
+     y: integer = y * 20;
+     if(a<b) {
+          z: integer = 30;
+          print x, " ", y, " ", z, "\n";
+     } else {
+          print "a>=b\n";
+     }
+}
+
+===[bad7.bminor Output]===
+Success!
+
+y -> local @ 0
+a -> param @ 0
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'x'
+y -> local @ 0
+z -> local @ 1
+
+Resolve Error | duplicate parameter 'a'
+
+return code: 3
+
+
+===[bad8.bminor Input]===
+/* Error: x not defined, deep down in the expression. */
+
+a: integer;
+
+f: function integer ( b: integer ) =
+{
+	c: integer;
+	for(c=0;c<b;c++) {
+		if(a<b) {
+			print a + b * (c / (a+x)), "\n"; 
+		}
+	}
+	return b;
+}
+
+===[bad8.bminor Output]===
+Success!
+
+c -> local @ 0
+c -> local @ 0
+b -> param @ 0
+c -> local @ 0
+a -> global @ a
+b -> param @ 0
+a -> global @ a
+b -> param @ 0
+c -> local @ 0
+a -> global @ a
+Resolve Error | Undefined symbol 'x'
+b -> param @ 0
+
+
+return code: 1
+
+
+===[bad9.bminor Input]===
+/* Error: x redefined after several intervening scopes. */
+
+a: integer;
+
+f: function integer ( b: integer ) =
+{
+	x: integer = 20;
+	{
+		i: integer;
+		for(i=0;i<x;i++) print i;
+	}
+	{
+		j: integer;
+		for(j=0;j<x;j++) print j;
+	}
+	x: integer = 30;
+
+	return x;
+}
+
+===[bad9.bminor Output]===
+Success!
+
+i -> local @ 1
+i -> local @ 1
+x -> local @ 0
+i -> local @ 1
+i -> local @ 1
+j -> local @ 2
+j -> local @ 2
+x -> local @ 0
+j -> local @ 2
+j -> local @ 2
+x -> local @ 0
+
+error: symbol 'x' already declared
+
+return code: 1
+
+
+===== SUMMARIZED PARSER RESULTS =====
+{
+  "student_tests": {
+    "Good": {
+      "correct": 10,
+      "incorrect": 0
+    },
+    "Bad": {
+      "correct": 10,
+      "incorrect": 0
+    }
+  },
+  "hidden_tests": {
+    "Good": {
+      "correct": 9,
+      "incorrect": 2
+    },
+    "Bad": {
+      "correct": 10,
+      "incorrect": 0
+    }
+  }
+}
+
+Resolver Project Grade
+-------------------
+
+General Structure: 25/25
+---------------------------------
+Overall structure is correct.
+
+Resolver - Manual Checks 20/25 
+--------------------------------------------
+Does not identify function definition vs prototype
+
+Student Tests: 20/20
+---------------------------
+Passes all your tests.
+
+Hidden Tests: 18/20
+---------------------------
+Failed 2 hidden tests
+
+Code Style: 10/10
+------------------------
+Looks good. Nice work
+
+Total: 93/100
+------------------------------------------
