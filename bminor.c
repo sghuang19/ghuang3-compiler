@@ -48,12 +48,19 @@ int main(int argc, char* argv[])
 		return decode(fp) == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 	else if (strcmp(option, "--scan") == 0)
 		return scan(fp) == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
-	else if (strcmp(option, "--parse") == 0)
-		return parse(fp) != NULL ? EXIT_SUCCESS : EXIT_FAILURE;
+
+	struct decl* d = parse(fp);
+	if (d == NULL)
+	{
+		fprintf(stderr, "Failed to parse file %s\n", filename);
+		return EXIT_FAILURE;
+	}
+	fclose(fp);
+
+	if (strcmp(option, "--parse") == 0)
+		return EXIT_SUCCESS;
 	else if (strcmp(option, "--print") == 0)
 	{
-		struct decl* d = parse(fp);
-		if (d == NULL) return EXIT_FAILURE;
 		print(d);
 		return EXIT_SUCCESS;
 	}
