@@ -7,6 +7,10 @@ d: boolean;
 
 func: function void (arg: integer);
 
+func: function void (arg: integer) = {
+    return;
+}
+
 main: function void () = {
     func(a);
     f: float;

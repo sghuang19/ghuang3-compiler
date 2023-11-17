@@ -1,8 +1,6 @@
 #ifndef EXPR_H
 #define EXPR_H
 
-#include "symbol.h"
-
 typedef enum
 {
 	/* Arithmetic operator nodes */
@@ -74,10 +72,16 @@ struct expr* expr_create_boolean_literal(int b);
 struct expr* expr_create_char_literal(char c);
 struct expr* expr_create_string_literal(const char* str);
 
-/* Printing the expressions */
+/** Print the expression */
 void expr_print(const struct expr* e);
 
-/* Resolving the expressions */
+/** Resolve the expression */
 void expr_resolve(struct expr* e);
+
+/**
+ * Typechecking the expression.
+ * @return Type of expr if successful, of left child otherwise.
+*/
+struct type* expr_typecheck(const struct expr* e);
 
 #endif

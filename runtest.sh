@@ -39,6 +39,9 @@ case $module in
     "resolver")
         command="resolve"
         ;;
+    "typechecker")
+        command="typecheck"
+        ;;
     *)
         echo "Unknown module: $module"
         exit 1
@@ -46,7 +49,7 @@ case $module in
 esac
 
 for testfile in ./test/"$module"/good*.bminor; do
-  if bminor --"$command" "$testfile" > "$testfile.out"; then
+  if bminor --"$command" "$testfile" > "$testfile.out" 2>&1; then
     echo "$testfile success (as expected)"
   else
     echo "$testfile failure (INCORRECT)"
@@ -54,7 +57,7 @@ for testfile in ./test/"$module"/good*.bminor; do
 done
 
 for testfile in ./test/"$module"/bad*.bminor; do
-  if bminor --"$command" "$testfile" > "$testfile.out"; then
+  if bminor --"$command" "$testfile" > "$testfile.out" 2>&1; then
     echo "$testfile success (INCORRECT)"
   else
     echo "$testfile failure (as expected)"

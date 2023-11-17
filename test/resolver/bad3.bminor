@@ -5,7 +5,9 @@ b: float;
 c: string;
 d: boolean;
 
-func: function void (arg: integer);
+func: function void (arg: integer) = { return; }
+
+func: function void (arg: integer) = { return; }
 
 main: function void () = {
     func(a, e);

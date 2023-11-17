@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "type.h"
+#include "expr.h"
+#include "param_list.h"
 
 /* Creating the types */
 
@@ -29,7 +32,7 @@ struct type* type_create_func(struct type* rtype, struct param_list* params)
 
 /* Printing the types */
 
-void type_print_primitive(struct type* t)
+void type_print_primitive(const struct type* t)
 {
 	switch (t->kind)
 	{
@@ -57,7 +60,7 @@ void type_print_primitive(struct type* t)
 	}
 }
 
-void type_print(struct type* t)
+void type_print(const struct type* t)
 {
 	switch (t->kind)
 	{
@@ -81,3 +84,35 @@ void type_print(struct type* t)
 		break;
 	}
 }
+
+/* Typechecking */
+
+int type_equals(const struct type* t1, const struct type* t2)
+{
+	if (!t1 && !t2) return 1; // Both are NULL
+	if (!t1 || !t2) return 0; // One is NULL, the other is not
+
+	if (t1->kind != t2->kind)
+		return 0;
+	switch (t1->kind)
+	{
+	case TYPE_ARRAY:
+		return type_equals(t1->subtype, t2->subtype);
+	case TYPE_FUNCTION:
+		if (!type_equals(t1->subtype, t2->subtype))
+			return 0;
+		struct param_list* p1 = t1->params;
+		struct param_list* p2 = t2->params;
+		while (p1 && p2)
+		{
+			if (!type_equals(t1->params->type, t2->params->type))
+				return 0;
+			p1 = p1->next;
+			p2 = p2->next;
+		}
+		return !p1 && !p2 ? 1 : 0;
+	default:
+		return 1;
+	}
+}
+

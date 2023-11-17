@@ -5,7 +5,16 @@ var: integer;
 main: function void (var: integer) = {
     {
         var: integer;
+        var++;
         main(var);
+        {
+            var: integer;
+            var++;
+            {
+                var: integer;
+                var++;
+            }
+        }
     }
     var++;
 }

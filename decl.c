@@ -1,7 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+
+#include "stmt.h"
+#include "expr.h"
 #include "decl.h"
 #include "type.h"
+#include "param_list.h"
 #include "symbol.h"
 #include "scope.h"
 
@@ -57,11 +61,19 @@ void decl_resolve(struct decl* d)
 {
 	if (!d) return;
 
-	if (scope_lookup_current(d->name))
+	if (scope_lookup_current(d->name) && d->type->kind != TYPE_FUNCTION)
 	{
-		fprintf(stderr, "error: symbol '%s' already declared\n", d->name);
+		fprintf(stderr, "Resolve Error | symbol '%s' already declared\n", d->name);
 		res_errors++;
 	}
+
+	struct symbol* prev = scope_lookup(d->name);
+	if (prev && prev->prototype && d->code)
+	{
+		fprintf(stderr, "Resolve Error | function '%s' already declared and defined\n", d->name);
+		res_errors++;
+	}
+
 	symbol_t kind;
 	int which;
 	if (cur_scope->level > 0)
@@ -78,11 +90,15 @@ void decl_resolve(struct decl* d)
 	scope_bind(d->name, d->symbol);
 
 	if (d->type->kind == TYPE_ARRAY)
+	{
 		expr_resolve(d->type->size);
+		expr_resolve(d->type->subtype->size);
+	}
 
 	expr_resolve(d->value);
 	if (d->code)
 	{
+		d->symbol->prototype = 1;
 		scope_enter();
 		param_list_resolve(d->type->params);
 		stmt_resolve(d->code);
@@ -90,4 +106,118 @@ void decl_resolve(struct decl* d)
 	}
 
 	decl_resolve(d->next);
+}
+
+/** Types are type-checked in declarations only */
+void type_typecheck(const struct type* t, const char* name)
+{
+	if (!t) return;
+	if (t->kind == TYPE_ARRAY)
+	{
+		struct type* size_type = expr_typecheck(t->size);
+		if (size_type->kind != TYPE_INTEGER)
+		{
+			printf("Type Error | size of array ('%s') cannot be ", name);
+			type_print(size_type);
+			printf(" (");
+			expr_print(t->size);
+			printf(")\n");
+			type_errors++;
+		}
+		if (t->subtype->kind == TYPE_FUNCTION)
+		{
+			printf("Type Error | array of functions not allowed (%s)\n", name);
+			type_errors++;
+		}
+		type_typecheck(t->subtype, name);
+		return;
+	}
+
+	if (t->kind == TYPE_FUNCTION)
+	{
+		if (t->subtype->kind == TYPE_ARRAY)
+		{
+			printf("Type Error | function ('%s') cannot return array (", name);
+			type_print(t->subtype);
+			printf(")\n");
+			type_errors++;
+		}
+
+		struct param_list* p = t->params;
+		while (p)
+		{
+			if (p->type->kind == TYPE_FUNCTION)
+			{
+				printf("Type Error | functions '%s' cannot take function as parameter (", name);
+				param_list_print(p);
+				printf(")\n");
+				type_errors++;
+			}
+			p = p->next;
+		}
+		return;
+	}
+}
+
+void decl_typecheck(struct decl* d)
+{
+	if (!d) return;
+
+	type_typecheck(d->type, d->name);
+	struct type* val_type = expr_typecheck(d->value);
+	if (d->value)
+	{
+		if (d->type->kind == TYPE_ARRAY)
+		{
+			// Local arrays cannot be initialized
+			if (d->symbol->kind == SYMBOL_LOCAL)
+			{
+				printf("Type Error | cannot initialize local array ('%s') ({", d->name);
+				expr_print(d->value);
+				printf("})\n");
+				type_errors++;
+			}
+
+			// Check initializer type
+			struct expr* e = d->value;
+			int len = 0;
+			while (e)
+			{
+				len++;
+				struct type* t = expr_typecheck(e->left);
+				if (!type_equals(d->type->subtype, t))
+				{
+					printf("Type Error | cannot initialize array of ");
+					type_print(d->type->subtype);
+					printf(" ('%s') with element of ", d->name);
+					type_print(t);
+					printf(" (");
+					expr_print(e->left);
+					printf(")\n");
+					type_errors++;
+				}
+				e = e->right;
+			}
+		}
+		else if (!type_equals(d->type, val_type))
+		{
+			printf("Type Error | cannot initialize ");
+			type_print(d->type);
+			printf(" ('%s') with ", d->name);
+			type_print(val_type);
+			printf(" (");
+			expr_print(d->value);
+			printf(")\n");
+			type_errors++;
+		}
+	}
+
+	if (d->type->kind == TYPE_FUNCTION && d->symbol->kind == SYMBOL_LOCAL)
+	{
+		printf("Type Error | cannot declare function ('%s') inside function\n", d->name);
+		type_errors++;
+	}
+
+	stmt_typecheck(d->code);
+	decl_typecheck(d->next);
 }
