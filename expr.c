@@ -310,7 +310,7 @@ void expr_resolve(struct expr* e)
 			resolve_msg(e->symbol);
 		else
 		{
-			printf("Resolve Error | Undefined symbol '%s'\n", e->name);
+			fprintf(stderr, "Resolve Error | Undefined symbol '%s'\n", e->name);
 			res_errors++;
 		}
 	}
