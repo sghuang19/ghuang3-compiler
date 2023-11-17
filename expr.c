@@ -339,3 +339,143 @@ void expr_resolve(struct expr* e)
 		expr_resolve(e->right);
 	}
 }
+
+/* Typechecking the expressions */
+
+/** @param rt Pass NULL to print a unary type error msg */
+void type_error_msg(const struct expr* e, const struct type* lt, const struct type* rt)
+{
+	// operator "<op>" cannot be applied on <type> (<expr>) and <type> (<expr>)
+	char* op = get_operator(e->kind);
+	printf("Type Error | operator '%s' cannot be applied on ", op);
+	free(op);
+	type_print(lt);
+	printf(" (");
+	expr_print(e->left);
+	printf(")");
+	if (rt)
+	{
+		printf(" and ");
+		type_print(rt);
+		printf(" (");
+		expr_print(e->right);
+		printf(")");
+	}
+	printf("\n");
+	type_errors++;
+}
+
+void arg_error_msg(const struct expr* e)
+{
+	printf("Type Error | function '%s' ", e->left->name);
+	if (!e->left->symbol->type->params)
+		printf("does not expect arguments but is given\n");
+	else if (!e->right)
+		printf("expects arguments but none is given\n");
+	else
+	{
+		printf("called with incorrect arguments (");
+		expr_print_list(e->right);
+		printf(")\n");
+	}
+	type_errors++;
+}
+
+struct type* expr_typecheck(const struct expr* e)
+{
+	if (!e) return NULL;
+	struct type* lt = expr_typecheck(e->left);
+	struct type* rt = expr_typecheck(e->right);
+
+	switch (e->kind)
+	{
+		/* Arithmetic operators */
+
+	case EXPR_ADD:
+	case EXPR_SUB:
+	case EXPR_MUL:
+	case EXPR_MOD:
+	case EXPR_DIV:
+	case EXPR_EXP:
+		if (lt->kind != rt->kind ||
+			lt->kind != TYPE_INTEGER && lt->kind != TYPE_FLOAT)
+			type_error_msg(e, lt, rt);
+		return lt;
+
+		/* Comparison operators */
+
+	case EXPR_GT:
+	case EXPR_GEQ:
+	case EXPR_LT:
+	case EXPR_LEQ:
+	case EXPR_EQ:
+	case EXPR_NEQ:
+		if (lt->kind != rt->kind ||
+			lt->kind != TYPE_INTEGER && lt->kind != TYPE_FLOAT &&
+			lt->kind != TYPE_CHAR && lt->kind != TYPE_BOOLEAN)
+			type_error_msg(e, lt, rt);
+		return type_create(TYPE_BOOLEAN);
+
+		/* Logical operators */
+
+	case EXPR_AND:
+	case EXPR_OR:
+		if (lt->kind != TYPE_BOOLEAN || rt->kind != TYPE_BOOLEAN)
+			type_error_msg(e, lt, rt);
+		return type_create(TYPE_BOOLEAN);
+
+		/* Other binary operator nodes */
+
+	case EXPR_CALL:
+		if (lt->kind != TYPE_FUNCTION)
+		{
+			type_error_msg(e, lt, rt);
+			return rt ? rt : lt; // Assume same type as argument, otherwise as left
+		}
+		if (!param_typecheck(lt->params, e->right))
+			arg_error_msg(e);
+		return e->left->symbol->type->subtype;
+	case EXPR_INDEX:
+		if (lt->kind != TYPE_ARRAY || rt->kind != TYPE_INTEGER)
+			type_error_msg(e, lt, rt);
+		return lt->subtype ? lt->subtype : lt;
+	case EXPR_ASSIGN:
+		if (lt->kind != rt->kind)
+			type_error_msg(e, lt, rt);
+		return lt;
+
+		/* Unary operator nodes */
+
+	case EXPR_NEG:
+	case EXPR_INCREMENT:
+	case EXPR_DECREMENT:
+		if (lt->kind != TYPE_INTEGER && lt->kind != TYPE_FLOAT)
+			type_error_msg(e, lt, NULL);
+		return lt;
+	case EXPR_NOT:
+		if (lt->kind != TYPE_BOOLEAN)
+			type_error_msg(e, lt, NULL);
+		return type_create(TYPE_BOOLEAN);
+
+		/* Leaf nodes */
+
+	case EXPR_NAME:
+		return e->symbol->type;
+	case EXPR_INTEGER_LITERAL:
+		return type_create(TYPE_INTEGER);
+	case EXPR_FLOAT_LITERAL:
+		return type_create(TYPE_FLOAT);
+	case EXPR_BOOLEAN_LITERAL:
+		return type_create(TYPE_BOOLEAN);
+	case EXPR_CHAR_LITERAL:
+		return type_create(TYPE_CHAR);
+	case EXPR_STRING_LITERAL:
+		return type_create(TYPE_STRING);
+
+		/* Special nodes */
+	case EXPR_LIST:
+		// Arguments are checked in EXPR_CALL
+		return lt; // Type of list is that of the 1st element
+	}
+	return NULL;
+}

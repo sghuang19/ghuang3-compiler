@@ -78,4 +78,10 @@ void expr_print(const struct expr* e);
 /** Resolve the expression */
 void expr_resolve(struct expr* e);
 
+/**
+ * Typechecking the expression.
+ * @return Type of expr if successful, of left child otherwise.
+*/
+struct type* expr_typecheck(const struct expr* e);
+
 #endif
