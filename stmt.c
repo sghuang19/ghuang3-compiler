@@ -187,3 +187,40 @@ void stmt_resolve(const struct stmt* s)
 	}
 	stmt_resolve(s->next);
 }
+
+void stmt_typecheck(const struct stmt* s)
+{
+	if (!s) return;
+	switch (s->kind)
+	{
+	case STMT_DECL:
+		decl_typecheck(s->decl);
+		break;
+	case STMT_IF_ELSE:
+	case STMT_FOR:
+		expr_typecheck(s->init_expr);
+		struct type* cond_type = expr_typecheck(s->expr);
+		if (cond_type->kind != TYPE_BOOLEAN)
+		{
+			printf("Type Error | condition of if/for statement cannot be ");
+			type_print(cond_type);
+			printf(" (");
+			expr_print(s->expr);
+			printf(")\n");
+			type_errors++;
+		}
+		expr_typecheck(s->next_expr);
+		stmt_typecheck(s->body);
+		stmt_typecheck(s->else_body);
+		break;
+	case STMT_BLOCK:
+		stmt_typecheck(s->body);
+		break;
+	case STMT_EXPR:
+	case STMT_PRINT:
+	case STMT_RETURN:
+		expr_typecheck(s->expr);
+		break;
+	}
+	stmt_typecheck(s->next);
+}
