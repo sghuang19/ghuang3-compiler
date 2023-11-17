@@ -32,7 +32,7 @@ struct type* type_create_func(struct type* rtype, struct param_list* params)
 
 /* Printing the types */
 
-void type_print_primitive(struct type* t)
+void type_print_primitive(const struct type* t)
 {
 	switch (t->kind)
 	{
@@ -60,7 +60,7 @@ void type_print_primitive(struct type* t)
 	}
 }
 
-void type_print(struct type* t)
+void type_print(const struct type* t)
 {
 	switch (t->kind)
 	{

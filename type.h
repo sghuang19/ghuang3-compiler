@@ -26,6 +26,6 @@ struct type* type_create(type_t kind);
 struct type* type_create_array(struct type* subtype, struct expr* size);
 struct type* type_create_func(struct type* rtype, struct param_list* params);
 
-void type_print(struct type* t);
+void type_print(const struct type* t);
 
 #endif

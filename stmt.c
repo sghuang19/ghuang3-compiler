@@ -151,7 +151,7 @@ void stmt_print(const struct stmt* s, int indent)
 		stmt_print(s->next, indent);
 }
 
-void stmt_resolve(struct stmt* s)
+void stmt_resolve(const struct stmt* s)
 {
 	if (!s) return;
 	switch (s->kind)
