@@ -82,7 +82,10 @@ void decl_resolve(struct decl* d)
 	scope_bind(d->name, d->symbol);
 
 	if (d->type->kind == TYPE_ARRAY)
+	{
 		expr_resolve(d->type->size);
+		expr_resolve(d->type->subtype->size);
+	}
 
 	expr_resolve(d->value);
 	if (d->code)
