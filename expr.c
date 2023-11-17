@@ -50,7 +50,7 @@ struct expr* expr_create_integer_literal(int i)
 
 struct expr* expr_create_float_literal(float f)
 {
-	struct expr* e = expr_create_leaf(EXPR_INTEGER_LITERAL);
+	struct expr* e = expr_create_leaf(EXPR_FLOAT_LITERAL);
 	e->float_literal = f;
 	return e;
 }
