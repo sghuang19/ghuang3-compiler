@@ -61,11 +61,19 @@ void decl_resolve(struct decl* d)
 {
 	if (!d) return;
 
-	if (scope_lookup_current(d->name))
+	if (scope_lookup_current(d->name) && d->type->kind != TYPE_FUNCTION)
 	{
-		fprintf(stderr, "error: symbol '%s' already declared\n", d->name);
+		fprintf(stderr, "Resolve Error | symbol '%s' already declared\n", d->name);
 		res_errors++;
 	}
+
+	struct symbol* prev = scope_lookup(d->name);
+	if (prev && prev->prototype && d->code)
+	{
+		fprintf(stderr, "Resolve Error | function '%s' already declared and defined\n", d->name);
+		res_errors++;
+	}
+
 	symbol_t kind;
 	int which;
 	if (cur_scope->level > 0)
@@ -90,6 +98,7 @@ void decl_resolve(struct decl* d)
 	expr_resolve(d->value);
 	if (d->code)
 	{
+		d->symbol->prototype = 1;
 		scope_enter();
 		param_list_resolve(d->type->params);
 		stmt_resolve(d->code);
