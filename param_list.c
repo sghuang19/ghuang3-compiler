@@ -46,3 +46,19 @@ void param_list_resolve(struct param_list* p)
 		expr_resolve(p->type->size);
 	param_list_resolve(p->next);
 }
+
+int param_typecheck(const struct param_list* params, const struct expr* args)
+{
+	if (!params && !args) return 1; // Both null
+	if (!params || !args) return 0; // One null
+	const struct param_list* p = params;
+	const struct expr* a = args;
+	while (p && a)
+	{
+		if (!type_equals(p->type, expr_typecheck(a->left)))
+			return 0;
+		p = p->next;
+		a = a->right;
+	}
+	return !p && !a; // Both null
+}
