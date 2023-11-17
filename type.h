@@ -30,4 +30,7 @@ struct type* type_create_func(struct type* rtype, struct param_list* params);
 
 void type_print(const struct type* t);
 
+/** @return 1 if two types are equal, 0 otherwise. */
+int type_equals(const struct type* t1, const struct type* t2);
+
 #endif
