@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "type.h"
+#include "expr.h"
+#include "param_list.h"
 
 /* Creating the types */
 

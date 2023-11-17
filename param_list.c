@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "param_list.h"
+#include "type.h"
+#include "expr.h"
+#include "symbol.h"
 #include "scope.h"
 
 struct param_list* param_list_create(char* name, struct type* type, struct param_list* next)

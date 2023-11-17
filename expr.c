@@ -1,8 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
 #include "encoder.h"
 #include "expr.h"
+#include "param_list.h"
+#include "type.h"
 #include "scope.h"
+#include "symbol.h"
 
 /* Creating binary nodes by default */
 

@@ -1,8 +1,6 @@
 #ifndef EXPR_H
 #define EXPR_H
 
-#include "symbol.h"
-
 typedef enum
 {
 	/* Arithmetic operator nodes */

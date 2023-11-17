@@ -1,8 +1,6 @@
 #ifndef SYMBOL_H
 #define SYMBOL_H
 
-#include "type.h"
-
 typedef enum
 {
 	SYMBOL_LOCAL,

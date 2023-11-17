@@ -1,7 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+
+#include "stmt.h"
+#include "expr.h"
 #include "decl.h"
 #include "type.h"
+#include "param_list.h"
 #include "symbol.h"
 #include "scope.h"
 

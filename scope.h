@@ -1,8 +1,7 @@
 #ifndef _SCOPE_H_
 #define _SCOPE_H_
 
-#include "symbol.h"
-#include "hash_table.h"
+struct symbol; // Forward declaration
 
 struct scope
 {

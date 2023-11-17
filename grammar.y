@@ -1,6 +1,10 @@
 %{
 #include <stdio.h>
 #include "stmt.h"
+#include "decl.h"
+#include "expr.h"
+#include "param_list.h"
+#include "type.h"
 #define YYDEBUG 1
 
 extern int yylex();

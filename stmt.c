@@ -1,5 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+
+#include "type.h"
+#include "expr.h"
+#include "decl.h"
 #include "stmt.h"
 #include "scope.h"
 

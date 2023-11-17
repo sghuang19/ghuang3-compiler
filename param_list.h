@@ -1,8 +1,6 @@
 #ifndef PARAM_LIST_H
 #define PARAM_LIST_H
 
-#include "type.h"
-
 struct param_list
 {
 	char* name;

@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "scope.h"
+#include "symbol.h"
+#include "hash_table.h"
 
 int res_errors = 0;
 struct scope* cur_scope = NULL;
