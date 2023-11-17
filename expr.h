@@ -72,10 +72,10 @@ struct expr* expr_create_boolean_literal(int b);
 struct expr* expr_create_char_literal(char c);
 struct expr* expr_create_string_literal(const char* str);
 
-/* Printing the expressions */
+/** Print the expression */
 void expr_print(const struct expr* e);
 
-/* Resolving the expressions */
+/** Resolve the expression */
 void expr_resolve(struct expr* e);
 
 #endif
