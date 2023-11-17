@@ -78,6 +78,84 @@ struct expr* expr_create_string_literal(const char* str)
 
 /* Printing the expression nodes */
 
+/**
+ * @param expr_t k the kind of the operator
+ * @return a string of the operator
+ */
+char* get_operator(expr_t k)
+{
+	char* op = calloc(3, sizeof(char));
+	switch (k)
+	{
+		/* Arithmetic operators */
+	case EXPR_ADD:
+		op[0] = '+';
+		break;
+	case EXPR_SUB:
+		op[0] = '-';
+		break;
+	case EXPR_MUL:
+		op[0] = '*';
+		break;
+	case EXPR_DIV:
+		op[0] = '/';
+		break;
+	case EXPR_MOD:
+		op[0] = '%';
+		break;
+	case EXPR_EXP:
+		op[0] = '^';
+		break;
+
+		/* Comparison and logical ops */
+	case EXPR_EQ:
+		op[0] = op[1] = '=';
+		break;
+	case EXPR_NEQ:
+		op[0] = '!';
+		op[1] = '=';
+		break;
+	case EXPR_LT:
+		op[0] = '<';
+		break;
+	case EXPR_LEQ:
+		op[0] = '<';
+		op[1] = '=';
+		break;
+	case EXPR_GT:
+		op[0] = '>';
+		break;
+	case EXPR_GEQ:
+		op[0] = '>';
+		op[1] = '=';
+		break;
+	case EXPR_AND:
+		op[0] = op[1] = '&';
+		break;
+	case EXPR_OR:
+		op[0] = op[1] = '|';
+		break;
+
+		/* Other binary ops */
+	case EXPR_CALL:
+		op[0] = '(';
+		op[1] = ')';
+		break;
+	case EXPR_INDEX:
+		op[0] = '[';
+		op[1] = ']';
+		break;
+	case EXPR_ASSIGN:
+		op[0] = '=';
+		break;
+
+	default:
+		free(op);
+		return NULL;
+	}
+	return op;
+}
+
 int get_precedence(const struct expr* e)
 {
 	switch (e->kind)
@@ -117,68 +195,7 @@ int get_precedence(const struct expr* e)
 
 void expr_print_binary(const struct expr* e)
 {
-	char operator[3] = "\0\0";
-	switch (e->kind)
-	{
-		/* Arithmetic operators */
-	case EXPR_ADD:
-		operator[0] = '+';
-		break;
-	case EXPR_SUB:
-		operator[0] = '-';
-		break;
-	case EXPR_MUL:
-		operator[0] = '*';
-		break;
-	case EXPR_DIV:
-		operator[0] = '/';
-		break;
-	case EXPR_MOD:
-		operator[0] = '%';
-		break;
-	case EXPR_EXP:
-		operator[0] = '^';
-		break;
-
-		/* Comparison and logical operators */
-	case EXPR_EQ:
-		operator[0] = operator[1] = '=';
-		break;
-	case EXPR_NEQ:
-		operator[0] = '!';
-		operator[1] = '=';
-		break;
-	case EXPR_LT:
-		operator[0] = '<';
-		break;
-	case EXPR_LEQ:
-		operator[0] = '<';
-		operator[1] = '=';
-		break;
-	case EXPR_GT:
-		operator[0] = '>';
-		break;
-	case EXPR_GEQ:
-		operator[0] = '>';
-		operator[1] = '=';
-		break;
-	case EXPR_AND:
-		operator[0] = operator[1] = '&';
-		break;
-	case EXPR_OR:
-		operator[0] = operator[1] = '|';
-		break;
-
-		/* Assignment operator */
-	case EXPR_ASSIGN:
-		operator[0] = '=';
-		break;
-
-	default:
-		/* Non-trivial cases handled by expr_print() */
-		break;
-	}
-
+	/* Non-trivial cases handled by expr_print() */
 	if (get_precedence(e) > get_precedence(e->left))
 	{
 		printf("(");
@@ -188,7 +205,9 @@ void expr_print_binary(const struct expr* e)
 	else
 		expr_print(e->left);
 
-	printf(" %s ", operator);
+	char* op = get_operator(e->kind);
+	printf(" %s ", op);
+	free(op);
 
 	if (get_precedence(e) > get_precedence(e->right))
 	{
