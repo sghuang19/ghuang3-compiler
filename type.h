@@ -13,6 +13,8 @@ typedef enum
 	TYPE_FUNCTION,
 } type_t;
 
+extern int type_errors;
+
 struct type
 {
 	type_t kind;
