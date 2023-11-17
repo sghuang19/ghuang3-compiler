@@ -39,6 +39,9 @@ case $module in
     "resolver")
         command="resolve"
         ;;
+    "typechecker")
+        command="typecheck"
+        ;;
     *)
         echo "Unknown module: $module"
         exit 1
