@@ -57,7 +57,7 @@ while       { printf("WHILE\n");    return TOKEN_WHILE; }
 }
 
 [0-9]*\.[0-9]+ {
-    /* Float without decimal point */
+    /* Float with decimal point */
     printf("TOKEN_FLOAT_LITERAL: %s\n", yytext);
     yylval.f = atof(yytext);
     return TOKEN_FLOAT_LITERAL;
