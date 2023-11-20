@@ -1,0 +1,1249 @@
+=====STUDENT TESTS=====
+====Good Tests====
+===[STUDENT TESTS/good0.bminor Input]===
+/* Variable declarations */
+a: integer = a;
+b: integer = a;
+c: integer = a + b;
+d: float = 45.67;
+e: boolean = false;
+f: char = 'q';
+g: string = "hello bminor\n";
+h: array [1] integer;
+i: array [2] boolean = {true, false};
+j: array [2] array [b] boolean;
+k: array [b] array [2] boolean;
+l: array [2] integer = {a + b, 1 + 3 + c};
+
+===[STUDENT TESTS/good0.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good0.bminor Output]===
+
+
+
+
+===[STUDENT TESTS/good1.bminor Input]===
+/* Function declarations */
+a: function void (arg1: integer, arg2: integer) = {
+    return;
+}
+
+b: function integer (arg1: array [2] integer) = {
+    a(arg1[0], arg1[1]);
+    return 1 + arg1[0];
+}
+
+===[STUDENT TESTS/good1.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good1.bminor Output]===
+
+
+
+
+===[STUDENT TESTS/good2.bminor Input]===
+/* Declarations within function */
+
+c: array [2] boolean = {true, false};
+a: function void (arg1: integer, arg2: integer) = {
+    a: integer = 2;
+    b: float = 1.1;
+    arg1 = arg2;
+}
+
+===[STUDENT TESTS/good2.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good2.bminor Output]===
+
+
+
+
+===[STUDENT TESTS/good3.bminor Input]===
+/* Expressions */
+
+a: integer;
+b: float;
+c: string;
+d: boolean;
+
+func: function void (arg: integer);
+
+main: function void () = {
+    func(a);
+    f: float = b;
+    g: string = c;
+    h: boolean = d;
+    a = a + a;
+    a = a * a;
+    a = a / a;
+    b = b / b;
+    d = d && true;
+}
+
+===[STUDENT TESTS/good3.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good3.bminor Output]===
+
+
+
+
+===[STUDENT TESTS/good4.bminor Input]===
+/* Multi-levels */
+
+var: integer;
+
+main: function void (var: integer) = {
+    {
+        var: integer;
+        main(var);
+    }
+    var++;
+}
+
+new: integer = var;
+
+===[STUDENT TESTS/good4.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good4.bminor Output]===
+
+
+
+
+===[STUDENT TESTS/good5.bminor Input]===
+/* Conditions */
+
+var: integer;
+
+main: function void () = {
+    if (var == 0)
+        var++;
+    else
+        var--;
+
+    new: boolean;
+    if (new)
+        var++;
+    else
+        var--;
+}
+
+===[STUDENT TESTS/good5.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good5.bminor Output]===
+
+
+
+
+===[STUDENT TESTS/good6.bminor Input]===
+/* Loop */
+
+var: integer;
+
+main: function void () = {
+    if (var == 0)
+        var++;
+    else
+        var--;
+
+    new: boolean;
+    if (new)
+        var++;
+    else
+        var--;
+}
+
+===[STUDENT TESTS/good6.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good6.bminor Output]===
+
+
+
+
+===[STUDENT TESTS/good7.bminor Input]===
+/* Finding max in array */
+
+SIZE: integer = 10;
+numbers: array [SIZE] integer = {0, 3, 5, 7, 9, 2, 4, 6, 8, 1};
+
+find_max: function integer (arr: array [] integer, size: integer) = {
+    max: integer = arr[0];
+    i: integer;
+    for (i = 1; i < size; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+main: function integer () = {
+    max: integer = find_max(numbers, SIZE);
+    print "The maximum number is ", max, "\n";
+    return 0;
+}
+
+===[STUDENT TESTS/good7.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good7.bminor Output]===
+
+
+
+
+===[STUDENT TESTS/good8.bminor Input]===
+/* Sum of even numbers in an array */
+
+SIZE: integer = 10;
+numbers: array [SIZE] integer = {0, 3, 5, 7, 9, 2, 4, 6, 8, 1};
+
+sum_even: function integer (arr: array [] integer, size: integer) = {
+    sum: integer = 0;
+    i: integer;
+    for (i = 0; i < size; i++) {
+        if (arr[i] % 2 == 0) {
+            sum = sum + arr[i];
+        }
+    }
+    return sum;
+}
+
+main: function integer () = {
+    even_sum: integer = sum_even(numbers, SIZE);
+    print "The sum of even numbers is ", even_sum, "\n";
+    return 0;
+}
+
+===[STUDENT TESTS/good8.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good8.bminor Output]===
+
+
+
+
+===[STUDENT TESTS/good9.bminor Input]===
+/* Factorial of a number using recursion */
+
+factorial: function integer (n: integer) = {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+main: function integer () = {
+    num: integer = 5;
+    result: integer = factorial(num);
+    print "The factorial of ", num, " is ", result, "\n";
+    return 0;
+}
+
+===[STUDENT TESTS/good9.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[STUDENT TESTS/good9.bminor Output]===
+
+
+
+
+====Bad Tests====
+===[STUDENT TESTS/bad0.bminor Input]===
+/* Incorrect type for initializer */
+
+a: integer = 0.1;
+b: float = 1;
+c: char = a;
+d: array [b] integer = {true, 1, 3, a, b};
+e: integer = "hello\n";
+f: integer = 's';
+g: integer = false;
+h: float = "hello\n";
+i: float = 's';
+j: float = false;
+k: string = 1;
+l: string = 's';
+m: string = false;
+
+===[STUDENT TESTS/bad0.bminor Status]===
+return code: 15
+Test passed successfully!
+
+===[STUDENT TESTS/bad0.bminor Output]===
+
+Type Error | cannot initialize integer ('a') with float (0.100000)
+Type Error | cannot initialize float ('b') with integer (1)
+Type Error | cannot initialize char ('c') with integer (a)
+Type Error | size of array ('d') cannot be float (b)
+Type Error | cannot initialize array of integer ('d') with element of boolean (true)
+Type Error | cannot initialize array of integer ('d') with element of float (b)
+Type Error | cannot initialize integer ('e') with string ("hello\n")
+Type Error | cannot initialize integer ('f') with char ('s')
+Type Error | cannot initialize integer ('g') with boolean (false)
+Type Error | cannot initialize float ('h') with string ("hello\n")
+Type Error | cannot initialize float ('i') with char ('s')
+Type Error | cannot initialize float ('j') with boolean (false)
+Type Error | cannot initialize string ('k') with integer (1)
+Type Error | cannot initialize string ('l') with char ('s')
+Type Error | cannot initialize string ('m') with boolean (false)
+
+
+
+===[STUDENT TESTS/bad1.bminor Input]===
+/* functions of incorrect types */
+
+a: function array [1] integer () = {
+    return;
+}
+
+b: function void () = {
+    c: function integer();
+    return;
+}
+
+===[STUDENT TESTS/bad1.bminor Status]===
+return code: 2
+Test passed successfully!
+
+===[STUDENT TESTS/bad1.bminor Output]===
+
+Type Error | function ('a') cannot return array (array [1] integer)
+Type Error | cannot declare function ('c') inside function
+
+
+
+===[STUDENT TESTS/bad2.bminor Input]===
+/* incorrect arguments */
+
+arr: array [5] integer = {1, 2, 3, 4, 5};
+
+a: function void (
+    arg1: integer, arg2: float, arg3: char, arg4: string, arg5: array [] integer
+) = { return; }
+
+b: function void() = { return; }
+
+main: function void () = {
+    i: integer = 0;
+    f: float = 3.14;
+    c: char = 'c';
+    s: string = "string";
+
+    a(i, f, c, s, arr);
+    a(i, f, c, s);
+    a(f, c, s, arr);
+    a(i, i, c, s, arr);
+    a(i, f, c, c, arr);
+    a();
+
+    b(1);
+    b(1, 2, f);
+}
+
+===[STUDENT TESTS/bad2.bminor Status]===
+return code: 8
+Test passed successfully!
+
+===[STUDENT TESTS/bad2.bminor Output]===
+
+Type Error | function 'a' called with incorrect arguments (i, f, c, s, arr)
+Type Error | function 'a' called with incorrect arguments (i, f, c, s)
+Type Error | function 'a' called with incorrect arguments (f, c, s, arr)
+Type Error | function 'a' called with incorrect arguments (i, i, c, s, arr)
+Type Error | function 'a' called with incorrect arguments (i, f, c, c, arr)
+Type Error | function 'a' expects arguments but none is given
+Type Error | function 'b' does not expect arguments but is given
+Type Error | function 'b' does not expect arguments but is given
+
+
+
+===[STUDENT TESTS/bad3.bminor Input]===
+/* expressions */
+
+a: integer;
+b: float;
+c: string;
+d: boolean;
+
+func: function integer (arg: integer);
+
+main: function void () = {
+    a + b;
+    b + c;
+    a ^ a;
+    b = "hello";
+    d = a;
+    a && b;
+    1 && false;
+    b >= c;
+    func();
+    func(c);
+    (func(a) + b) * 2 == (func(c) % 2);
+}
+
+===[STUDENT TESTS/bad3.bminor Status]===
+return code: 11
+Test passed successfully!
+
+===[STUDENT TESTS/bad3.bminor Output]===
+
+Type Error | operator '+' cannot be applied on integer (a) and float (b)
+Type Error | operator '+' cannot be applied on float (b) and string (c)
+Type Error | operator '=' cannot be applied on float (b) and string ("hello")
+Type Error | operator '=' cannot be applied on boolean (d) and integer (a)
+Type Error | operator '&&' cannot be applied on integer (a) and float (b)
+Type Error | operator '&&' cannot be applied on integer (1) and boolean (false)
+Type Error | operator '>=' cannot be applied on float (b) and string (c)
+Type Error | function 'func' expects arguments but none is given
+Type Error | function 'func' called with incorrect arguments (c)
+Type Error | operator '+' cannot be applied on integer (func(a)) and float (b)
+Type Error | function 'func' called with incorrect arguments (c)
+
+
+
+===[STUDENT TESTS/bad4.bminor Input]===
+/* Multi-levels */
+
+var: integer;
+
+main: function void (var: integer) = {
+    {
+        f: float = 3.14;
+        var + 3.14;
+        var = f;
+        var = 'c';
+        main(var);
+    }
+    var++;
+}
+
+new: integer = var;
+===[STUDENT TESTS/bad4.bminor Status]===
+return code: 3
+Test passed successfully!
+
+===[STUDENT TESTS/bad4.bminor Output]===
+
+Type Error | operator '+' cannot be applied on integer (var) and float (3.140000)
+Type Error | operator '=' cannot be applied on integer (var) and float (f)
+Type Error | operator '=' cannot be applied on integer (var) and char ('c')
+
+
+
+===[STUDENT TESTS/bad5.bminor Input]===
+/* Conditions */
+
+var: integer;
+
+main: function void () = {
+    if (var == 0)
+        var++;
+    else
+        var--;
+
+    new: integer = 0;
+    if (new)
+        new++;
+    else
+        new--;
+}
+
+===[STUDENT TESTS/bad5.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[STUDENT TESTS/bad5.bminor Output]===
+
+Type Error | condition of if/for statement cannot be integer (new)
+
+
+
+===[STUDENT TESTS/bad6.bminor Input]===
+/* Loop */
+
+var: integer;
+
+main: function void () = {
+    new: float = 3.14;
+    if (new + 1.1)
+        new++;
+    else
+        new--;
+
+    if (var && var)
+        var++;
+    else
+        var--;
+}
+
+===[STUDENT TESTS/bad6.bminor Status]===
+return code: 2
+Test passed successfully!
+
+===[STUDENT TESTS/bad6.bminor Output]===
+
+Type Error | condition of if/for statement cannot be float (new + 1.100000)
+Type Error | operator '&&' cannot be applied on integer (var) and integer (var)
+
+
+
+===[STUDENT TESTS/bad7.bminor Input]===
+/* Finding max in array */
+
+SIZE: integer = 10;
+
+find_max: function integer (arr: array [] integer, size: integer) = {
+    max: integer = arr["first"];
+    i: integer;
+    for (i = 1; i - size; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+main: function integer () = {
+    numbers: array [SIZE] integer = {true, 3.14, 5, 7, 9, 'c', 4, 6, 8, 1};
+    max: integer = find_max(numbers, SIZE, 1);
+    print "The maximum number is ", max, "\n";
+    return 0;
+}
+
+===[STUDENT TESTS/bad7.bminor Status]===
+return code: 7
+Test passed successfully!
+
+===[STUDENT TESTS/bad7.bminor Output]===
+
+Type Error | operator '[]' cannot be applied on array [] integer (arr) and string ("first")
+Type Error | condition of if/for statement cannot be integer (i - size)
+Type Error | cannot initialize local array ('numbers') ({true, 3.140000, 5, 7, 9, 'c', 4, 6, 8, 1})
+Type Error | cannot initialize array of integer ('numbers') with element of boolean (true)
+Type Error | cannot initialize array of integer ('numbers') with element of float (3.140000)
+Type Error | cannot initialize array of integer ('numbers') with element of char ('c')
+Type Error | function 'find_max' called with incorrect arguments (numbers, SIZE, 1)
+
+
+
+===[STUDENT TESTS/bad8.bminor Input]===
+/* Sum of even numbers in an array */
+
+SIZE: float = 10;
+
+sum_even: function integer (arr: array [] integer, size: integer) = {
+    sum: char = 0;
+    i: integer;
+    for (i = 0; i < size; i++) {
+        if (arr[i] % 2) {
+            sum = sum + arr['c'];
+        }
+    }
+    return sum;
+}
+
+main: function integer () = {
+    numbers: array [SIZE] integer = {0, 3, 5, 7, 9, 2, 4, 6, 8, 1};
+    even_sum: integer = sum_even(numbers, numbers, SIZE);
+    print "The sum of even numbers is ", even_sum + SIZE, "\n";
+    return 0;
+}
+
+===[STUDENT TESTS/bad8.bminor Status]===
+return code: 9
+Test passed successfully!
+
+===[STUDENT TESTS/bad8.bminor Output]===
+
+Type Error | cannot initialize float ('SIZE') with integer (10)
+Type Error | cannot initialize char ('sum') with integer (0)
+Type Error | condition of if/for statement cannot be integer (arr[i] % 2)
+Type Error | operator '[]' cannot be applied on array [] integer (arr) and char ('c')
+Type Error | operator '+' cannot be applied on char (sum) and integer (arr['c'])
+Type Error | size of array ('numbers') cannot be float (SIZE)
+Type Error | cannot initialize local array ('numbers') ({0, 3, 5, 7, 9, 2, 4, 6, 8, 1})
+Type Error | function 'sum_even' called with incorrect arguments (numbers, numbers, SIZE)
+Type Error | operator '+' cannot be applied on integer (even_sum) and float (SIZE)
+
+
+
+===[STUDENT TESTS/bad9.bminor Input]===
+/* Factorial of a number using recursion */
+
+factorial: function integer (n: integer) = {
+    if (n) {
+        return 1;
+    } else {
+        return n % factorial(n - 1, true);
+    }
+}
+
+main: function integer () = {
+    num: integer = 5;
+    result: integer = factorial(num, 1);
+    print "The factorial of ", num, " is ", result, "\n";
+    return 0;
+}
+
+===[STUDENT TESTS/bad9.bminor Status]===
+return code: 3
+Test passed successfully!
+
+===[STUDENT TESTS/bad9.bminor Output]===
+
+Type Error | condition of if/for statement cannot be integer (n)
+Type Error | function 'factorial' called with incorrect arguments (n - 1, true)
+Type Error | function 'factorial' called with incorrect arguments (num, 1)
+
+
+
+=====HIDDEN TESTS=====
+====Good Tests====
+===[HIDDEN TESTS/good1.bminor Input]===
+/*
+Correct: The parameter name can vary as long as the type is the same.
+*/
+
+x: function integer(a:integer);
+
+x: function integer(b:integer) = {
+	return 0;
+}
+
+x: function integer(c:integer);
+
+===[HIDDEN TESTS/good1.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good1.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/good2.bminor Input]===
+/*
+Correct: Test various nested definitions.
+*/
+
+f: function void() = {
+	x: integer = 1;
+	{
+		print x;
+		x: integer = x + 1;
+		print x;
+	}
+	print x;
+}
+
+===[HIDDEN TESTS/good2.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good2.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/good3.bminor Input]===
+/*
+Correct: Test various function return types.
+*/
+
+A: function boolean(x: integer, y: integer);
+B: function integer(x: char);
+C: function char(a: string);
+
+main: function integer() = {
+	i: integer;
+	for (i = 0; i < 10; i++)
+		if (i % 2 == 0)
+			print i;
+		else
+			return i;
+
+	if (A(B('d') - 1, 10)) {
+		x: integer = 0;
+		return 2 * B('c') + x;
+	}
+
+	return B(C("hello")) % 3;
+}
+
+===[HIDDEN TESTS/good3.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good3.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/good4.bminor Input]===
+/*
+Correct: Test combinations of boolean operators.
+*/
+
+func: function void(
+		a: integer,
+		b: integer,
+		c: boolean,
+		d: boolean
+	) = {
+
+	print a -b;
+	print c && d;
+	print a + b * a - a ^ b /a;
+
+	print a < b && d;
+	print (a < b) || (c && d);
+}
+
+===[HIDDEN TESTS/good4.bminor Status]===
+return code: 7
+TEST NOT PASSED
+
+===[HIDDEN TESTS/good4.bminor Output]===
+
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'c'
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'c'
+Resolve Error | Resolve errors found, aborting typechecking
+
+
+
+===[HIDDEN TESTS/good5.bminor Input]===
+/*
+Correct: Test array assignments.
+*/
+
+x:array [5] integer = {1,2,3,4,5};
+y:array [5] array [5] integer;
+
+main:function void () =
+{
+	y[1] = x;
+	count:integer;
+	for(count = 0; count < 5; count++)
+	{
+		y[count] = x;
+	} 	
+}
+
+===[HIDDEN TESTS/good5.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good5.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/good7.bminor Input]===
+/*
+Correct: Test if-expression and return-expression.
+*/
+
+main: function integer() = {
+	m: integer = 2;
+	n: boolean = true;
+
+	if (!n) return 0; else return -m;
+
+	print 10 * (-1 + m);
+}
+
+===[HIDDEN TESTS/good7.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good7.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/good8.bminor Input]===
+/*
+Correct: Boolean expression in several places.
+*/
+
+x: function integer(a:boolean) = {
+	if (a) for (;a;) print a;
+}
+
+===[HIDDEN TESTS/good8.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good8.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/good9.bminor Input]===
+/*
+Correct: A program to plot a quadratic function. 
+*/
+
+/* Make use of atoi from the standard library */
+
+atoi: function integer( s: string );
+
+quadratic: function integer ( a: integer, b: integer, c: integer, x: integer ) = {
+	return a*x*x + b*x + c*x;
+}
+
+main: function integer ( argc: integer, argv: array [] string ) =  {
+
+      if(argc<3) {
+          print "use: ", argv[0], "[a] [b] [c] [start] [end]\n";
+      }
+
+      a: integer = atoi(argv[0]);
+      b: integer = atoi(argv[1]);
+      c: integer = atoi(argv[2]);
+      start: integer = atoi(argv[3]);
+      end: integer = atoi(argv[4]);
+
+
+      x: integer;
+      
+      for(x=start;x<end;x++) {
+          print x, " ", quadratic(a,b,c,x), "\n";
+      }
+
+      return 0;
+}
+
+===[HIDDEN TESTS/good9.bminor Status]===
+return code: 2
+TEST NOT PASSED
+
+===[HIDDEN TESTS/good9.bminor Output]===
+
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'c'
+Resolve Error | Resolve errors found, aborting typechecking
+
+
+
+===[HIDDEN TESTS/good10.bminor Input]===
+/*
+
+Testing float typechecking
+
+*/
+
+main: function integer() = {
+    m: float = 3.1;
+    n: float = 5.2;
+    
+    x: float = m + n;
+
+    print x;
+}
+
+===[HIDDEN TESTS/good10.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good10.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/good6.bminor Input]===
+/*
+Correct: Test assignment of array literals.
+*/
+
+main: function void (a: integer) = {
+	x: array [1] boolean;
+	y: array [1] integer;
+	if (x[y[a]]) return;
+	{
+		z: integer;
+		zz: integer = z;
+	}
+}
+
+===[HIDDEN TESTS/good6.bminor Status]===
+return code: 0
+Test passed successfully!
+
+===[HIDDEN TESTS/good6.bminor Output]===
+
+
+
+
+====Bad Tests====
+===[HIDDEN TESTS/bad1.bminor Input]===
+/*
+Incorrect: Mismatched types in forward declaration
+*/
+
+x: function integer(a:char);
+x: function integer(a:integer) = {
+	return 0;
+}
+
+===[HIDDEN TESTS/bad1.bminor Status]===
+return code: 0
+TEST NOT PASSED
+
+===[HIDDEN TESTS/bad1.bminor Output]===
+
+
+
+
+===[HIDDEN TESTS/bad2.bminor Input]===
+/*
+Incorrect: Variable redefined within a scope.
+*/
+
+f: function void() = {
+	x: integer = 1;
+	{
+		print x;
+		x: integer = x + 1;
+		print x;
+	}
+	x: integer = 2;
+	print x;
+}
+
+===[HIDDEN TESTS/bad2.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad2.bminor Output]===
+
+Resolve Error | symbol 'x' already declared
+Resolve Error | Resolve errors found, aborting typechecking
+
+
+
+===[HIDDEN TESTS/bad3.bminor Input]===
+/*
+Incorrect: Mismatched function return types.
+*/
+
+main: function void() = {
+	return i;
+}
+
+func: function integer() = {
+	return;
+}
+
+===[HIDDEN TESTS/bad3.bminor Status]===
+return code: 1
+Test passed successfully!
+
+===[HIDDEN TESTS/bad3.bminor Output]===
+
+Resolve Error | Undefined symbol 'i'
+Resolve Error | Resolve errors found, aborting typechecking
+
+
+
+===[HIDDEN TESTS/bad4.bminor Input]===
+/*
+Incorrect: Mismatched operators.
+*/
+
+
+func: function void(
+		a: integer,
+		b: integer,
+		c: boolean,
+		d: boolean
+	) = {
+
+	print a -c;
+	print c * d;
+	print a + b * a - a ^ b /d;
+
+	print a < b && a;
+	print (a < b) + (c && d);
+}
+
+===[HIDDEN TESTS/bad4.bminor Status]===
+return code: 7
+Test passed successfully!
+
+===[HIDDEN TESTS/bad4.bminor Output]===
+
+Resolve Error | Undefined symbol 'c'
+Resolve Error | Undefined symbol 'c'
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'c'
+Resolve Error | Resolve errors found, aborting typechecking
+
+
+
+===[HIDDEN TESTS/bad5.bminor Input]===
+/*
+Incorrect: Cannot subscript a value which is not an array.
+*/
+
+main: function void() = {
+	s : boolean = false;
+	c : char = s[1];
+	print c;
+}
+
+===[HIDDEN TESTS/bad5.bminor Status]===
+return code: 2
+Test passed successfully!
+
+===[HIDDEN TESTS/bad5.bminor Output]===
+
+Type Error | operator '[]' cannot be applied on boolean (s) and integer (1)
+Type Error | cannot initialize char ('c') with boolean (s[1])
+
+
+
+===[HIDDEN TESTS/bad6.bminor Input]===
+/*
+Incorrect: Cannot assign an array to an atomic type.
+*/
+
+main: function void () = {
+	// array of one boolean != boolean
+	x: array [1] boolean = {true};
+	if (x) return;
+}
+
+===[HIDDEN TESTS/bad6.bminor Status]===
+return code: 2
+Test passed successfully!
+
+===[HIDDEN TESTS/bad6.bminor Output]===
+
+Type Error | cannot initialize local array ('x') ({true})
+Type Error | condition of if/for statement cannot be array [1] boolean (x)
+
+
+
+===[HIDDEN TESTS/bad7.bminor Input]===
+/*
+Incorrect: Improper operators on values.
+*/
+
+main: function integer() = {
+	m: integer = 2;
+	n: boolean = true;
+
+	// wrong negation
+	if (-n) return 0; else return !m;
+
+	// arithmetic on boolean
+	print 10 * (-1 + n);
+}
+
+===[HIDDEN TESTS/bad7.bminor Status]===
+return code: 3
+Test passed successfully!
+
+===[HIDDEN TESTS/bad7.bminor Output]===
+
+Type Error | operator '(null)' cannot be applied on boolean (n)
+Type Error | operator '(null)' cannot be applied on integer (m)
+Type Error | operator '+' cannot be applied on integer (-1) and boolean (n)
+
+
+
+===[HIDDEN TESTS/bad8.bminor Input]===
+/*
+Incorrect: Cannot use an integer in place of a boolean.
+*/
+
+x: function integer(a:integer) = {
+	if (a) return 10;
+	for (;a;) print a;
+}
+
+===[HIDDEN TESTS/bad8.bminor Status]===
+return code: 2
+Test passed successfully!
+
+===[HIDDEN TESTS/bad8.bminor Output]===
+
+Type Error | condition of if/for statement cannot be integer (a)
+Type Error | condition of if/for statement cannot be integer (a)
+
+
+
+===[HIDDEN TESTS/bad9.bminor Input]===
+/*
+Incorrect: Several type mismatches throughout.
+*/
+
+/* Make use of atoi from the standard library */
+
+atoi: function boolean ( s: string );
+
+quadratic: function void ( a: char, b: string, c: boolean, x: integer ) = {
+	return a*x*x + b*x + c*x;
+}
+
+main: function integer ( argc: integer, argv: array [] string ) =  {
+
+      if(argc<3) {
+          print "use: ", argv[0], "[a] [b] [c] [start] [end]\n";
+      }
+
+      a: integer = atoi(argv[0]);
+      b: integer = atoi(argv[1]);
+      c: integer = atoi(argv[2]);
+      start: integer = atoi(argv[3]);
+      end: integer = atoi(argv[4]);
+
+
+      x: integer;
+      
+      for(x=start;x<end;x++) {
+          print x, " ", quadratic(a,b,c,x), "\n";
+      }
+
+      return 0;
+}
+
+===[HIDDEN TESTS/bad9.bminor Status]===
+return code: 2
+Test passed successfully!
+
+===[HIDDEN TESTS/bad9.bminor Output]===
+
+Resolve Error | Undefined symbol 'b'
+Resolve Error | Undefined symbol 'c'
+Resolve Error | Resolve errors found, aborting typechecking
+
+
+
+===[HIDDEN TESTS/bad10.bminor Input]===
+/*
+Incorrect: Several type errors throughout.
+*/
+
+abs: function string (n: integer);
+
+digits: array [6] char = {
+	14,
+	8,
+	6168,
+	42,
+	0,
+	74546
+};
+
+main:function integer () = {
+	digits[4] = -468;
+	i: boolean = 0;
+	for (; abs(digits[i]) == digits[i];) {
+		print digits[i];
+		i = i + 1;
+		print ' ';
+	}
+	print '\n';
+        z: float = 1.0 + 2;
+	return 0;
+}
+
+===[HIDDEN TESTS/bad10.bminor Status]===
+return code: 16
+Test passed successfully!
+
+===[HIDDEN TESTS/bad10.bminor Output]===
+
+Type Error | cannot initialize array of char ('digits') with element of integer (14)
+Type Error | cannot initialize array of char ('digits') with element of integer (8)
+Type Error | cannot initialize array of char ('digits') with element of integer (6168)
+Type Error | cannot initialize array of char ('digits') with element of integer (42)
+Type Error | cannot initialize array of char ('digits') with element of integer (0)
+Type Error | cannot initialize array of char ('digits') with element of integer (74546)
+Type Error | operator '=' cannot be applied on char (digits[4]) and integer (-468)
+Type Error | cannot initialize boolean ('i') with integer (0)
+Type Error | operator '[]' cannot be applied on array [6] char (digits) and boolean (i)
+Type Error | operator '[]' cannot be applied on array [6] char (digits) and boolean (i)
+Type Error | function 'abs' called with incorrect arguments (digits[i])
+Type Error | operator '[]' cannot be applied on array [6] char (digits) and boolean (i)
+Type Error | operator '==' cannot be applied on string (abs(digits[i])) and char (digits[i])
+Type Error | operator '[]' cannot be applied on array [6] char (digits) and boolean (i)
+Type Error | operator '+' cannot be applied on boolean (i) and integer (1)
+Type Error | operator '+' cannot be applied on float (1.000000) and integer (2)
+
+
+
+===== SUMMARIZED PRINTER RESULTS =====
+{
+  "student_tests": {
+    "Good": {
+      "correct": 10,
+      "incorrect": 0
+    },
+    "Bad": {
+      "correct": 10,
+      "incorrect": 0
+    }
+  },
+  "hidden_tests": {
+    "Good": {
+      "correct": 8,
+      "incorrect": 2
+    },
+    "Bad": {
+      "correct": 9,
+      "incorrect": 1
+    }
+  }
+}
+
+Printer Project
+---------------
+
+Continued correctness of the -scan, -parse, -print, and -resolve options (30/30 points)
+----------------------------------------------
+Scanning, parsing, printing, and resolving all seem to be correct.
+
+General correctness of the -typecheck option. (20/20 points)
+----------------------------------------------
+Typechecking looks to be done correctly
+
+Student Tests (20/20 points)
+------------------------------------------
+Nice test coverage
+
+Hidden Tests (17/20 points)
+------------------------------------------
+Looks like some small issues in resolving function parameters when in the function body
+
+Coding Style (10/10 points)
+------------------------------------------
+Coding style looks quite nice. Well done!
+
+---------------
