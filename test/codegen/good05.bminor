@@ -1,0 +1,5 @@
+/* Function referencing local var */
+main: function integer () = {
+    a: integer = 128;
+    return a;
+}

@@ -62,6 +62,7 @@ void type_print_primitive(const struct type* t)
 
 void type_print(const struct type* t)
 {
+	if (!t) return;
 	switch (t->kind)
 	{
 	case TYPE_ARRAY:
@@ -115,4 +116,3 @@ int type_equals(const struct type* t1, const struct type* t2)
 		return 1;
 	}
 }
-

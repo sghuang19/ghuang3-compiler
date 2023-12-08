@@ -1,0 +1,6 @@
+/* Assign to global variable */
+a: integer = 128;
+main: function integer () = {
+    a = a - 1;
+    return a;
+}

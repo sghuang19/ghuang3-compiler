@@ -8,6 +8,7 @@
 #include "printer.h"
 #include "resolver.h"
 #include "typechecker.h"
+#include "codegen.h"
 
 void usage(int exit_code)
 {
@@ -69,6 +70,8 @@ int main(int argc, char* argv[])
 		return resolve(d);
 	else if (strcmp(option, "--typecheck") == 0)
 		return typecheck(d);
+	else if (strcmp(option, "--codegen") == 0)
+		return codegen(d);
 	else
 	{
 		fprintf(stderr, "Unknown option '%s'\n", option);

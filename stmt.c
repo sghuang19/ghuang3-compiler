@@ -6,6 +6,8 @@
 #include "decl.h"
 #include "stmt.h"
 #include "scope.h"
+#include "scratch.h"
+#include "label.h"
 
 struct stmt* stmt_create(
 	stmt_t kind,
@@ -191,6 +193,8 @@ void stmt_resolve(const struct stmt* s)
 void stmt_typecheck(const struct stmt* s)
 {
 	if (!s) return;
+	extern struct type* rtype;
+	struct type* expr_type;
 	switch (s->kind)
 	{
 	case STMT_DECL:
@@ -218,9 +222,140 @@ void stmt_typecheck(const struct stmt* s)
 		break;
 	case STMT_EXPR:
 	case STMT_PRINT:
-	case STMT_RETURN:
 		expr_typecheck(s->expr);
+		break;
+	case STMT_RETURN:
+		expr_type = expr_typecheck(s->expr);
+		if (!(rtype->kind == TYPE_VOID && expr_type == NULL) &&
+			!type_equals(expr_type, rtype))
+		{
+			printf("Type Error | return type mismatch, expected ");
+			type_print(rtype);
+			printf(", got");
+			if (s->expr)
+			{
+				printf(" ");
+				expr_print(s->expr);
+				printf(" (");
+				type_print(expr_typecheck(s->expr));
+				printf(")\n");
+			}
+			else
+				printf(" nothing\n");
+			type_errors++;
+		}
 		break;
 	}
 	stmt_typecheck(s->next);
+}
+
+/** Generates code for print statement */
+void print_codegen(const struct stmt* s)
+{
+	struct expr* e = s->expr;
+	while (e)
+	{
+		expr_codegen(e->left);
+		switch (e->kind)
+		{
+		case EXPR_INTEGER_LITERAL:
+			printf(".data\n");
+			printf(".formatter_d: .string \"%%d\"\n");
+			printf("movq $%d, %%rsi\n", e->integer_literal);
+			printf("leaq .formatter_d(%%rip), %%rdi\n");
+			break;
+		default:
+			// TODO: Others printf formats
+			break;
+		}
+	}
+}
+
+void stmt_codegen(const struct stmt* s)
+{
+	if (!s) return;
+	int top, end; // Labels
+	extern const char* cur_func;
+
+	switch (s->kind)
+	{
+	case STMT_DECL:
+		decl_codegen(s->decl);
+		break;
+	case STMT_EXPR:
+		if (s->expr)
+		{
+			expr_codegen(s->expr);
+			scratch_free(s->expr->reg);
+		}
+		break;
+	case STMT_IF_ELSE:
+		top = label_create();
+		end = label_create();
+
+		printf("# if-else condition\n");
+		if (s->expr)
+		{
+			expr_codegen(s->expr);
+			printf("cmp $0, %s\n", scratch_name(s->expr->reg));
+			scratch_free(s->expr->reg);
+			printf("je %s\n", label_name(top)); // To false
+		}
+
+		printf("# if-else body\n");
+		stmt_codegen(s->body);
+		printf("jmp %s\n", label_name(end)); // To end
+
+		printf("# if-else else body\n");
+		printf("%s:\n", label_name(top)); // False label
+		stmt_codegen(s->else_body);
+
+		printf("%s:\n", label_name(end)); // End label
+		break;
+	case STMT_FOR:
+		top = label_create();
+		end = label_create();
+
+		printf("# for-loop init expr\n");
+		expr_codegen(s->init_expr);
+
+		printf("%s:\n", label_name(top)); // Loop top
+
+		printf("# for-loop expr\n");
+		if (s->expr)
+		{
+			expr_codegen(s->expr);
+			printf("cmp $0 %s\n", scratch_name(s->expr->reg));
+			scratch_free(s->expr->reg);
+			printf("je %s\n", label_name(end));
+		}
+
+		printf("# for-loop body\n");
+		stmt_codegen(s->body);
+
+		printf("# for-loop next expr\n");
+		expr_codegen(s->next_expr);
+		printf("jmp %s:\n", label_name(top));
+
+		printf("%s:\n", label_name(end)); // Loop end
+		break;
+	case STMT_PRINT:
+		// TODO: Implement register calling
+		// TODO: Calling runtime library
+		break;
+	case STMT_RETURN:
+		if (s->expr)
+		{
+			expr_codegen(s->expr);
+			printf("movq %s, %%rax\n", scratch_name(s->expr->reg));
+			scratch_free(s->expr->reg);
+		}
+		printf("jmp .%s_epilogue\n", cur_func);
+		break;
+	case STMT_BLOCK:
+		stmt_codegen(s->body);
+		break;
+	}
+
+	stmt_codegen(s->next);
 }

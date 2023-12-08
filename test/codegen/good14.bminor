@@ -1,0 +1,8 @@
+/* If-else */
+main : function integer () = {
+    cond: boolean = true;
+    if (cond)
+        return 128;
+    else
+        return 127;
+}

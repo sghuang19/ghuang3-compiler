@@ -1,0 +1,8 @@
+/* Function call with arg */
+f: function integer (arg : integer) = {
+    return arg;
+}
+
+main : function integer () = {
+    return f(0);
+}
