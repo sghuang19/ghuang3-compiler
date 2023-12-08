@@ -1,0 +1,5 @@
+/* Function referencing global var */
+a: integer = 128;
+main: function integer () = {
+    return a;
+}

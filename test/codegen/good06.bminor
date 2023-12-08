@@ -1,0 +1,6 @@
+/* Arithmetics */
+main: function integer () = {
+    a: integer = 128;
+    b: integer = 64;
+    return (a / b) + 1; // 3
+}
