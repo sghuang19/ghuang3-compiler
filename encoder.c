@@ -5,9 +5,9 @@
 
 int is_hex(char c)
 {
-	return c >= '0' && c <= '9' ||
-		   c >= 'A' && c <= 'F' ||
-		   c >= 'a' && c <= 'f';
+	return (c >= '0' && c <= '9') ||
+		   (c >= 'A' && c <= 'F') ||
+		   (c >= 'a' && c <= 'f');
 }
 
 int string_decode(const char* es, char* s)
@@ -202,7 +202,7 @@ int decode(FILE* fp)
 {
 	// Find the size of the file
 	fseek(fp, 0, SEEK_END);
-	long file_size = ftell(fp);
+	unsigned long file_size = ftell(fp);
 	if (file_size > (MAX_STRING_LEN * 5 + 2) * sizeof(char))
 	{
 		fprintf(stderr, "Invalid string: too long\n");

@@ -1,0 +1,7 @@
+/* Unary precedence */
+x: integer = x++;
+x: integer = (x++)--;
+x: integer = -x + 1;
+x: integer = (-x + 1)--;
+x: integer = !(!x);
+x: integer = (x + y) * -1;

@@ -8,6 +8,8 @@
 #include "type.h"
 #include "scope.h"
 #include "symbol.h"
+#include "scratch.h"
+#include "label.h"
 
 /* Creating binary nodes by default */
 
@@ -263,6 +265,7 @@ void expr_print_list(const struct expr* e)
 
 void expr_print(const struct expr* e)
 {
+	if (!e) return;
 	switch (e->kind)
 	{
 		/* Leaf nodes */
@@ -397,8 +400,8 @@ struct type* expr_typecheck(const struct expr* e)
 	case EXPR_MOD:
 	case EXPR_DIV:
 	case EXPR_EXP:
-		if (lt->kind != rt->kind ||
-			lt->kind != TYPE_INTEGER && lt->kind != TYPE_FLOAT)
+		if ((lt->kind != rt->kind) ||
+			(lt->kind != TYPE_INTEGER && lt->kind != TYPE_FLOAT))
 			type_error_msg(e, lt, rt);
 		return lt;
 
@@ -411,8 +414,8 @@ struct type* expr_typecheck(const struct expr* e)
 	case EXPR_EQ:
 	case EXPR_NEQ:
 		if (lt->kind != rt->kind ||
-			lt->kind != TYPE_INTEGER && lt->kind != TYPE_FLOAT &&
-			lt->kind != TYPE_CHAR && lt->kind != TYPE_BOOLEAN)
+			(lt->kind != TYPE_INTEGER && lt->kind != TYPE_FLOAT &&
+			 lt->kind != TYPE_CHAR && lt->kind != TYPE_BOOLEAN))
 			type_error_msg(e, lt, rt);
 		return type_create(TYPE_BOOLEAN);
 
@@ -478,4 +481,233 @@ struct type* expr_typecheck(const struct expr* e)
 		return lt; // Type of list is that of the 1st element
 	}
 	return NULL;
+}
+
+int expr_is_constant(const struct expr* e)
+{
+	if (!e) return 1;
+	switch (e->kind)
+	{
+	case EXPR_INTEGER_LITERAL:
+	case EXPR_FLOAT_LITERAL:
+	case EXPR_BOOLEAN_LITERAL:
+	case EXPR_CHAR_LITERAL:
+	case EXPR_STRING_LITERAL:
+	case EXPR_NAME:
+		return 1;
+	case EXPR_NEG:
+		return expr_is_constant(e->left);
+	case EXPR_LIST:
+		return expr_is_constant(e->left) && expr_is_constant(e->right);
+	default:
+		return 0;
+	}
+}
+
+/* Codegen */
+
+extern int codegen_errors;
+
+/** @return the key op associated with the expression */
+static char* expr_codegen_op(expr_t kind)
+{
+	switch (kind)
+	{
+		/* Arithmetic operators */
+	case EXPR_ADD:
+		return "addq";
+	case EXPR_SUB:
+		return "subq";
+	case EXPR_MUL:
+		return "imulq";
+	case EXPR_DIV:
+	case EXPR_MOD:
+		return "idivq";
+
+		/* Comparison operators */
+	case EXPR_GT:
+		return "setg";
+	case EXPR_GEQ:
+		return "setge";
+	case EXPR_LT:
+		return "setl";
+	case EXPR_LEQ:
+		return "setle";
+	case EXPR_EQ:
+		return "sete";
+	case EXPR_NEQ:
+		return "setne";
+
+		/* Logical operators */
+	case EXPR_AND:
+		return "andq";
+	case EXPR_OR:
+		return "orq";
+
+		/* Other binary operators */
+	case EXPR_CALL:
+		return "call";
+	case EXPR_INDEX:
+	case EXPR_ASSIGN:
+		return "movq";
+
+		/* Unary operators */
+	case EXPR_NEG:
+		return "negq";
+	case EXPR_NOT:
+		return "xorq";
+	case EXPR_INCREMENT:
+		return "incq";
+	case EXPR_DECREMENT:
+		return "decq";
+
+	default:
+		return NULL; // Handled elsewhere
+	}
+}
+
+void expr_codegen(struct expr* e)
+{
+	if (!e) return;
+	expr_codegen(e->left);
+	// Delay pushing args for func call
+	if (e->kind != EXPR_CALL)
+		expr_codegen(e->right);
+	if (e->left)
+		e->reg = e->left->reg; // Keep left register
+
+	printf("; ");
+	expr_print(e);
+	printf("\n");
+
+	struct expr* arg;
+	int arg_count;
+
+	switch (e->kind)
+	{
+		/* Literals */
+	case EXPR_INTEGER_LITERAL:
+	case EXPR_BOOLEAN_LITERAL:
+		e->reg = scratch_alloc();
+		printf("movq $%d, %s\n", e->integer_literal, scratch_name(e->reg));
+		break;
+	case EXPR_FLOAT_LITERAL:
+		e->reg = scratch_alloc();
+		fprintf(stderr, "CodeGen Error | float literals not supported\n");
+		codegen_errors++;
+		break;
+	case EXPR_CHAR_LITERAL:
+		e->reg = scratch_alloc();
+		printf("movq $%d, %s\n", e->char_literal, scratch_name(e->reg));
+		break;
+	case EXPR_STRING_LITERAL:
+		e->reg = scratch_alloc();
+		string_create(e->string_literal, e->reg);
+		break;
+
+		/* Arithmetic operators */
+	case EXPR_ADD:
+	case EXPR_SUB:
+		printf("%s %s, %s\n", expr_codegen_op(e->kind),
+			scratch_name(e->right->reg), scratch_name(e->reg));
+		break;
+	case EXPR_MUL:
+	case EXPR_DIV:
+	case EXPR_MOD:
+		printf("movq %s, %%rax\n", scratch_name(e->reg));
+		if (e->kind == EXPR_DIV || e->kind == EXPR_MOD)
+			printf("cqo\n");
+		printf("%s %s\n", expr_codegen_op(e->kind), scratch_name(e->right->reg));
+		printf("movq %s, %s\n",
+			e->kind == EXPR_MOD ? "%rdx" : "%rax",
+			scratch_name(e->reg));
+		break;
+	case EXPR_EXP:
+		// TODO: call runtime library exp
+		break;
+
+		/* Unary operators */
+	case EXPR_NEG:
+	case EXPR_INCREMENT:
+	case EXPR_DECREMENT:
+		printf("%s %s\n", expr_codegen_op(e->kind), scratch_name(e->reg));
+		break;
+	case EXPR_NOT:
+		printf("xorq $1 %s\n", scratch_name(e->reg));
+		break;
+
+		/* Comparison and logical operators */
+	case EXPR_GT:
+	case EXPR_GEQ:
+	case EXPR_LT:
+	case EXPR_LEQ:
+	case EXPR_EQ:
+	case EXPR_NEQ:
+		printf("cmpq %s, %s\n",
+			scratch_name(e->reg), scratch_name(e->right->reg));
+		printf("xor %s, %s",
+			scratch_name(e->reg), scratch_name(e->reg)); // Clear register
+		printf("%s %%al\n", expr_codegen_op(e->kind)); // Set lower 8 bits
+		printf("movq %%rax, %s\n", scratch_name(e->reg));
+		break;
+
+	case EXPR_AND:
+	case EXPR_OR:
+		printf("testq %s, %s\n",
+			scratch_name(e->reg), scratch_name(e->reg));
+		printf("xor %s, %s",
+			scratch_name(e->reg), scratch_name(e->reg)); // Clear register
+		printf("setnz %s\n", scratch_name(e->reg));
+		printf("testq %s, %s\n",
+			scratch_name(e->right->reg), scratch_name(e->right->reg));
+		printf("xor %s, %s",
+			scratch_name(e->right->reg), scratch_name(e->right->reg));
+		printf("setnz %s\n", scratch_name(e->right->reg));
+		printf("%s %s, %s\n", expr_codegen_op(e->kind),
+			scratch_name(e->right->reg), scratch_name(e->reg));
+		break;
+
+		/* Other binary operators */
+	case EXPR_ASSIGN:
+		printf("movq %s, %s\n",
+			scratch_name(e->right->reg),
+			symbol_codegen(e->left->symbol));
+		scratch_free(e->reg);
+		e->reg = e->right->reg; // Side effect
+	case EXPR_INDEX:
+		// Always word size
+		printf("movq (%s, %s, 8), %s\n",
+			scratch_name(e->left->reg),
+			scratch_name(e->right->reg),
+			scratch_name(e->reg));
+	case EXPR_CALL:
+		// Save registers?
+		expr_codegen(e->right); // Push arguments by codegen
+		printf("call %s\n", e->left->name); // Make function call
+		// Stack frame is set by callee
+		// Recover stack
+		arg_count = 0;
+		arg = e->right;
+		while (arg && arg->left)
+		{
+			arg_count++;
+			arg = arg->right;
+		}
+		printf("subq $%d, %%rsp", arg_count * 8);
+		printf("movq %%rax, %s", scratch_name(e->reg)); // Return value
+		break;
+
+		/* Other nodes */
+	case EXPR_LIST:
+		// Already at the base condition of recursion, the last arg
+		printf("pushq %s\n", scratch_name(e->reg)); // Left child already stored
+		scratch_free(e->reg); // Not needed anymore
+		break;
+	case EXPR_NAME:
+		printf("movq %s, %s\n",
+			symbol_codegen(e->symbol), scratch_name(e->reg));
+		break;
+	}
+
+	if (e->right) scratch_free(e->right->reg);
 }

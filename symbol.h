@@ -14,9 +14,12 @@ struct symbol
 	struct type* type;
 	char* name;
 	int which;
-	int prototype;
+	int prototype; // 1 if function prototype, 0 otherwise
+	int locals; // number of local variables
 };
 
 struct symbol* symbol_create(symbol_t kind, struct type* type, char* name, int which);
+
+const char* symbol_codegen(const struct symbol* s);
 
 #endif

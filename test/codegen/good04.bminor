@@ -1,0 +1,4 @@
+/* Function */
+main: function integer () = {
+    return 1024;
+}

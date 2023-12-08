@@ -1,0 +1,2 @@
+/* Integer declaration with value */
+a: integer = 1024;

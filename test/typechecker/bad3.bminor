@@ -19,4 +19,5 @@ main: function void () = {
     func();
     func(c);
     (func(a) + b) * 2 == (func(c) % 2);
+    return 0;
 }

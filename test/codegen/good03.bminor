@@ -1,0 +1,3 @@
+/* String declaration with value */
+s1: string = "Hello World";
+s2: string = "sam\n";
