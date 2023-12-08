@@ -22,6 +22,18 @@ printer_test () {
   done
 }
 
+codegen_test () {
+  for testfile in ./test/codegen/good*.bminor; do
+    if bminor --codegen "$testfile" > "$testfile.out" &&
+       gcc -x assembler "$testfile.out" -o "$testfile.exe"; then
+      echo "$testfile success (as expected)"
+    else
+      echo "$testfile failure (INCORRECT)"
+    fi
+    rm "$testfile.exe"
+  done
+}
+
 case $module in
     "encoder")
         command="encode"
@@ -41,6 +53,10 @@ case $module in
         ;;
     "typechecker")
         command="typecheck"
+        ;;
+    "codegen")
+        codegen_test
+        exit
         ;;
     *)
         echo "Unknown module: $module"
