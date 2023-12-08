@@ -100,12 +100,14 @@ void decl_resolve(struct decl* d)
 	expr_resolve(d->value);
 	if (d->code)
 	{
-		d->symbol->prototype = 1;
+		d->symbol->prototype = 0;
 		scope_enter();
 		param_list_resolve(d->type->params);
 		stmt_resolve(d->code);
 		scope_exit();
 	}
+	else
+		d->symbol->prototype = 1;
 
 	d->symbol->locals = cur_local;
 
@@ -252,6 +254,11 @@ const char* cur_func;
 
 void decl_codegen_func(struct decl* d)
 {
+	if (d->symbol->prototype) {
+		fprintf(stderr, "is a prototype");
+	return;
+	}
+
 	// Prologue
 	printf(".text\n");
 	printf(".global %s\n", d->name);
@@ -306,6 +313,7 @@ void decl_codegen_val(const struct expr* v)
 	switch (v->kind)
 	{
 	case EXPR_NEG:
+	// FIXME: handle global negative value
 		printf(".quad -");
 		expr_print(v->right);
 		printf("\n");
@@ -357,7 +365,7 @@ void decl_codegen(struct decl* d)
 		if (d->value)
 		{
 			expr_codegen(d->value);
-			printf("movq %s, -%d(%%rbp)\n", scratch_name(d->value->reg), d->symbol->which * 8);
+			printf("movq %s, -%d(%%rbp)\n", scratch_name(d->value->reg), (d->symbol->which + 1) * 8);
 			scratch_free(d->value->reg);
 		}
 		// Otherwise do nothing

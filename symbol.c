@@ -20,10 +20,10 @@ const char* symbol_codegen(const struct symbol* s)
 	switch (s->kind)
 	{
 	case SYMBOL_LOCAL:
-		sign = '+';
+		sign = '-';
 		break;
 	case SYMBOL_PARAM:
-		sign = '-';
+		sign = ' ';
 		break;
 	case SYMBOL_GLOBAL:
 		return s->name;

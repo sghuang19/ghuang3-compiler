@@ -573,13 +573,14 @@ void expr_codegen(struct expr* e)
 	// Delay pushing args for func call
 	if (e->kind != EXPR_CALL)
 		expr_codegen(e->right);
-	if (e->left)
-		e->reg = e->left->reg; // Keep left register
+	// Allocate reg if leaf
+	e->reg = e->left ? e->left->reg : scratch_alloc();
 
-	printf("; ");
+	printf("# ");
 	expr_print(e);
 	printf("\n");
 
+	char* op;
 	struct expr* arg;
 	int arg_count;
 
@@ -588,20 +589,16 @@ void expr_codegen(struct expr* e)
 		/* Literals */
 	case EXPR_INTEGER_LITERAL:
 	case EXPR_BOOLEAN_LITERAL:
-		e->reg = scratch_alloc();
 		printf("movq $%d, %s\n", e->integer_literal, scratch_name(e->reg));
 		break;
 	case EXPR_FLOAT_LITERAL:
-		e->reg = scratch_alloc();
 		fprintf(stderr, "CodeGen Error | float literals not supported\n");
 		codegen_errors++;
 		break;
 	case EXPR_CHAR_LITERAL:
-		e->reg = scratch_alloc();
 		printf("movq $%d, %s\n", e->char_literal, scratch_name(e->reg));
 		break;
 	case EXPR_STRING_LITERAL:
-		e->reg = scratch_alloc();
 		string_create(e->string_literal, e->reg);
 		break;
 
@@ -674,12 +671,17 @@ void expr_codegen(struct expr* e)
 			symbol_codegen(e->left->symbol));
 		scratch_free(e->reg);
 		e->reg = e->right->reg; // Side effect
+		e->right->reg = -1; // Don't free it
+		break;
 	case EXPR_INDEX:
+		e->reg = scratch_alloc(); // 3rd scratch needed
 		// Always word size
 		printf("movq (%s, %s, 8), %s\n",
 			scratch_name(e->left->reg),
 			scratch_name(e->right->reg),
 			scratch_name(e->reg));
+		scratch_free(e->left->reg);
+		break;
 	case EXPR_CALL:
 		// Save registers?
 		expr_codegen(e->right); // Push arguments by codegen
@@ -704,8 +706,22 @@ void expr_codegen(struct expr* e)
 		scratch_free(e->reg); // Not needed anymore
 		break;
 	case EXPR_NAME:
-		printf("movq %s, %s\n",
-			symbol_codegen(e->symbol), scratch_name(e->reg));
+		switch (e->symbol->type->kind)
+		{
+		case TYPE_ARRAY:
+		case TYPE_STRING:
+			op = "leaq"; // Load address
+			break;
+		case TYPE_FUNCTION:
+			// Do nothing. Handled by function call.
+			return;
+		default:
+			op = "movq"; // Load value
+			break;
+		}
+		
+		printf("%s %s, %s\n",
+			op, symbol_codegen(e->symbol), scratch_name(e->reg));
 		break;
 	}
 

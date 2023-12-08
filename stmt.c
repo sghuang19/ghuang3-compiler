@@ -271,7 +271,7 @@ void stmt_codegen(const struct stmt* s)
 		top = label_create();
 		end = label_create();
 
-		printf("; if-else condition\n");
+		printf("# if-else condition\n");
 		if (s->expr)
 		{
 			expr_codegen(s->expr);
@@ -280,11 +280,11 @@ void stmt_codegen(const struct stmt* s)
 			printf("je %s\n", label_name(top)); // To false
 		}
 
-		printf("; if-else body\n");
+		printf("# if-else body\n");
 		stmt_codegen(s->body);
 		printf("jmp %s\n", label_name(end)); // To end
 
-		printf("; if-else else body\n");
+		printf("# if-else else body\n");
 		printf("%s\n:", label_name(top)); // False label
 		stmt_codegen(s->else_body);
 
@@ -299,7 +299,7 @@ void stmt_codegen(const struct stmt* s)
 
 		printf("%s\n:", label_name(top)); // Loop top
 
-		printf("; for-loop expr\n");
+		printf("# for-loop expr\n");
 		if (s->expr)
 		{
 			expr_codegen(s->expr);
@@ -308,10 +308,10 @@ void stmt_codegen(const struct stmt* s)
 			printf("je %s\n", label_name(end));
 		}
 
-		printf("; for-loop body\n");
+		printf("# for-loop body\n");
 		stmt_codegen(s->body);
 
-		printf("; for-loop next expr\n");
+		printf("# for-loop next expr\n");
 		expr_codegen(s->next_expr);
 		printf("jmp %s\n:", label_name(top));
 
@@ -324,7 +324,7 @@ void stmt_codegen(const struct stmt* s)
 		if (s->expr)
 		{
 			expr_codegen(s->expr);
-			printf("movq %d, %%rax\n", s->expr->reg);
+			printf("movq %s, %%rax\n", scratch_name(s->expr->reg));
 			scratch_free(s->expr->reg);
 		}
 		printf("jmp .%s_epilogue\n", cur_func);

@@ -1,7 +1,5 @@
-/* Unary precedence */
-x: integer = x++;
-x: integer = (x++)--;
-x: integer = -x + 1;
-x: integer = (-x + 1)--;
-x: integer = !(!x);
-x: integer = (x + y) * -1;
+/* Indexing */
+a: array [4] integer = {0, 1, 2, 3};
+main: function integer () = {
+    return a[0] + a[1] + a[2] + a[3]; // 6
+}

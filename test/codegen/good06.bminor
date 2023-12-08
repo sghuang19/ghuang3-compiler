@@ -1,18 +1,6 @@
-/* Nested if conditions */
-main : function void () = {
-    if (true) {
-        print "Hello";
-    } else {
-        print "World";
-    }
-
-    if ( x + y <= 0 )
-        if (x)
-            print "x";
-
-    if ( x + y <= 0 )
-        if (x)
-            print "x";
-        else
-            print "y";
+/* Arithmetics */
+main: function integer () = {
+    a: integer = 128;
+    b: integer = 64;
+    return (a / b) + 1; // 3
 }

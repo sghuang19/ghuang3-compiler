@@ -24,12 +24,8 @@ int scratch_alloc()
 
 void scratch_free(int r)
 {
-	if (r < 0 || r > 6)
-	{
-		fprintf(stderr, "Codegen Error | Invalid scratch register\n");
-		codegen_errors++;
-	}
-	regs[r] = 0;
+	if (r >=0 && r <= 6)
+		regs[r] = 0;
 }
 
 const char* scratch_name(int r)
@@ -51,7 +47,7 @@ const char* scratch_name(int r)
 	case 6:
 		return "%r15";
 	default:
-		fprintf(stderr, "Codegen Error | Invalid scratch register\n");
+		fprintf(stderr, "CodeGen Error | Invalid scratch register\n");
 		codegen_errors++;
 		return NULL;
 	}

@@ -1,2 +1,3 @@
 /* Integer declaration with value */
-a: integer = 1024;
+a: integer = 128;
+main: function integer () = { return 0; }

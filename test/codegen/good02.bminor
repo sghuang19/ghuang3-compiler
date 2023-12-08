@@ -1,2 +1,3 @@
 /* String declaration */
 s: string;
+main: function integer () = { return 128; }
