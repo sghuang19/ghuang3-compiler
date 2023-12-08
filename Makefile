@@ -1,16 +1,13 @@
-CFLAGS =
-MODS = encoder scanner parser printer resolver typechecker
-SRCS = bminor.c $(addsuffix .c, $(MODS)) \
-	   decl.c stmt.c expr.c type.c param_list.c \
-	   symbol.c scope.c hash_table.c \
-	   lex.yy.c grammar.tab.c
+CFLAGS = -Wall -Wextra -g
+MODS = encoder scanner parser printer resolver typechecker codegen
+SRCS = $(shell find . -maxdepth 1 -type f -name "*.c")
 OBJS = $(SRCS:.c=.o)
 
-bminor: $(OBJS)
+bminor: grammar.tab.o lex.yy.o $(OBJS)
 	gcc $(CFLAGS) $^ -o $@
 
-scanner.o: scanner.c token.h
-	gcc $(CFLAGS) -c $< -o $@
+lex.yy.o: lex.yy.c
+	gcc -c $< -o $@  # suppress warnings
 
 %.o: %.c
 	gcc $(CFLAGS) -c $< -o $@
@@ -18,7 +15,7 @@ scanner.o: scanner.c token.h
 lex.yy.c: lex.yy.l
 	flex $<
 
-grammar.tab.c token.h: grammar.y lex.yy.c
+grammar.tab.c token.h: grammar.y
 	bison --defines=token.h $<
 
 # Tests
@@ -30,8 +27,7 @@ test-%: bminor
 clean-test:
 	rm -f ./test/*/*.bminor.out
 
-clean:
-	rm -f ./test/*/*.bminor.out
+clean: clean-test
 	rm -f lex.yy.c
 	rm -f token.h grammar.tab.c grammar.output
 	rm -f *.o
