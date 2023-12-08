@@ -39,5 +39,6 @@ struct stmt* stmt_create_empty(stmt_t kind);
 void stmt_print(const struct stmt* s, int indent);
 void stmt_resolve(const struct stmt* s);
 void stmt_typecheck(const struct stmt* s);;
+void stmt_codegen(const struct stmt* s);
 
 #endif
