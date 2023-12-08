@@ -98,12 +98,16 @@ void decl_resolve(struct decl* d)
 	expr_resolve(d->value);
 	if (d->code)
 	{
-		d->symbol->prototype = 1;
+		d->symbol->prototype = 0;
 		scope_enter();
 		param_list_resolve(d->type->params);
 		stmt_resolve(d->code);
 		scope_exit();
 	}
+	else
+		d->symbol->prototype = 1;
+
+	d->symbol->locals = cur_local;
 
 	decl_resolve(d->next);
 }
@@ -159,9 +163,28 @@ void type_typecheck(const struct type* t, const char* name)
 	}
 }
 
+struct type* rtype = NULL;
+
 void decl_typecheck(struct decl* d)
 {
 	if (!d) return;
+
+	// Global declarations must be constant
+	if (d->symbol->kind == SYMBOL_GLOBAL && !expr_is_constant(d->value))
+	{
+		printf("Type Error | global variable ('%s') cannot be initialized "
+			   "with non-constant expression ", d->name);
+		if (d->value && d->value->kind == EXPR_LIST)
+		{
+			printf("{");
+			expr_print(d->value);
+			printf("}");
+		}
+		else
+			expr_print(d->value);
+		printf("\n");
+		type_errors++;
+	}
 
 	type_typecheck(d->type, d->name);
 	struct type* val_type = expr_typecheck(d->value);
@@ -180,10 +203,8 @@ void decl_typecheck(struct decl* d)
 
 			// Check initializer type
 			struct expr* e = d->value;
-			int len = 0;
 			while (e)
 			{
-				len++;
 				struct type* t = expr_typecheck(e->left);
 				if (!type_equals(d->type->subtype, t))
 				{
@@ -212,10 +233,14 @@ void decl_typecheck(struct decl* d)
 		}
 	}
 
-	if (d->type->kind == TYPE_FUNCTION && d->symbol->kind == SYMBOL_LOCAL)
+	if (d->type->kind == TYPE_FUNCTION)
 	{
-		printf("Type Error | cannot declare function ('%s') inside function\n", d->name);
-		type_errors++;
+		rtype = d->type->subtype;
+		if (d->symbol->kind == SYMBOL_LOCAL)
+		{
+			printf("Type Error | cannot declare function ('%s') inside function\n", d->name);
+			type_errors++;
+		}
 	}
 
 	stmt_typecheck(d->code);
