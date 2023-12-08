@@ -50,6 +50,7 @@ struct expr
 	expr_t kind;
 	struct expr* left;
 	struct expr* right;
+	int reg; // Used by codegen
 
 	/* Used by various leaf expressions */
 	struct symbol* symbol;
@@ -83,5 +84,10 @@ void expr_resolve(struct expr* e);
  * @return Type of expr if successful, of left child otherwise.
 */
 struct type* expr_typecheck(const struct expr* e);
+
+/** @return 1 if the expression is constant, 0 otherwise */
+int expr_is_constant(const struct expr* e);
+
+void expr_codegen(struct expr* e);
 
 #endif
